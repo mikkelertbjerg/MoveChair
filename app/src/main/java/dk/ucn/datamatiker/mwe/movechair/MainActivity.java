@@ -3,6 +3,9 @@ package dk.ucn.datamatiker.mwe.movechair;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,16 +24,22 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Menu 1");
         setSupportActionBar(toolbar);
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+        drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Adding default page fragment
+        displaySelectedScreen(R.id.nav_profile);
     }
 
     @Override
@@ -46,27 +55,48 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
+        displaySelectedScreen(item.getItemId());
+        return true;
+    }
 
-        if (id == R.id.nav_my_plan) {
+    private void displaySelectedScreen(int itemId) {
 
-        } else if (id == R.id.nav_activity_log) {
+        //creating fragment object
+        Fragment fragment = null;
 
-        } else if (id == R.id.nav_activities) {
+        //initializing the fragment object which is selected
+        switch (itemId) {
+            case R.id.nav_my_plan:
+                fragment = new my_plan();
+                break;
+            case R.id.nav_activity_log:
+                fragment = new activity_log();
+                break;
+            case R.id.nav_activities:
+                fragment = new activities();
+                break;
+            case R.id.nav_profile:
+                fragment = new profile();
+                break;
+            case R.id.nav_achievements:
+                fragment = new achievements();
+                break;
+            case R.id.nav_highscore:
+                fragment = new highscore();
+                break;
+            case R.id.nav_options:
+                fragment = new options();
+                break;
+        }
 
-        } else if (id == R.id.nav_profile) {
-
-        } else if (id == R.id.nav_achievements) {
-
-        } else if (id == R.id.nav_highscore) {
-
-        } else if (id == R.id.nav_options) {
-
+        //replacing the fragment
+        if (fragment != null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_frame, fragment);
+            ft.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 }
