@@ -1,19 +1,14 @@
 package dk.ucn.datamatiker.mwe.movechair;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
@@ -67,25 +62,25 @@ public class MainActivity extends AppCompatActivity
         //initializing the fragment object which is selected
         switch (itemId) {
             case R.id.nav_my_plan:
-                fragment = new my_plan();
+                fragment = new MyPlanFragment();
                 break;
             case R.id.nav_activity_log:
-                fragment = new activity_log();
+                fragment = new ActivityLogFragment();
                 break;
             case R.id.nav_activities:
-                fragment = new activities();
+                fragment = new ActivitiesFragment();
                 break;
             case R.id.nav_profile:
-                fragment = new profile();
+                fragment = new ProfileFragment();
                 break;
             case R.id.nav_achievements:
-                fragment = new achievements();
+                fragment = new AchievementsFragment();
                 break;
             case R.id.nav_highscore:
-                fragment = new highscore();
+                fragment = new HighscoreFragment();
                 break;
             case R.id.nav_options:
-                fragment = new options();
+                fragment = new OptionsFragment();
                 break;
         }
 

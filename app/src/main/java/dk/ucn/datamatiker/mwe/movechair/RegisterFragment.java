@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link register.OnFragmentInteractionListener} interface
+ * {@link RegisterFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link register#newInstance} factory method to
+ * Use the {@link RegisterFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class register extends Fragment {
+public class RegisterFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,7 +29,7 @@ public class register extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public register() {
+    public RegisterFragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +39,11 @@ public class register extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment register.
+     * @return A new instance of fragment RegisterFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static register newInstance(String param1, String param2) {
-        register fragment = new register();
+    public static RegisterFragment newInstance(String param1, String param2) {
+        RegisterFragment fragment = new RegisterFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -92,7 +92,7 @@ public class register extends Fragment {
     }
 
     /**
-     * This interface must be implemented by activities that contain this
+     * This interface must be implemented by ActivitiesFragment that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
