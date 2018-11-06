@@ -12,4 +12,5 @@
     <string name="activities">Activities</string>
     <string name="activity_log">Activity Log</string>
     <string name="my_plan">My Plan</string>
+    <string name="highscore">Highscore</string>
 </resources>
