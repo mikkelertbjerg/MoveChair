@@ -91,8 +91,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button registerButton = (Button) findViewById(R.id.register_button);
-        registerButton.setOnClickListener(new OnClickListener() {
+        Button previewButton = (Button) findViewById(R.id.preview_app_button);
+        previewButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
