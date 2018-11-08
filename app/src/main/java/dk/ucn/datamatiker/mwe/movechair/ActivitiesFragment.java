@@ -62,7 +62,7 @@ public class ActivitiesFragment extends Fragment implements View.OnClickListener
         if (fragment != null) {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
 
-            ft.replace(R.id.activities_menu_layout, fragment);
+            ft.replace(R.id.content_frame, fragment);
             //ft.addToBackStack(null);
 
             ft.commit();

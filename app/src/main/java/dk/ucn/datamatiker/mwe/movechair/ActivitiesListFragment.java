@@ -1,11 +1,7 @@
 package dk.ucn.datamatiker.mwe.movechair;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,7 +15,7 @@ import java.util.ArrayList;
 
 public class ActivitiesListFragment extends Fragment implements View.OnClickListener {
 
-    ArrayList<ActivitiesListItems> activityItems;
+    ArrayList<ActivityListItem> activityItems;
 
     @Nullable
     @Override
@@ -37,12 +33,13 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("ActivitiesListFragment");
         RecyclerView rvActivities = (RecyclerView) view.findViewById(R.id.rv_activities);
 
-        activityItems = ActivitiesListItems.createActivityListItems(20);
+        activityItems = ActivityListItem.createActivityListItems(20);
         // Create adapter passing in the sample user data
-        RecyclerViewActivitiesAdapter adapter = new RecyclerViewActivitiesAdapter(activityItems);
+        ActivityAdapter adapter = new ActivityAdapter(activityItems);
         // Attach the adapter to the recyclerview to populate items
         rvActivities.setAdapter(adapter);
         // Set layout manager to position the items
+        rvActivities.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     @Override
