@@ -40,6 +40,13 @@
 
     <!-- Strings related to activities -->
 
+    <!-- String related to activities menu -->
+
+    <string name="action_exercises">Exercises</string>
+    <string name="action_workouts">Workouts</string>
+    <string name="action_workout_plans">Workout Plans</string>
+
+
     <!-- Strings related to profile -->
 
     <!-- Strings related to highscore -->
