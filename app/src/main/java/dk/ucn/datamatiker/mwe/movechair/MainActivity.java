@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //Adding default page fragment
-        displaySelectedScreen(R.id.nav_profile);
+        displaySelectedScreen(R.id.nav_my_plan);
     }
 
     @Override
