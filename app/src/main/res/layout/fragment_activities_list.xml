@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activities_layout"
+    android:id="@+id/activities_list_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ActivitiesListFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -15,6 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/activities_list_item">
-
     </android.support.v7.widget.RecyclerView>
-</LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
