@@ -27,8 +27,9 @@ public class ExerciseModel extends ActivityModel{
         this.equipment = equipment;
     }
 
-    public ExerciseModel(String name, String description, int id) {
+    public ExerciseModel(String name, String description, int id, double points) {
         super(name, description, id);
+        this.points = points;
         this.categories = new ArrayList<CategoryModel>();
         this.media = new ArrayList<MediaModel>();
         this.difficulties = new ArrayList<DifficultyModel>();
@@ -83,4 +84,5 @@ public class ExerciseModel extends ActivityModel{
     public void setPoints(double points){
         this.points = points;
     }
+
 }

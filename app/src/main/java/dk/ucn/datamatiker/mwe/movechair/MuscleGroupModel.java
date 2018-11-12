@@ -11,6 +11,11 @@ public class MuscleGroupModel {
         this.muscles = new ArrayList<MuscleModel>();
     }
 
+    public MuscleGroupModel(String name, ArrayList<MuscleModel> muscles) {
+        this.name = name;
+        this.muscles = muscles;
+    }
+
     public String getName() {
         return name;
     }
@@ -22,4 +27,5 @@ public class MuscleGroupModel {
     public ArrayList<MuscleModel> getMuscles() {
         return muscles;
     }
+
 }

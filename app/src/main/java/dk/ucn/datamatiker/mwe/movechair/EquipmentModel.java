@@ -15,4 +15,5 @@ public class EquipmentModel {
     public void setName(String name) {
         this.name = name;
     }
+
 }
