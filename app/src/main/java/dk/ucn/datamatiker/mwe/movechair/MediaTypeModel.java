@@ -1,9 +1,9 @@
 package dk.ucn.datamatiker.mwe.movechair;
 
-public class EquipmentModel {
+public class MediaTypeModel {
     private String name;
 
-    public EquipmentModel(String name) {
+    public MediaTypeModel(String name) {
 
         this.name = name;
     }

@@ -31,22 +31,39 @@ public class ExerciseViewModel extends Fragment {
         //Get activity object from fragment arguments
         ActivityModel activity = (ActivityModel)getArguments().getSerializable("activity");
         //This makes you able to change toolbar title
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(activity.getTitle());
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(activity.getName());
 
         //TODO Replace this with db call to get specific exercise?
-        ExerciseModel exerciseModel = new ExerciseModel(activity.getTitle(), activity.getDescription(),activity.getId());
-        exerciseModel.setName("Generic Exercise Name");
-        exerciseModel.setDescription("Generic Exercise Description");
+        ExerciseModel exerciseModel = new ExerciseModel(activity.getName(), activity.getDescription(),activity.getId());
         exerciseModel.setPoints(5);
+        CategoryModel category = new CategoryModel("Weightloss");
+        EquipmentModel equipment = new EquipmentModel("Kettlebell");
+        MuscleModel muscle = new MuscleModel("Bicep");
+        MuscleGroupModel muscleGroup = new MuscleGroupModel("Arms");
+        muscleGroup.getMuscles().add(muscle);
+        DifficultyModel difficulty = new DifficultyModel("Easy", 1);
+
+        exerciseModel.getCategories().add(category);
+        exerciseModel.getEquipment().add(equipment);
+        exerciseModel.getDifficulties().add(difficulty);
+        exerciseModel.getMuscleGroups().add(muscleGroup);
 
         //VideoView exercise_video = view.findViewById(R.id.exercise_video);
         TextView exercise_title = view.findViewById(R.id.exercise_title);
         TextView exercise_description = view.findViewById(R.id.exercise_description);
         TextView exercise_points = view.findViewById(R.id.exercise_points);
+        TextView exercise_category = view.findViewById(R.id.exercise_category);
+        TextView exercise_equipment = view.findViewById(R.id.exercise_equipment);
+        TextView exercise_musclegroup = view.findViewById(R.id.exercise_muscle_group);
+        TextView exercise_difficulty = view.findViewById(R.id.exercise_difficulty);
 
         //TODO exercise_video
         exercise_title.setText(exerciseModel.getName());
         exercise_description.setText(exerciseModel.getDescription());
         exercise_points.setText("Points: " + Double.toString(exerciseModel.getPoints()));
+        exercise_category.setText(exerciseModel.getCategories().get(0).getName());
+        exercise_equipment.setText(exerciseModel.getEquipment().get(0).getName());
+        exercise_musclegroup.setText(exerciseModel.getMuscleGroups().get(0).getName());
+        exercise_difficulty.setText(exerciseModel.getDifficulties().get(0).getName());
     }
 }
