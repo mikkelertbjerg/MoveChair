@@ -1,6 +1,7 @@
 package dk.ucn.datamatiker.mwe.movechair;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,31 +34,32 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
             super(activityItemView);
 
             //activityItemIcon = (ImageView) activityItemView.findViewById(R.id.activity_item_icon);
-            activityItemTitle = (TextView) activityItemView.findViewById(R.id.activity_item_title);
-            activityItemDescription = (TextView) activityItemView.findViewById(R.id.activity_item_description);
+            activityItemTitle = (TextView) activityItemView.findViewById(R.id.activity_title);
+            activityItemDescription = (TextView) activityItemView.findViewById(R.id.activity_description);
         }
     }
 
         // ... view holder defined above...
 
         // Store a member variable for the contacts
-        private List<ActivityListItem> activityItems;
+        private List<ActivityModel> activities;
 
         // Pass in the contact array into the constructor
-        public ActivityAdapter(List<ActivityListItem> activityItems) {
-            this.activityItems = activityItems;
+        public ActivityAdapter(List<ActivityModel> activities) {
+            this.activities = activities;
         }
 
     @Override
     public ActivityAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final Context context = parent.getContext();
+
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
-        View activityListView = inflater.inflate(R.layout.activities_list_item, parent, false);
+        final View activityListView = inflater.inflate(R.layout.activity, parent, false);
 
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(activityListView);
+        final ViewHolder viewHolder = new ViewHolder(activityListView);
 
         //Create onClick
         activityListView.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +68,11 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
                 MainActivity mainActivity = (MainActivity) context;
                 Fragment exerciseFragment = new ExerciseViewModel();
                 //Create bundle with Exercise ID
+                final int position = viewHolder.getAdapterPosition();
+                Bundle bundle = new Bundle();
+                ActivityModel activity = activities.get(position);
+                bundle.putSerializable("activity", activity);
+                exerciseFragment.setArguments(bundle);
                 mainActivity.switchFragment(exerciseFragment);
             }
         });
@@ -76,19 +83,20 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         // Get the data model based on position
-        ActivityListItem activitiesListItem = activityItems.get(position);
+        ActivityModel activityModel = activities.get(position);
 
         // Set item views based on your views and data model
         //ImageView activityItemIcon = viewHolder.activityItemIcon;
         TextView activityItemTitle = viewHolder.activityItemTitle;
         TextView activityItemDescription = viewHolder.activityItemDescription;
         //activityItemIcon.setImageIcon(activitiesListItem.getImg());
-        activityItemTitle.setText(activitiesListItem.getTitle());
-        activityItemDescription.setText(activitiesListItem.getDescription());
+        activityItemTitle.setText(activityModel.getTitle());
+        activityItemDescription.setText(activityModel.getDescription());
+
     }
 
     @Override
     public int getItemCount() {
-        return activityItems.size();
+        return activities.size();
     }
 }

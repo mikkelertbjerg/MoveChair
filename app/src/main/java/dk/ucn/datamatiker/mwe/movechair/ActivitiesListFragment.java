@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class ActivitiesListFragment extends Fragment{
 
-    ArrayList<ActivityListItem> activityItems;
+    ArrayList<ActivityModel> activities;
 
     @Nullable
     @Override
@@ -34,10 +34,11 @@ public class ActivitiesListFragment extends Fragment{
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getArguments().getString("buttonText"));
         RecyclerView rvActivities = view.findViewById(R.id.rv_activities);
 
-
-        activityItems = ActivityListItem.createActivityListItems(20);
+        //TODO method should be replaced by getting data from DB:
+        //TODO if statement that switches on ActivityTypeID fills the adapter list
+        activities = ActivityModel.createActivities(20);
         // Create adapter passing in the sample user data
-        ActivityAdapter adapter = new ActivityAdapter(activityItems);
+        ActivityAdapter adapter = new ActivityAdapter(activities);
         // Attach the adapter to the recyclerview to populate items
         rvActivities.setAdapter(adapter);
         // Set layout manager to position the items
@@ -46,6 +47,5 @@ public class ActivitiesListFragment extends Fragment{
     }
 
     //Tilføj 3 metoder der henter Exercises/Workouts/WorkoutPlans fra DB
-    //Lad en if statement bestemme hvilken af dem der bliver brugt ud fra buttonText
 
 }
