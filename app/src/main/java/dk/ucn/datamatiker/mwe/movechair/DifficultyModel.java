@@ -24,4 +24,5 @@ public class DifficultyModel {
     public void setMultiplier(double multiplier) {
         this.multiplier = multiplier;
     }
+
 }
