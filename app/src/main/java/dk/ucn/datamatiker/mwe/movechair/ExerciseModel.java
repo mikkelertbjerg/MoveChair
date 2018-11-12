@@ -1,12 +1,16 @@
 package dk.ucn.datamatiker.mwe.movechair;
 
-public class ExerciseModel {
+public class ExerciseModel extends ActivityModel{
 
     private String name;
     private String description;
     private String imgPath;
     private String videoPath;
     private double points;
+
+    public ExerciseModel(String title, String description, int id) {
+        super(title, description, id);
+    }
 
     public String getName(){
         return name;

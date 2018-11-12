@@ -13,7 +13,7 @@
         android:id="@+id/rv_activities"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/activities_list_item">
+        tools:listitem="@layout/activity">
     </android.support.v7.widget.RecyclerView>
 
 </android.support.constraint.ConstraintLayout>
