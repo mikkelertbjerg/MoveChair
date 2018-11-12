@@ -39,18 +39,41 @@
     <!-- Strings related to activity log -->
 
     <!-- Strings related to activities -->
+    <string name="activity_title">Title: </string>
+    <string name="activity_description">Description: </string>
 
-    <!-- String related to exercises -->
-    <string name="exercise_title">Title</string>
-    <string name="exercise_description">Description</string>
-    <string name="exercise_points">Points: x</string>
-    <string name="exercise_equipment">Equipment</string>
-    <string name="exercise_difficulty">Difficulty</string>
-    <string name="exercise_category">Category</string>
-    <string name="exercise_muscle_group">Muscle group</string>
+    <!-- Strings related to exercises -->
+    <string name="exercise_title">Title: </string>
+    <string name="exercise_description">Description: </string>
+    <string name="exercise_points">Points: </string>
+    <string name="exercise_equipment">Equipment: </string>
+    <string name="exercise_difficulty">Difficulty: </string>
+    <string name="exercise_category">Category: </string>
+    <string name="exercise_muscle_group">Muscle group(s): </string>
+
+    <!-- Strings related to workouts -->
+    <string name="workout_title">Title: </string>
+    <string name="workout_description">Description: </string>
+    <string name="workout_points">Points: </string>
+    <string name="workout_equipment">Equipment: </string>
+    <string name="workout_difficulty">Difficulty: </string>
+    <string name="workout_category">Category: </string>
+    <string name="workout_muscle_group">Muscle group(s): </string>
+    <string name="workout_duration">Duration: </string>
+    <string name="action_start_workout">Start Workout</string>
+    
+    <!-- String related to workout plans -->
+    <string name="workout_plan_title">Title: </string>
+    <string name="workout_plan_description">Description: </string>
+    <string name="workout_plan_points">Points: </string>
+    <string name="workout_plan_equipment">Equipment: </string>
+    <string name="workout_plan_difficulty">Difficulty: </string>
+    <string name="workout_plan_category">Category: </string>
+    <string name="workout_plan_muscle_group">Muscle group(s): </string>
+    <string name="workout_plan_duration">Duration: </string>
+    <string name="action_start_workout_plan">Start Workout Plan</string>
 
     <!-- String related to activities menu -->
-
     <string name="action_exercises">Exercises</string>
     <string name="action_workouts">Workouts</string>
     <string name="action_workout_plans">Workout Plans</string>
