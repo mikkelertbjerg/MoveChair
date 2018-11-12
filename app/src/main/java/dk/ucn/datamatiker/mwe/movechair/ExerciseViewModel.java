@@ -58,12 +58,12 @@ public class ExerciseViewModel extends Fragment {
         TextView exercise_difficulty = view.findViewById(R.id.exercise_difficulty);
 
         //TODO exercise_video
-        exercise_title.setText(exerciseModel.getName());
-        exercise_description.setText(exerciseModel.getDescription());
+        exercise_title.setText("Title: " + exerciseModel.getName());
+        exercise_description.setText("Description: " + exerciseModel.getDescription());
         exercise_points.setText("Points: " + Double.toString(exerciseModel.getPoints()));
-        exercise_category.setText(exerciseModel.getCategories().get(0).getName());
-        exercise_equipment.setText(exerciseModel.getEquipment().get(0).getName());
-        exercise_musclegroup.setText(exerciseModel.getMuscleGroups().get(0).getName());
-        exercise_difficulty.setText(exerciseModel.getDifficulties().get(0).getName());
+        exercise_category.setText("Category: " + exerciseModel.getCategories().get(0).getName());
+        exercise_equipment.setText("Equipment: " + exerciseModel.getEquipment().get(0).getName());
+        exercise_musclegroup.setText("Muscle group(s): " + exerciseModel.getMuscleGroups().get(0).getName());
+        exercise_difficulty.setText("Difficulty: " + exerciseModel.getDifficulties().get(0).getName());
     }
 }
