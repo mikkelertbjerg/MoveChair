@@ -67,14 +67,29 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 MainActivity mainActivity = (MainActivity) context;
-                Fragment exerciseFragment = new ExerciseViewModel();
+                Fragment fragment = null;
+                String type = activities.get(0).getClass().getSimpleName();
+
+                switch (type) {
+                    case "ExerciseModel":
+                        fragment = new ExerciseViewModel();
+                        break;
+                    case "WorkoutModel":
+                        fragment = new WorkoutViewModel();
+                        break;
+                    case "WorkoutPlanModel":
+                        fragment = new WorkoutPlanViewModel();
+                        break;
+                    default:
+                        break;
+                }
                 //Create bundle with Exercise ID
                 final int position = viewHolder.getAdapterPosition();
                 Bundle bundle = new Bundle();
                 ActivityModel activity = activities.get(position);
                 bundle.putSerializable("activity", activity);
-                exerciseFragment.setArguments(bundle);
-                mainActivity.switchFragment(exerciseFragment);
+                fragment.setArguments(bundle);
+                mainActivity.switchFragment(fragment);
             }
         });
 

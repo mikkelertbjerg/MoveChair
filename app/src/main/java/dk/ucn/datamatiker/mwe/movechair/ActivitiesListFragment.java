@@ -38,19 +38,19 @@ public class ActivitiesListFragment extends Fragment{
         //TODO method should be replaced by getting data from DB:
         //TODO if statement that switches on ActivityTypeID fills the adapter list
 
-
+        //TODO Delete: used to generate dummydate
 
         switch(getArguments().getString("buttonText")){
             case "Exercises":
-                activities = ActivityModel.createExercises(10);
+                activities = createExercises(10);
                 break;
 
             case "Workouts":
-                activities = ActivityModel.createWorkouts(10);
+                activities = createWorkouts(5);
                 break;
 
             case "Workout Plans":
-                activities = ActivityModel.createWorkoutPlans(10);
+                activities = createWorkoutPlans(5);
                 break;
 
             default:
@@ -65,7 +65,32 @@ public class ActivitiesListFragment extends Fragment{
 
     }
 
+    //public int lastActivtyListTitle = 0;
+    //public int lastActivityListDescription = 0;
 
-    //Tilføj 3 metoder der henter Exercises/Workouts/WorkoutPlans fra DB
+    private ArrayList<ActivityModel> createExercises(int numActivities){
+        ArrayList<ActivityModel> exercises = new ArrayList<ActivityModel>();
+
+        for(int i = 0; i <= numActivities; i++){
+            exercises.add(new ExerciseModel("Exercise" + (i+1), "Description " + (i+1), i, 1));
+        }
+        return exercises;
+    }
+    private ArrayList<ActivityModel> createWorkouts(int numActivities){
+        ArrayList<ActivityModel> workouts = new ArrayList<ActivityModel>();
+
+        for(int i = 0; i <= numActivities; i++){
+            workouts.add(new WorkoutModel("Workout " + (i+1), "Description " + (i+1), i, createExercises(5)));
+        }
+        return workouts;
+    }
+    private ArrayList<ActivityModel> createWorkoutPlans(int numActivities){
+        ArrayList<ActivityModel> workoutPlans = new ArrayList<ActivityModel>();
+
+        for(int i = 0; i <= numActivities; i++){
+            workoutPlans.add(new WorkoutPlanModel("Workout Plan " + (i+1), "Description " + (i+1), i, createWorkouts(5)));
+        }
+        return workoutPlans;
+    }
 
 }

@@ -4,23 +4,23 @@ import java.util.ArrayList;
 
 public class WorkoutPlanModel extends ActivityModel{
 
-    private ArrayList<WorkoutModel> workouts;
+    private ArrayList<ActivityModel> workouts;
 
-    public WorkoutPlanModel(String name, String description, int id, ArrayList<WorkoutModel> workouts) {
+    public WorkoutPlanModel(String name, String description, int id, ArrayList<ActivityModel> workouts) {
         super(name, description, id);
         this.workouts = workouts;
     }
 
     public WorkoutPlanModel(String name, String description, int id) {
         super(name, description, id);
-        this.workouts = new ArrayList<WorkoutModel>();
+        this.workouts = new ArrayList<ActivityModel>();
     }
 
-    public ArrayList<WorkoutModel> getWorkouts() {
+    public ArrayList<ActivityModel> getWorkouts() {
         return workouts;
     }
 
-    public void setWorkouts(ArrayList<WorkoutModel> workouts) {
+    public void setWorkouts(ArrayList<ActivityModel> workouts) {
         this.workouts = workouts;
     }
 }
