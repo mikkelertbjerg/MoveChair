@@ -46,6 +46,7 @@ public class ActivitiesListFragment extends Fragment{
 
     }
 
+
     //Tilføj 3 metoder der henter Exercises/Workouts/WorkoutPlans fra DB
 
 }
