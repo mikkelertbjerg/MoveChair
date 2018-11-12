@@ -39,13 +39,29 @@ public class ActivityModel implements Serializable {
     public static int lastActivityListDescription = 0;
     //public static int lastActivityListImg = 0;
 
-    public static ArrayList<ActivityModel> createActivities(int numActivities){
-        ArrayList<ActivityModel> activites = new ArrayList<ActivityModel>();
+    public static ArrayList<ActivityModel> createExercises(int numActivities){
+        ArrayList<ActivityModel> exercises = new ArrayList<ActivityModel>();
 
         for(int i = 0; i <= numActivities; i++){
-            activites.add(new ActivityModel("Activity " + ++lastActivtyListTitle, "Description " + ++lastActivityListDescription, i));
+            exercises.add(new ActivityModel("Exercise" + ++lastActivtyListTitle, "Description " + ++lastActivityListDescription, i));
         }
-        return activites;
+        return exercises;
+    }
+    public static ArrayList<ActivityModel> createWorkouts(int numActivities){
+        ArrayList<ActivityModel> workouts = new ArrayList<ActivityModel>();
+
+        for(int i = 0; i <= numActivities; i++){
+            workouts.add(new ActivityModel("Workout " + ++lastActivtyListTitle, "Description " + ++lastActivityListDescription, i));
+        }
+        return workouts;
+    }
+    public static ArrayList<ActivityModel> createWorkoutPlans(int numActivities){
+        ArrayList<ActivityModel> workoutPlans = new ArrayList<ActivityModel>();
+
+        for(int i = 0; i <= numActivities; i++){
+            workoutPlans.add(new ActivityModel("Workout Plan " + ++lastActivtyListTitle, "Description " + ++lastActivityListDescription, i));
+        }
+        return workoutPlans;
     }
 
 }

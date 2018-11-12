@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -36,7 +37,25 @@ public class ActivitiesListFragment extends Fragment{
 
         //TODO method should be replaced by getting data from DB:
         //TODO if statement that switches on ActivityTypeID fills the adapter list
-        activities = ActivityModel.createActivities(20);
+
+
+
+        switch(getArguments().getString("buttonText")){
+            case "Exercises":
+                activities = ActivityModel.createExercises(10);
+                break;
+
+            case "Workouts":
+                activities = ActivityModel.createWorkouts(10);
+                break;
+
+            case "Workout Plans":
+                activities = ActivityModel.createWorkoutPlans(10);
+                break;
+
+            default:
+                break;
+        }
         // Create adapter passing in the sample user data
         ActivityAdapter adapter = new ActivityAdapter(activities);
         // Attach the adapter to the recyclerview to populate items
