@@ -14,12 +14,17 @@ import android.widget.Button;
 
 
 public class ActivitiesFragment extends Fragment implements View.OnClickListener {
+    Button exercisesButton;
+    Button workoutsButton;
+    Button workoutPlansButton;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //returning our layout file
         //change R.layout.yourlayoutfilename for each of your fragments
         return inflater.inflate(R.layout.fragment_activites, container, false);
+
     }
 
 
@@ -28,9 +33,11 @@ public class ActivitiesFragment extends Fragment implements View.OnClickListener
         super.onViewCreated(view, savedInstanceState);
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Activities");
-        Button exercisesButton = (Button) view.findViewById(R.id.exercises_button);
-        Button workoutsButton = (Button) view.findViewById(R.id.workouts_button);
-        Button workoutPlansButton = (Button) view.findViewById(R.id.workout_plans_button);
+
+        workoutsButton = view.findViewById(R.id.workouts_button);
+        exercisesButton = view.findViewById(R.id.exercises_button);
+        workoutPlansButton = view.findViewById(R.id.workout_plans_button);
+
         exercisesButton.setOnClickListener(this);
         workoutsButton.setOnClickListener(this);
         workoutPlansButton.setOnClickListener(this);
@@ -40,33 +47,38 @@ public class ActivitiesFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         //creating fragment object
         Fragment fragment = null;
+        String buttonText;
+        Bundle bundle = new Bundle();
 
         switch (v.getId()) {
             case R.id.exercises_button:
+                buttonText = (String) exercisesButton.getText();
+                bundle.putString("buttonText", buttonText);
                 fragment = new ActivitiesListFragment();
+                fragment.setArguments(bundle);
                 break;
 
             case R.id.workouts_button:
+                buttonText = (String) workoutsButton.getText();
+                bundle.putString("buttonText", buttonText);
                 fragment = new ActivitiesListFragment();
+                fragment.setArguments(bundle);
                 break;
 
             case R.id.workout_plans_button:
+                buttonText = (String) workoutPlansButton.getText();
+                bundle.putString("buttonText", buttonText);
                 fragment = new ActivitiesListFragment();
+                fragment.setArguments(bundle);
                 break;
 
             default:
                 break;
         }
 
-        //replacing the fragment
-        if (fragment != null) {
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-
-            ft.replace(R.id.content_frame, fragment);
-            //ft.addToBackStack(null);
-
-            ft.commit();
-        }
+        //Replacing the fragment
+        MainActivity mainAactivity = (MainActivity)getActivity();
+        mainAactivity.switchFragment(fragment);
     }
 
 }
