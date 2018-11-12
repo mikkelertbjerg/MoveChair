@@ -40,6 +40,11 @@
 
     <!-- Strings related to activities -->
 
+    <!-- String related to exercises -->
+    <string name="exercise_title">Title</string>
+    <string name="exercise_description">Description</string>
+    <string name="exercise_points">Points: 100</string>
+
     <!-- String related to activities menu -->
 
     <string name="action_exercises">Exercises</string>

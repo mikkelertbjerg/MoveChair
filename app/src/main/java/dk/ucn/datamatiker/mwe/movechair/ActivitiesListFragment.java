@@ -3,6 +3,7 @@ package dk.ucn.datamatiker.mwe.movechair;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +14,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 
-public class ActivitiesListFragment extends Fragment implements View.OnClickListener {
+public class ActivitiesListFragment extends Fragment{
 
     ArrayList<ActivityListItem> activityItems;
 
@@ -30,8 +31,9 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //This makes you able to change toolbar title
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("ActivitiesListFragment");
-        RecyclerView rvActivities = (RecyclerView) view.findViewById(R.id.rv_activities);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getArguments().getString("buttonText"));
+        RecyclerView rvActivities = view.findViewById(R.id.rv_activities);
+
 
         activityItems = ActivityListItem.createActivityListItems(20);
         // Create adapter passing in the sample user data
@@ -40,10 +42,10 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
         rvActivities.setAdapter(adapter);
         // Set layout manager to position the items
         rvActivities.setLayoutManager(new LinearLayoutManager(getActivity()));
-    }
-
-    @Override
-    public void onClick(View v) {
 
     }
+
+    //Tilføj 3 metoder der henter Exercises/Workouts/WorkoutPlans fra DB
+    //Lad en if statement bestemme hvilken af dem der bliver brugt ud fra buttonText
+
 }

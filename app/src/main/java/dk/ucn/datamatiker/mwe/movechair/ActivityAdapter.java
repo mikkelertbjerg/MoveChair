@@ -1,6 +1,7 @@
 package dk.ucn.datamatiker.mwe.movechair;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import java.util.List;
 // Create the basic adapter extending from RecyclerView.Adapter
 // Note that we specify the custom ViewHolder which gives us access to our views
 public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHolder> {
+    Context context;
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
@@ -48,7 +50,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
     @Override
     public ActivityAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
+        final Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
@@ -56,6 +58,18 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
         // Return a new holder instance
         ViewHolder viewHolder = new ViewHolder(activityListView);
+
+        //Create onClick
+        activityListView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) context;
+                Fragment exerciseFragment = new ExerciseViewModel();
+                //Create bundle with Exercise ID
+                mainActivity.switchFragment(exerciseFragment);
+            }
+        });
+
         return viewHolder;
     }
 
