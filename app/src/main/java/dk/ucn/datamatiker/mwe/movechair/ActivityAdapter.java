@@ -62,6 +62,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         final ViewHolder viewHolder = new ViewHolder(activityListView);
 
         //Create onClick
+        //TODO Change so it redirect to the correct view, rather than only the exercise view
         activityListView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
