@@ -43,7 +43,11 @@
     <!-- String related to exercises -->
     <string name="exercise_title">Title</string>
     <string name="exercise_description">Description</string>
-    <string name="exercise_points">Points: 100</string>
+    <string name="exercise_points">Points: x</string>
+    <string name="exercise_equipment">Equipment</string>
+    <string name="exercise_difficulty">Difficulty</string>
+    <string name="exercise_category">Category</string>
+    <string name="exercise_muscle_group">Muscle group</string>
 
     <!-- String related to activities menu -->
 

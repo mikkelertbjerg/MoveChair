@@ -90,7 +90,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         TextView activityItemTitle = viewHolder.activityItemTitle;
         TextView activityItemDescription = viewHolder.activityItemDescription;
         //activityItemIcon.setImageIcon(activitiesListItem.getImg());
-        activityItemTitle.setText(activityModel.getTitle());
+        activityItemTitle.setText(activityModel.getName());
         activityItemDescription.setText(activityModel.getDescription());
 
     }

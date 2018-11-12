@@ -8,6 +8,7 @@ public class MuscleGroupModel {
 
     public MuscleGroupModel(String name){
         this.name = name;
+        this.muscles = new ArrayList<MuscleModel>();
     }
 
     public String getName() {
@@ -20,9 +21,5 @@ public class MuscleGroupModel {
 
     public ArrayList<MuscleModel> getMuscles() {
         return muscles;
-    }
-
-    public void addMuscle(MuscleModel muscleModel) {
-        this.muscles.add(muscleModel);
     }
 }

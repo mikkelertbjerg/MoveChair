@@ -7,12 +7,12 @@ public class ActivityModel implements Serializable {
 
     //TODO Change this/Delete
     private int id;
-    private String title;
+    private String name;
     private String description;
 
-    public ActivityModel(String title, String description, int id){
+    public ActivityModel(String name, String description, int id){
         this.id = id;
-        this.title = title;
+        this.name = name;
         this.description = description;
 
     }
@@ -23,20 +23,18 @@ public class ActivityModel implements Serializable {
         this.id = id;
     }
 
-    public String getTitle(){
-        return title;
+    public String getName(){
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription(){
         return description;
     }
 
-    /*
-    public String getImg(){
-
-        return img;
-    }
-    */
     public static int lastActivtyListTitle = 0;
     public static int lastActivityListDescription = 0;
     //public static int lastActivityListImg = 0;
