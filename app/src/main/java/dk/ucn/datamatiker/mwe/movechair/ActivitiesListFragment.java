@@ -10,9 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class ActivitiesListFragment extends Fragment{
@@ -27,7 +26,6 @@ public class ActivitiesListFragment extends Fragment{
         return inflater.inflate(R.layout.fragment_activities_list, container, false);
     }
 
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -38,7 +36,7 @@ public class ActivitiesListFragment extends Fragment{
         //TODO method should be replaced by getting data from DB:
         //TODO if statement that switches on ActivityTypeID fills the adapter list
 
-        //TODO Delete: used to generate dummydate
+        //TODO Delete: used to generate dummy data
 
         switch(getArguments().getString("buttonText")){
             case "Exercises":
@@ -65,17 +63,60 @@ public class ActivitiesListFragment extends Fragment{
 
     }
 
-    //public int lastActivtyListTitle = 0;
-    //public int lastActivityListDescription = 0;
-
-    private ArrayList<ActivityModel> createExercises(int numActivities){
-        ArrayList<ActivityModel> exercises = new ArrayList<ActivityModel>();
+    private ArrayList<MuscleModel> createMuscles(int numActivities){
+        ArrayList<MuscleModel> muscles = new ArrayList<MuscleModel>();
 
         for(int i = 0; i <= numActivities; i++){
-            exercises.add(new ExerciseModel("Exercise" + (i+1), "Description " + (i+1), i, 1));
+            muscles.add(new MuscleModel("Muscle" + (i+1)));
+        }
+        return muscles;
+    }
+    private ArrayList<MuscleGroupModel> createMuscleGroups(int numActivities){
+        ArrayList<MuscleGroupModel> muscleGroups = new ArrayList<MuscleGroupModel>();
+
+        for(int i = 0; i <= numActivities; i++){
+            muscleGroups.add(new MuscleGroupModel("Muscle Group" + (i+1), createMuscles(3)));
+        }
+        return muscleGroups;
+    }
+
+    private ArrayList<EquipmentModel> createEquipment(int numActivities){
+        ArrayList<EquipmentModel> equipment = new ArrayList<EquipmentModel>();
+
+        for(int i = 0; i <= numActivities; i++){
+            equipment.add(new EquipmentModel("Equipment" + (i+1)));
+        }
+        return equipment;
+    }
+    private ArrayList<ActivityModel> createExercises(int numActivities) {
+        ArrayList<ActivityModel> exercises = new ArrayList<ActivityModel>();
+
+        /* DUMMY DATA - DIFFICULTY MODELS*/
+        DifficultyModel beginner = new DifficultyModel("Beginner", 1);
+        DifficultyModel intermediate = new DifficultyModel("Intermediate", 1.25);
+        DifficultyModel advanced = new DifficultyModel("Advanced", 1.5);
+        ArrayList<DifficultyModel> difficulties = new ArrayList<>();
+        difficulties.add(beginner);
+        difficulties.add(intermediate);
+        difficulties.add(advanced);
+
+        /* DUMMY DATA - CATEGORY MODELS*/
+        CategoryModel hypertrophy = new CategoryModel("Hypertrophy");
+        CategoryModel cardio = new CategoryModel("Cardio");
+        CategoryModel strength = new CategoryModel("Strength");
+        ArrayList<CategoryModel> categories = new ArrayList<>();
+        categories.add(hypertrophy);
+        categories.add(cardio);
+        categories.add(strength);
+
+
+        for (int i = 0; i <= numActivities; i++) {
+            exercises.add(new ExerciseModel("Exercise" + (i + 1), "Description " + (i + 1), i, 1, null,
+                    difficulties, categories, createMuscleGroups(1), createEquipment(1)));
         }
         return exercises;
     }
+
     private ArrayList<ActivityModel> createWorkouts(int numActivities){
         ArrayList<ActivityModel> workouts = new ArrayList<ActivityModel>();
 
@@ -93,4 +134,144 @@ public class ActivitiesListFragment extends Fragment{
         return workoutPlans;
     }
 
+    //TODO DELETE THIS
+    private ArrayList<ActivityModel> createDummyData() {
+        ArrayList<ActivityModel> activities = new ArrayList<ActivityModel>();
+        ArrayList<ExerciseModel> armBlaster = new ArrayList<ExerciseModel>();
+        ArrayList<ExerciseModel> shoulderBlaster = new ArrayList<ExerciseModel>();
+        ArrayList<ExerciseModel> chestBlaster = new ArrayList<ExerciseModel>();
+        ArrayList<ExerciseModel> backBlaster = new ArrayList<ExerciseModel>();
+        ArrayList<WorkoutModel> projectArms = new ArrayList<WorkoutModel>();
+
+
+        /* DUMMY DATA - EQUIPMENT MODELS*/
+        EquipmentModel barbell = new EquipmentModel("Barbell");
+        EquipmentModel dumbbell = new EquipmentModel("Dumbbell");
+        EquipmentModel kettlebell = new EquipmentModel("Kettlebell");
+
+        /* DUMMY DATA - DIFFICULTY MODELS*/
+        DifficultyModel beginner = new DifficultyModel("Beginner", 1);
+        DifficultyModel intermediate = new DifficultyModel("Intermediate", 1.25);
+        DifficultyModel advanced = new DifficultyModel("Advanced", 1.5);
+
+        /* DUMMY DATA - CATEGORY MODELS*/
+        CategoryModel hypertrophy = new CategoryModel("Hypertrophy");
+        CategoryModel cardio = new CategoryModel("Cardio");
+        CategoryModel stregth = new CategoryModel("Strength");
+
+        /* DUMMY DATA - MUSCLE MODELS */
+        MuscleModel biceps = new MuscleModel("biceps");
+        MuscleModel triceps = new MuscleModel("triceps");
+        MuscleModel frontDelt = new MuscleModel("front deltoid");
+        MuscleModel deltoid = new MuscleModel("deltoid");
+        MuscleModel backDelt = new MuscleModel("back deltoid");
+        MuscleModel pectorals = new MuscleModel("pectorals");
+        MuscleModel upperPecs = new MuscleModel("upper pectorals");
+        MuscleModel lowerPecs = new MuscleModel("lower pectorals");
+        MuscleModel trapezius = new MuscleModel("trapezius");
+        MuscleModel rhomboids = new MuscleModel("rhomboids");
+
+        /* DUMMY DATA - MUSCLEGROUP MODELS*/
+        MuscleGroupModel arm = new MuscleGroupModel("Arm");
+        arm.getMuscles().add(biceps);
+        arm.getMuscles().add(triceps);
+        MuscleGroupModel shoulder = new MuscleGroupModel("Shoulder");
+        shoulder.getMuscles().add(frontDelt);
+        shoulder.getMuscles().add(deltoid);
+        shoulder.getMuscles().add(backDelt);
+        MuscleGroupModel back = new MuscleGroupModel("Back");
+        back.getMuscles().add(trapezius);
+        back.getMuscles().add(rhomboids);
+        MuscleGroupModel chest = new MuscleGroupModel("Chest");
+        chest.getMuscles().add(pectorals);
+        chest.getMuscles().add(upperPecs);
+        chest.getMuscles().add(lowerPecs);
+
+        /* DUMMY DATA - MEDIA TYPE MODELS*/
+        MediaTypeModel video = new MediaTypeModel("Video");
+        MediaTypeModel audio = new MediaTypeModel("Audio");
+
+        /* DUMMY DATA EXERCISE MODELS */
+        ExerciseModel curls = new ExerciseModel("Bicep curl", "Raise the arm from the hip, towards the shoulder. Pin the elbow, and tighten the core", 1, 1);
+        curls.getEquipment().add(dumbbell);
+        curls.getDifficulties().add(beginner);
+        curls.getCategories().add(hypertrophy);
+        curls.getMuscleGroups().add(arm);
+
+        ExerciseModel tricepOverHeadExtensions = new ExerciseModel("Tricep Over Head Extensions", "Extend your triceps over your head!", 2, 1);
+        tricepOverHeadExtensions.getEquipment().add(barbell);
+        tricepOverHeadExtensions.getDifficulties().add(intermediate);
+        tricepOverHeadExtensions.getCategories().add(hypertrophy);
+        tricepOverHeadExtensions.getMuscleGroups().add(arm);
+
+        ExerciseModel dumbbellRows = new ExerciseModel("Dumbbell Rows", "Row with dumbbells!", 3, 1);
+        dumbbellRows.getEquipment().add(dumbbell);
+        dumbbellRows.getDifficulties().add(intermediate);
+        dumbbellRows.getCategories().add(stregth);
+        dumbbellRows.getMuscleGroups().add(back);
+        //dumbbellRows.getMuscleGroups().add(arm); //Do we allow multiple muscle groups in one exercises (it wouldn't be wrong).
+
+        ExerciseModel barbellRows = new ExerciseModel("Barbell Rows", "Row with a barbell!", 4, 2);
+        barbellRows.getEquipment().add(barbell);
+        barbellRows.getDifficulties().add(advanced);
+        barbellRows.getCategories().add(stregth);
+        barbellRows.getMuscleGroups().add(back);
+
+        ExerciseModel dumbbellShoulderPress = new ExerciseModel("Dumbbell Shoulder Press", "Press dumbbells with your shoulders!", 5, 1);
+        dumbbellShoulderPress.getEquipment().add(dumbbell);
+        dumbbellShoulderPress.getDifficulties().add(intermediate);
+        dumbbellShoulderPress.getCategories().add(hypertrophy);
+        dumbbellShoulderPress.getMuscleGroups().add(shoulder);
+
+        ExerciseModel barbellShoulderPress = new ExerciseModel("Barbell Shoulder Press", "Press a barbell with your shoulders!", 6, 2);
+        barbellShoulderPress.getEquipment().add(barbell);
+        barbellShoulderPress.getDifficulties().add(advanced);
+        barbellShoulderPress.getCategories().add(stregth);
+        barbellShoulderPress.getMuscleGroups().add(shoulder);
+
+        ExerciseModel dumbbellChestPress = new ExerciseModel("Dumbbell Chest Press", "Press dumbbells with your chest", 7, 1);
+        dumbbellChestPress.getEquipment().add(dumbbell);
+        dumbbellChestPress.getDifficulties().add(intermediate);
+        dumbbellChestPress.getCategories().add(hypertrophy);
+        dumbbellChestPress.getMuscleGroups().add(chest);
+
+        ExerciseModel benchPress = new ExerciseModel("Bench Press", "Press a barbell with your chest", 8, 3);
+        benchPress.getEquipment().add(barbell);
+        benchPress.getDifficulties().add(advanced);
+        benchPress.getCategories().add(stregth);
+        benchPress.getMuscleGroups().add(chest);
+
+        armBlaster.add(curls);
+        armBlaster.add(tricepOverHeadExtensions);
+
+        chestBlaster.add(benchPress);
+        chestBlaster.add(dumbbellChestPress);
+
+        shoulderBlaster.add(barbellShoulderPress);
+        shoulderBlaster.add(dumbbellShoulderPress);
+
+        backBlaster.add(barbellRows);
+        backBlaster.add(dumbbellRows);
+
+
+        return activities;
+    }
+
+    private ExerciseModel tricepsOverheadExtensions()
+    {
+        ExerciseModel tricepOverHeadExtensions = new ExerciseModel("Tricep Over Head Extensions", "Extend your triceps over your head!", 2, 1);
+        EquipmentModel barbell = new EquipmentModel("Barbell");
+        DifficultyModel intermediate = new DifficultyModel("Intermediate", 1.25);
+        CategoryModel hypertrophy = new CategoryModel("Hypertrophy");
+        MuscleModel triceps = new MuscleModel("triceps");
+        MuscleGroupModel arm = new MuscleGroupModel("Arm");
+
+        arm.getMuscles().add(triceps);
+        tricepOverHeadExtensions.getMuscleGroups().add(arm);
+        tricepOverHeadExtensions.getEquipment().add(barbell);
+        tricepOverHeadExtensions.getDifficulties().add(intermediate);
+        tricepOverHeadExtensions.getCategories().add(hypertrophy);
+
+        return tricepOverHeadExtensions;
+    }
 }

@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 public class WorkoutPlanViewModel extends Fragment {
@@ -27,8 +28,23 @@ public class WorkoutPlanViewModel extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //Get activity object from fragment arguments
-        ActivityModel activity = (ActivityModel) getArguments().getSerializable("activity");
+        WorkoutPlanModel activity = (WorkoutPlanModel) getArguments().getSerializable("activity");
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(activity.getName());
+
+        WorkoutPlanModel workoutPlanModel = new WorkoutPlanModel(activity.getName(),
+                activity.getDescription(),
+                activity.getId(),
+                activity.getWorkouts()
+        );
+
+        TextView workout_plan_title = view.findViewById(R.id.workout_plan_title);
+        TextView workout_plan_duration = view.findViewById(R.id.workout_plan_duration);
+        TextView workout_plan_description = view.findViewById(R.id.workout_plan_description);
+
+        workout_plan_title.setText("Title: " + workoutPlanModel.getName());
+        workout_plan_duration.setText("Duration: 5");
+        workout_plan_description.setText("Duration: " + workoutPlanModel.getDescription());
+
     }
 }

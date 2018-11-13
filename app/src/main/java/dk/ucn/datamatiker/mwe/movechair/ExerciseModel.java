@@ -53,8 +53,33 @@ public class ExerciseModel extends ActivityModel{
         this.difficulties = difficulties;
     }
 
+    public String printDifficulties() {
+        String temp = "";
+        for(int i = 0; i < this.difficulties.size(); i++){
+            temp += this.difficulties.get(i).getName();
+
+            if (i < this.difficulties.size()-1) {
+                temp += ", ";
+            }
+        }
+
+        return temp;
+    }
+
     public ArrayList<CategoryModel> getCategories() {
         return categories;
+    }
+
+    public String printCategories(){
+        String temp = "";
+        for(int i = 0; i < this.categories.size(); i++){
+            temp += this.categories.get(i).getName();
+
+            if(i < this.difficulties.size()-1){
+                temp += ", ";
+            }
+        }
+        return temp;
     }
 
     public void setCategories(ArrayList<CategoryModel> categories) {
@@ -69,12 +94,36 @@ public class ExerciseModel extends ActivityModel{
         this.muscleGroups = muscleGroups;
     }
 
+    public String printMuscleGroups(){
+        String temp = "";
+        for(int i = 0; i < this.muscleGroups.size(); i++){
+            temp += this.muscleGroups.get(i).getName();
+
+            if(i < this.muscleGroups.size()-1){
+                temp += ", ";
+            }
+        }
+        return temp;
+    }
+
     public ArrayList<EquipmentModel> getEquipment() {
         return equipment;
     }
 
     public void setEquipment(ArrayList<EquipmentModel> equipment) {
         this.equipment = equipment;
+    }
+
+    public String printEquipment(){
+        String temp = "";
+        for(int i = 0; i < this.equipment.size(); i++){
+            temp += this.equipment.get(i).getName();
+
+            if(i < this.equipment.size()-1){
+                temp += ", ";
+            }
+        }
+        return temp;
     }
 
     public double getPoints(){
@@ -84,5 +133,6 @@ public class ExerciseModel extends ActivityModel{
     public void setPoints(double points){
         this.points = points;
     }
+
 
 }
