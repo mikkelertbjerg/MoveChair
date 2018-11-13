@@ -12,7 +12,7 @@ public class ExerciseModel extends ActivityModel{
     private ArrayList<MuscleGroupModel> muscleGroups;
     private ArrayList<EquipmentModel> equipment;
 
-    public ExerciseModel(String name, String description, int id, double points,
+    public ExerciseModel(String name, String description, int id, double points, int duration,
                          ArrayList<MediaModel> media,
                          ArrayList<DifficultyModel> difficulties,
                          ArrayList<CategoryModel> categories,
@@ -20,6 +20,7 @@ public class ExerciseModel extends ActivityModel{
                          ArrayList<EquipmentModel> equipment) {
         super(name, description, id);
         this.points = points;
+        this.setDuration(duration);
         this.media = media;
         this.difficulties = difficulties;
         this.categories = categories;
@@ -27,9 +28,10 @@ public class ExerciseModel extends ActivityModel{
         this.equipment = equipment;
     }
 
-    public ExerciseModel(String name, String description, int id, double points) {
+    public ExerciseModel(String name, String description, int id, double points, int duration) {
         super(name, description, id);
         this.points = points;
+        this.setDuration(duration);
         this.categories = new ArrayList<CategoryModel>();
         this.media = new ArrayList<MediaModel>();
         this.difficulties = new ArrayList<DifficultyModel>();
@@ -133,6 +135,5 @@ public class ExerciseModel extends ActivityModel{
     public void setPoints(double points){
         this.points = points;
     }
-
 
 }

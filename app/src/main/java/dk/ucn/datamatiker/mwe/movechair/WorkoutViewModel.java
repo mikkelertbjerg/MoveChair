@@ -31,7 +31,7 @@ public class WorkoutViewModel extends Fragment {
         //Get activity object from fragment arguments
         WorkoutModel activity = (WorkoutModel) getArguments().getSerializable("activity");
         //This makes you able to change toolbar title
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getArguments().getString("buttonText"));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(activity.getName());
 
         WorkoutModel workoutModel = new WorkoutModel(activity.getName(),
                 activity.getDescription(),
@@ -50,7 +50,7 @@ public class WorkoutViewModel extends Fragment {
         TextView workout_description = view.findViewById(R.id.workout_description);
 
         workout_title.setText("Title: " + workoutModel.getName());
-        workout_duration.setText("Duration: 5"); //TODO Add to model
+        workout_duration.setText("Duration: " + workoutModel.getDuration());
         workout_description.setText("Description: " + workoutModel.getName());
 
         RecyclerView rvActivities = view.findViewById(R.id.rv_exercises);

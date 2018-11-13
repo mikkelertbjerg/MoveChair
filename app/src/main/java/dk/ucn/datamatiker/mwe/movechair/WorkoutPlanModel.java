@@ -23,4 +23,16 @@ public class WorkoutPlanModel extends ActivityModel{
     public void setWorkouts(ArrayList<ActivityModel> workouts) {
         this.workouts = workouts;
     }
+
+
+    @Override
+    public int getDuration() {
+        int temp = 0;
+        for (ActivityModel x: this.getWorkouts()
+                ) {
+            temp += x.getDuration();
+        }
+
+        return temp;
+    }
 }
