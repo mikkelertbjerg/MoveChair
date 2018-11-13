@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 // Create the basic adapter extending from RecyclerView.Adapter
@@ -45,10 +43,10 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
         // ... view holder defined above...
 
-        // Store a member variable for the contacts
+        // Store a member variable for the activities
         private List<ActivityModel> activities;
 
-        // Pass in the contact array into the constructor
+        // Pass in the activities array into the constructor
         public ActivityAdapter(List<ActivityModel> activities) {
             this.activities = activities;
         }
@@ -66,7 +64,6 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         final ViewHolder viewHolder = new ViewHolder(activityListView);
 
         //Create onClick
-        //TODO Change so it redirect to the correct view, rather than only the exercise view
         activityListView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
