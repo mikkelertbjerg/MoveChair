@@ -47,7 +47,7 @@ public class WorkoutPlanViewModel extends Fragment {
 
         workout_plan_title.setText("Title: " + workoutPlanModel.getName());
         workout_plan_duration.setText("Duration: " + workoutPlanModel.getDuration());
-        workout_plan_description.setText("Duration: " + workoutPlanModel.getDescription());
+        workout_plan_description.setText("Description: " + workoutPlanModel.getDescription());
 
         RecyclerView rvActivities = view.findViewById(R.id.rv_workouts);
         // Create adapter passing in the sample user data

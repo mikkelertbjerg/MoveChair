@@ -28,4 +28,5 @@ public class MyPlanFragment extends Fragment {
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("My Plan");
     }
+
 }
