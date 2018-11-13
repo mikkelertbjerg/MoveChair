@@ -44,6 +44,7 @@
 
     <!-- Strings related to exercises -->
     <string name="exercise_title">Title: </string>
+    <string name="exercise_duration">Duration: </string>
     <string name="exercise_description">Description: </string>
     <string name="exercise_points">Points: </string>
     <string name="exercise_equipment">Equipment: </string>

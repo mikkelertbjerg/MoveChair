@@ -9,6 +9,7 @@ public class ActivityModel implements Serializable {
     private int id;
     private String name;
     private String description;
+    private int duration;
 
     public ActivityModel(String name, String description, int id){
         this.id = id;
@@ -34,4 +35,11 @@ public class ActivityModel implements Serializable {
         return description;
     }
 
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 }

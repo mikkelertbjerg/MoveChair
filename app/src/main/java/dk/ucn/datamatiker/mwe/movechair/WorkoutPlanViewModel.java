@@ -45,7 +45,7 @@ public class WorkoutPlanViewModel extends Fragment {
         TextView workout_plan_description = view.findViewById(R.id.workout_plan_description);
 
         workout_plan_title.setText("Title: " + workoutPlanModel.getName());
-        workout_plan_duration.setText("Duration: 5");
+        workout_plan_duration.setText("Duration: " + workoutPlanModel.getDuration());
         workout_plan_description.setText("Duration: " + workoutPlanModel.getDescription());
 
         RecyclerView rvActivities = view.findViewById(R.id.rv_workouts);
