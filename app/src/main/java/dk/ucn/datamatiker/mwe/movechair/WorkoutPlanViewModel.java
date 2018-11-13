@@ -37,6 +37,7 @@ public class WorkoutPlanViewModel extends Fragment {
         WorkoutPlanModel workoutPlanModel = new WorkoutPlanModel(activity.getName(),
                 activity.getDescription(),
                 activity.getId(),
+                activity.getDuration(),
                 activity.getWorkouts()
         );
 

@@ -6,13 +6,15 @@ public class WorkoutPlanModel extends ActivityModel{
 
     private ArrayList<ActivityModel> workouts;
 
-    public WorkoutPlanModel(String name, String description, int id, ArrayList<ActivityModel> workouts) {
+    public WorkoutPlanModel(String name, String description, int id, int duration, ArrayList<ActivityModel> workouts) {
         super(name, description, id);
+        this.setDuration(duration);
         this.workouts = workouts;
     }
 
-    public WorkoutPlanModel(String name, String description, int id) {
+    public WorkoutPlanModel(String name, String description, int id, int duration) {
         super(name, description, id);
+        this.setDuration(duration);
         this.workouts = new ArrayList<ActivityModel>();
     }
 
@@ -24,15 +26,4 @@ public class WorkoutPlanModel extends ActivityModel{
         this.workouts = workouts;
     }
 
-
-    @Override
-    public int getDuration() {
-        int temp = 0;
-        for (ActivityModel x: this.getWorkouts()
-                ) {
-            temp += x.getDuration();
-        }
-
-        return temp;
-    }
 }
