@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity
         //initializing the fragment object which is selected
         switch (itemId) {
             case R.id.nav_my_plan:
-                fragment = new MyPlanFragment();
+                fragment = new HomeFragment();
                 break;
             case R.id.nav_activity_log:
                 fragment = new ActivityLogFragment();

@@ -12,7 +12,7 @@
     <string name="achievements">Achievements</string>
     <string name="activities">Activities</string>
     <string name="activity_log">Activity Log</string>
-    <string name="my_plan">My Plan</string>
+    <string name="home">Home</string>
     <string name="highscore">Highscore</string>
 
     <string name="title_activity_login">Sign in</string>
@@ -34,7 +34,9 @@
         completions."
     </string>
 
-    <!-- Strings related to my plan -->
+    <!-- Strings related to home -->
+    <string name="strides">Strides</string>
+    <string name="upcoming_workout">Upcoming Workout</string>
 
     <!-- Strings related to activity log -->
 

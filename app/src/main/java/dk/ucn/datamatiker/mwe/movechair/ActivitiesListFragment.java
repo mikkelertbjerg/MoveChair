@@ -57,7 +57,10 @@ public class ActivitiesListFragment extends Fragment {
         // Attach the adapter to the recyclerview to populate items
         rvActivities.setAdapter(adapter);
         // Set layout manager to position the items
-        rvActivities.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        linearLayoutManager.setStackFromEnd(true);
+        rvActivities.setLayoutManager(linearLayoutManager);
 
     }
 
