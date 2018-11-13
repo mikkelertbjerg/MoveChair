@@ -40,6 +40,7 @@
 
     <!-- String related to search view -->
     <string name="search_hint">Muscle, Equipment, Exercise...</string>
+    <string name="action_search">Title</string>
 
     <!-- Strings related to activities -->
     <string name="activity_title">Title: </string>
@@ -68,7 +69,7 @@
     <string name="workout_muscle_group">Muscle group(s): </string>
     <string name="workout_duration">Duration: </string>
     <string name="action_start_workout">Start Workout</string>
-    
+
     <!-- String related to workout plans -->
     <string name="workout_plan_title">Title: </string>
     <string name="workout_plan_description">Description: </string>
