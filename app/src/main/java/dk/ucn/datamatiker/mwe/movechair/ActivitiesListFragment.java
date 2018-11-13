@@ -129,7 +129,7 @@ public class ActivitiesListFragment extends Fragment{
         ArrayList<ActivityModel> workoutPlans = new ArrayList<ActivityModel>();
 
         for(int i = 0; i < numActivities; i++){
-            workoutPlans.add(new WorkoutPlanModel("Workout Plan " + (i+1), "Description " + (i+1), i, createWorkouts(2)));
+            workoutPlans.add(new WorkoutPlanModel("Workout Plan " + (i+1), "Description " + (i+1), i, 3, createWorkouts(2)));
         }
         return workoutPlans;
     }
