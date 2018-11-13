@@ -38,6 +38,9 @@
 
     <!-- Strings related to activity log -->
 
+    <!-- String related to search view -->
+    <string name="search_hint">Muscle, Equipment, Exercise...</string>
+
     <!-- Strings related to activities -->
     <string name="activity_title">Title: </string>
     <string name="activity_duration">Duration: </string>
