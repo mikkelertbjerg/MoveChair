@@ -18,6 +18,15 @@ public class WorkoutPlanModel extends ActivityModel{
         this.workouts = new ArrayList<ActivityModel>();
     }
 
+    @Override
+    public double getPoints(){
+        int temp = 0;
+        for(ActivityModel x: this.getWorkouts()){
+            temp += x.getPoints();
+        }
+        return temp;
+    }
+
     public ArrayList<ActivityModel> getWorkouts() {
         return workouts;
     }

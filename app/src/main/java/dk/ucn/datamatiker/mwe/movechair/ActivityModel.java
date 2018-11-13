@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 public class ActivityModel implements Serializable {
 
-    //TODO Change this/Delete
     private int id;
     private String name;
     private String description;
     private int duration;
+    private double points;
 
     public ActivityModel(String name, String description, int id){
         this.id = id;
@@ -41,5 +41,13 @@ public class ActivityModel implements Serializable {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public double getPoints() {
+        return points;
+    }
+
+    public void setPoints(double points) {
+        this.points = points;
     }
 }
