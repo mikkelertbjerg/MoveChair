@@ -3,7 +3,6 @@ package dk.ucn.datamatiker.mwe.movechair;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,10 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import java.util.ArrayList;
-import java.util.Random;
 
 
-public class ActivitiesListFragment extends Fragment{
+public class ActivitiesListFragment extends Fragment {
 
     ArrayList<ActivityModel> activities;
 
@@ -91,6 +89,7 @@ public class ActivitiesListFragment extends Fragment{
         }
         return equipment;
     }
+
     private ArrayList<ActivityModel> createExercises(int numActivities) {
         ArrayList<ActivityModel> exercises = new ArrayList<ActivityModel>();
 

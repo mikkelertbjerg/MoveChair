@@ -1,7 +1,9 @@
 package dk.ucn.datamatiker.mwe.movechair;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -34,15 +36,23 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //Adding default page fragment
-        displaySelectedScreen(R.id.nav_my_plan);
+        MyPlanFragment startFragment = new MyPlanFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_frame, startFragment, startFragment.getClass().toString())
+                .commit();
     }
+
 
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        } else if(getSupportFragmentManager().getBackStackEntryCount() == 0){
+            moveTaskToBack(true);
+        }
+        else{
             super.onBackPressed();
         }
     }
@@ -55,10 +65,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void displaySelectedScreen(int itemId) {
-
         //creating fragment object
         Fragment fragment = null;
-
         //initializing the fragment object which is selected
         switch (itemId) {
             case R.id.nav_my_plan:
@@ -82,6 +90,10 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_options:
                 fragment = new OptionsFragment();
                 break;
+
+                default:
+            fragment = new MyPlanFragment();
+                    break;
         }
 
         //replacing the fragment
@@ -93,10 +105,14 @@ public class MainActivity extends AppCompatActivity
 
     public void switchFragment(Fragment fragment) {
         //replacing the fragment
-        if (fragment != null) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, fragment);
-            ft.commit();
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment currentFragment = fm.findFragmentById(R.id.content_frame);
+        if (!fragment.getClass().toString().equals(currentFragment.getTag())) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .addToBackStack(null)
+                    .replace(R.id.content_frame, fragment, fragment.getClass().toString())
+                    .commit();
         }
     }
 }
