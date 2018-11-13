@@ -66,7 +66,7 @@ public class ActivitiesListFragment extends Fragment{
     private ArrayList<MuscleModel> createMuscles(int numActivities){
         ArrayList<MuscleModel> muscles = new ArrayList<MuscleModel>();
 
-        for(int i = 0; i <= numActivities; i++){
+        for(int i = 0; i < numActivities; i++){
             muscles.add(new MuscleModel("Muscle" + (i+1)));
         }
         return muscles;
@@ -74,7 +74,7 @@ public class ActivitiesListFragment extends Fragment{
     private ArrayList<MuscleGroupModel> createMuscleGroups(int numActivities){
         ArrayList<MuscleGroupModel> muscleGroups = new ArrayList<MuscleGroupModel>();
 
-        for(int i = 0; i <= numActivities; i++){
+        for(int i = 0; i < numActivities; i++){
             muscleGroups.add(new MuscleGroupModel("Muscle Group" + (i+1), createMuscles(3)));
         }
         return muscleGroups;
@@ -83,7 +83,7 @@ public class ActivitiesListFragment extends Fragment{
     private ArrayList<EquipmentModel> createEquipment(int numActivities){
         ArrayList<EquipmentModel> equipment = new ArrayList<EquipmentModel>();
 
-        for(int i = 0; i <= numActivities; i++){
+        for(int i = 0; i < numActivities; i++){
             equipment.add(new EquipmentModel("Equipment" + (i+1)));
         }
         return equipment;
@@ -110,9 +110,9 @@ public class ActivitiesListFragment extends Fragment{
         categories.add(strength);
 
 
-        for (int i = 0; i <= numActivities; i++) {
+        for (int i = 0; i < numActivities; i++) {
             exercises.add(new ExerciseModel("Exercise" + (i + 1), "Description " + (i + 1), i, 1, null,
-                    difficulties, categories, createMuscleGroups(1), createEquipment(1)));
+                    difficulties, categories, createMuscleGroups(2), createEquipment(2)));
         }
         return exercises;
     }
@@ -120,16 +120,16 @@ public class ActivitiesListFragment extends Fragment{
     private ArrayList<ActivityModel> createWorkouts(int numActivities){
         ArrayList<ActivityModel> workouts = new ArrayList<ActivityModel>();
 
-        for(int i = 0; i <= numActivities; i++){
-            workouts.add(new WorkoutModel("Workout " + (i+1), "Description " + (i+1), i, createExercises(5)));
+        for(int i = 0; i < numActivities; i++){
+            workouts.add(new WorkoutModel("Workout " + (i+1), "Description " + (i+1), i, createExercises(2)));
         }
         return workouts;
     }
     private ArrayList<ActivityModel> createWorkoutPlans(int numActivities){
         ArrayList<ActivityModel> workoutPlans = new ArrayList<ActivityModel>();
 
-        for(int i = 0; i <= numActivities; i++){
-            workoutPlans.add(new WorkoutPlanModel("Workout Plan " + (i+1), "Description " + (i+1), i, createWorkouts(5)));
+        for(int i = 0; i < numActivities; i++){
+            workoutPlans.add(new WorkoutPlanModel("Workout Plan " + (i+1), "Description " + (i+1), i, createWorkouts(2)));
         }
         return workoutPlans;
     }

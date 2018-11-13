@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,7 @@ public class WorkoutViewModel extends Fragment {
                 activity.getExercises()
         );
 
+
         TextView workout_title = view.findViewById(R.id.workout_title);
         TextView workout_duration = view.findViewById(R.id.workout_duration);
         //TODO Do we need theese props? Not according to our domain
@@ -50,10 +53,13 @@ public class WorkoutViewModel extends Fragment {
         workout_duration.setText("Duration: 5"); //TODO Add to model
         workout_description.setText("Description: " + workoutModel.getName());
 
-
-
-
-
+        RecyclerView rvActivities = view.findViewById(R.id.rv_exercises);
+        // Create adapter passing in the sample user data
+        ActivityAdapter adapter = new ActivityAdapter(activity.getExercises());
+        // Attach the adapter to the recyclerview to populate items
+        rvActivities.setAdapter(adapter);
+        // Set layout manager to position the items
+        rvActivities.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 }
 

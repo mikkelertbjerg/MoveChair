@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +47,14 @@ public class WorkoutPlanViewModel extends Fragment {
         workout_plan_title.setText("Title: " + workoutPlanModel.getName());
         workout_plan_duration.setText("Duration: 5");
         workout_plan_description.setText("Duration: " + workoutPlanModel.getDescription());
+
+        RecyclerView rvActivities = view.findViewById(R.id.rv_workouts);
+        // Create adapter passing in the sample user data
+        ActivityAdapter adapter = new ActivityAdapter(activity.getWorkouts());
+        // Attach the adapter to the recyclerview to populate items
+        rvActivities.setAdapter(adapter);
+        // Set layout manager to position the items
+        rvActivities.setLayoutManager(new LinearLayoutManager(getActivity()));
 
     }
 }
