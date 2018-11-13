@@ -40,6 +40,9 @@
 
     <!-- Strings related to activities -->
     <string name="activity_title">Title: </string>
+    <string name="activity_duration">Duration: </string>
+    <string name="activity_muscle_group">Muscle Group(s): </string>
+    <string name="activity_points">Points: </string>
     <string name="activity_description">Description: </string>
 
     <!-- Strings related to exercises -->

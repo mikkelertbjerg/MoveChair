@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 // Create the basic adapter extending from RecyclerView.Adapter
@@ -23,7 +25,8 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         // for any view that will be set as you render a row
         //public ImageView activityItemIcon;
         public TextView activityItemTitle;
-        public TextView activityItemDescription;
+        public TextView activityItemDuration;
+        public TextView activityItemPoints;
 
 
         // We also create a constructor that accepts the entire item row
@@ -35,7 +38,8 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
             //activityItemIcon = (ImageView) activityItemView.findViewById(R.id.activity_item_icon);
             activityItemTitle = (TextView) activityItemView.findViewById(R.id.activity_title);
-            activityItemDescription = (TextView) activityItemView.findViewById(R.id.activity_description);
+            activityItemDuration = (TextView) activityItemView.findViewById(R.id.activity_duration);
+            activityItemPoints = (TextView) activityItemView.findViewById(R.id.activity_points);
         }
     }
 
@@ -104,10 +108,12 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         // Set item views based on your views and data model
         //ImageView activityItemIcon = viewHolder.activityItemIcon;
         TextView activityItemTitle = viewHolder.activityItemTitle;
-        TextView activityItemDescription = viewHolder.activityItemDescription;
+        TextView activityItemDuration = viewHolder.activityItemDuration;
+        TextView activityItemPoints = viewHolder.activityItemPoints;
         //activityItemIcon.setImageIcon(activitiesListItem.getImg());
-        activityItemTitle.setText(activityModel.getName());
-        activityItemDescription.setText(activityModel.getDescription());
+        activityItemTitle.setText("Title: " + activityModel.getName());
+        activityItemDuration.setText("Duration: " + String.valueOf(activityModel.getDuration()));
+        activityItemPoints.setText("Points: " + String.valueOf(activityModel.getPoints()));
 
     }
 

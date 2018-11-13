@@ -29,11 +29,19 @@ public class WorkoutModel extends ActivityModel{
     @Override
     public int getDuration() {
         int temp = 0;
-        for (ActivityModel x: this.getExercises()
-                ) {
+        for (ActivityModel x: this.getExercises()){
             temp += x.getDuration();
         }
 
+        return temp;
+    }
+
+    @Override
+    public double getPoints() {
+        int temp = 0;
+        for(ActivityModel x: this.getExercises()){
+            temp += x.getPoints();
+        }
         return temp;
     }
 }
