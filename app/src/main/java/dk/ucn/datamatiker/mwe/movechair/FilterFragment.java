@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class FilterFragment extends Fragment {
+    private ActivityModel activityModel;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -27,25 +29,79 @@ public class FilterFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Filters");
+        activityModel = (ActivityModel) getArguments().getSerializable("ActivityModel");
 
-        String[] filters = createDummyData();
-        Spinner activitySpinner = (Spinner) view.findViewById(R.id.filter_spinner);
+        Spinner equipmentSpinner = (Spinner) view.findViewById(R.id.equipment_spinner);
+        Spinner muscleGroupsSpinner = (Spinner) view.findViewById(R.id.muscle_groups_spinner);
+        Spinner musclesSpinner = (Spinner) view.findViewById(R.id.muscles_spinner);
+        Spinner difficultiesSpinner = (Spinner) view.findViewById(R.id.difficulties_spinner);
 
-        ArrayList<StateVO> listVOs = new ArrayList<>();
+        List<String> equipmentFilters = createDummyEquipment();
+        List<String> muscleGroupFilters = createDummyMuscleGroups();
+        List<String> muscleFilters = createDummyMuscles();
+        List<String> difficultyFilters = createDummyDifficulties();
 
-        for(int i = 0; i < filters.length; i++){
+        List<StateVO> equipmentVOs = createVOs(equipmentFilters);
+        List<StateVO> muscleGroupVOs = createVOs(muscleGroupFilters);
+        List<StateVO> muscleVOs = createVOs(muscleFilters);
+        List<StateVO> difficultyVOs = createVOs(difficultyFilters);
+
+        FilterAdapter equipmentFilterAdapter = new FilterAdapter(getContext(), 0, equipmentVOs);
+        equipmentSpinner.setAdapter(equipmentFilterAdapter);
+        FilterAdapter muscleGroupFilterAdapter = new FilterAdapter(getContext(), 0, muscleGroupVOs);
+        muscleGroupsSpinner.setAdapter(muscleGroupFilterAdapter);
+        FilterAdapter muscleFilterAdapter = new FilterAdapter(getContext(), 0, muscleVOs);
+        musclesSpinner.setAdapter(muscleFilterAdapter);
+        FilterAdapter difficultyFilterAdapter = new FilterAdapter(getContext(), 0, difficultyVOs);
+        difficultiesSpinner.setAdapter(difficultyFilterAdapter);
+    }
+
+    private List<StateVO> createVOs(List<String> vos){
+        List<StateVO> listVOs = new ArrayList<>();
+        for(int i = 0; i < vos.size(); i++){
             StateVO stateVO = new StateVO();
-            stateVO.setTitle(filters[i]);
+            stateVO.setTitle(vos.get(i));
             stateVO.setSelected(false);
             listVOs.add(stateVO);
         }
-
-        FilterAdapter filterAdapter = new FilterAdapter(getContext(), 0, listVOs);
-        activitySpinner.setAdapter(filterAdapter);
+        return listVOs;
     }
 
-    private String[] createDummyData(){
-         String[] filters = new String[]{"Filters", "Equipment", "Muscle Groups", "Categories"};
+    private List<String> createDummyEquipment(){
+        List<String> filters = new ArrayList<>();
+        filters.add("Equipment");
+        filters.add("Barbell");
+        filters.add("Dumbbell");
+        filters.add("Kettlebell");
+        return filters;
+    }
+
+    private List<String> createDummyMuscleGroups(){
+        List<String> filters = new ArrayList<>();
+        filters.add("Muscle Groups");
+        filters.add("Chest");
+        filters.add("Back");
+        filters.add("Arms");
+        filters.add("Shoulders");
+        return filters;
+    }
+
+    private List<String> createDummyMuscles(){
+        List<String> filters = new ArrayList<>();
+        filters.add("Muscles");
+        filters.add("Bicep");
+        filters.add("Tricep");
+        filters.add("Deltoid");
+        filters.add("Trapezius");
+        return filters;
+    }
+
+    private List<String> createDummyDifficulties(){
+        List<String> filters = new ArrayList<>();
+        filters.add("Difficulties");
+        filters.add("Beginner");
+        filters.add("Intermediate");
+        filters.add("Advanced");
         return filters;
     }
 }

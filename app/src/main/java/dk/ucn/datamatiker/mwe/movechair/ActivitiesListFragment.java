@@ -19,6 +19,7 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
 
     ArrayList<ActivityModel> activities;
     private String activityType;
+    private ActivityModel activityModel;
 
     @Nullable
     @Override
@@ -46,14 +47,17 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
         switch(getArguments().getString("buttonText")){
             case "Exercises":
                 activities = createExercises(10);
+                activityModel = activities.get(0);
                 break;
 
             case "Workouts":
                 activities = createWorkouts(5);
+                activityModel = activities.get(0);
                 break;
 
             case "Workout Plans":
                 activities = createWorkoutPlans(5);
+                activityModel = activities.get(0);
                 break;
 
             default:
@@ -78,6 +82,9 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
     @Override
     public void onClick(View v) {
         FilterFragment filterFragment = new FilterFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("ActivityModel", activityModel);
+        filterFragment.setArguments(bundle);
         MainActivity mainActivity = (MainActivity) v.getContext();
         mainActivity.switchFragment(filterFragment);
     }
