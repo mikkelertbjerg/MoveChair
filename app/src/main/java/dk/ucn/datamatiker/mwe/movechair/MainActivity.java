@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //Adding default page fragment
-        MyPlanFragment startFragment = new MyPlanFragment();
+        HomeFragment startFragment = new HomeFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_frame, startFragment, startFragment.getClass().toString())
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity
                 break;
 
                 default:
-            fragment = new MyPlanFragment();
+            fragment = new HomeFragment();
                     break;
         }
 

@@ -58,7 +58,7 @@ public class ActivitiesListFragment extends Fragment {
         rvActivities.setAdapter(adapter);
         // Set layout manager to position the items
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         linearLayoutManager.setStackFromEnd(true);
         rvActivities.setLayoutManager(linearLayoutManager);
 
