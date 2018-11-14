@@ -50,6 +50,7 @@
     <string name="activity_muscle_group">Muscle Group(s): </string>
     <string name="activity_points">Points: </string>
     <string name="activity_description">Description: </string>
+    <string name="action_filter">Filters</string>
 
     <!-- Strings related to exercises -->
     <string name="exercise_title">Title: </string>
@@ -88,6 +89,12 @@
     <string name="action_workouts">Workouts</string>
     <string name="action_workout_plans">Workout Plans</string>
 
+    <!-- Strings related to spinner_activity -->
+    <!-- Equipment, Muscle, MuscleGroups, Category -->
+    <string name="spinner_title">SpinnerModel</string>
+    <!-- Equipment: Barbell, Dumbell, MuscleGroups: Back, Chest, Arm... -->
+    <string name="spinner_checkbox">ModelItem</string>
+    <string name="action_set_filters">Set Filters</string>
 
     <!-- Strings related to profile -->
 

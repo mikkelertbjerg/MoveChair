@@ -9,12 +9,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Spinner;
+
 import java.util.ArrayList;
 
 
-public class ActivitiesListFragment extends Fragment {
+public class ActivitiesListFragment extends Fragment implements View.OnClickListener {
 
     ArrayList<ActivityModel> activities;
+    private String activityType;
 
     @Nullable
     @Override
@@ -30,6 +34,9 @@ public class ActivitiesListFragment extends Fragment {
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getArguments().getString("buttonText"));
         RecyclerView rvActivities = view.findViewById(R.id.rv_activities);
+
+        Button filterButton = (Button) view.findViewById(R.id.set_filters_button);
+        filterButton.setOnClickListener(this);
 
         //TODO method should be replaced by getting data from DB:
         //TODO if statement that switches on ActivityTypeID fills the adapter list
@@ -52,17 +59,54 @@ public class ActivitiesListFragment extends Fragment {
             default:
                 break;
         }
+        // Determine the activity type
+        activityType = activities.get(0).getClass().getSimpleName();
+
         // Create adapter passing in the sample user data
         ActivityAdapter adapter = new ActivityAdapter(activities);
+
         // Attach the adapter to the recyclerview to populate items
         rvActivities.setAdapter(adapter);
+
         // Set layout manager to position the items
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         linearLayoutManager.setStackFromEnd(true);
         rvActivities.setLayoutManager(linearLayoutManager);
-
     }
+
+    @Override
+    public void onClick(View v) {
+        FilterFragment filterFragment = new FilterFragment();
+        MainActivity mainActivity = (MainActivity) v.getContext();
+        mainActivity.switchFragment(filterFragment);
+    }
+
+    private ArrayList<ActivityModel> getFilteredActivities(){
+        ArrayList<ActivityModel> filteredActivities = new ArrayList<>();
+            switch(activityType){
+                case "ExerciseModel":
+                    for(int i = 0; i < activities.size(); i++) {
+                        //Do something with user input
+                    }
+                    break;
+
+                case "WorkoutModel":
+                    for(int i = 0; i < activities.size(); i++) {
+                        //Do something with user input
+                    }
+                    break;
+
+                case "WorkoutPlanModel":
+                    for(int i = 0; i < activities.size(); i++) {
+                        //Do something with user input
+                    }
+                    break;
+            }
+        return filteredActivities;
+    }
+
+
 
     private ArrayList<MuscleModel> createMuscles(int numActivities){
         ArrayList<MuscleModel> muscles = new ArrayList<MuscleModel>();
@@ -80,7 +124,6 @@ public class ActivitiesListFragment extends Fragment {
         }
         return muscleGroups;
     }
-
     private ArrayList<EquipmentModel> createEquipment(int numActivities){
         ArrayList<EquipmentModel> equipment = new ArrayList<EquipmentModel>();
 
@@ -89,7 +132,6 @@ public class ActivitiesListFragment extends Fragment {
         }
         return equipment;
     }
-
     private ArrayList<ActivityModel> createExercises(int numActivities) {
         ArrayList<ActivityModel> exercises = new ArrayList<ActivityModel>();
 
@@ -118,7 +160,6 @@ public class ActivitiesListFragment extends Fragment {
         }
         return exercises;
     }
-
     private ArrayList<ActivityModel> createWorkouts(int numActivities){
         ArrayList<ActivityModel> workouts = new ArrayList<ActivityModel>();
 
@@ -135,7 +176,6 @@ public class ActivitiesListFragment extends Fragment {
         }
         return workoutPlans;
     }
-
     //TODO DELETE THIS
     private ArrayList<ActivityModel> createDummyData() {
         ArrayList<ActivityModel> activities = new ArrayList<ActivityModel>();
