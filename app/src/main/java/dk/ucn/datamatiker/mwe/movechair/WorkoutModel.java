@@ -25,14 +25,12 @@ public class WorkoutModel extends ActivityModel{
         this.exercises = exercises;
     }
 
-
     @Override
     public int getDuration() {
         int temp = 0;
         for (ActivityModel x: this.getExercises()){
             temp += x.getDuration();
         }
-
         return temp;
     }
 
