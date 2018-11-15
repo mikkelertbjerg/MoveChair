@@ -82,13 +82,11 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
     @Override
     public void onClick(View v) {
         FilterFragment filterFragment = new FilterFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("ActivityModel", activityModel);
-        filterFragment.setArguments(bundle);
         MainActivity mainActivity = (MainActivity) v.getContext();
         mainActivity.switchFragment(filterFragment);
     }
 
+    //TODO Hvad er du?
     private ArrayList<ActivityModel> getFilteredActivities(){
         ArrayList<ActivityModel> filteredActivities = new ArrayList<>();
             switch(activityType){
