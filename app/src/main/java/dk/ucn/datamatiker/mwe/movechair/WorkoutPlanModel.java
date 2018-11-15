@@ -18,6 +18,9 @@ public class WorkoutPlanModel extends ActivityModel{
         this.workouts = new ArrayList<ActivityModel>();
     }
 
+    public WorkoutPlanModel() {
+    }
+
     @Override
     public double getPoints(){
         int temp = 0;

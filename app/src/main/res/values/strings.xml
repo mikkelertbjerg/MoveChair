@@ -14,6 +14,7 @@
     <string name="activity_log">Activity Log</string>
     <string name="home">Home</string>
     <string name="highscore">Highscore</string>
+    <string name="my_plan">My Plan</string>
 
     <string name="title_activity_login">Sign in</string>
 
@@ -37,6 +38,7 @@
     <!-- Strings related to home -->
     <string name="strides">Strides</string>
     <string name="upcoming_workout">Upcoming Workout</string>
+    <string name="my_plan_btn">See My Plan</string>
 
     <!-- Strings related to activity log -->
 

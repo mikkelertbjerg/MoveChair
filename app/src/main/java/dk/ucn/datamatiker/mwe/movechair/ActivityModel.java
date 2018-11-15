@@ -17,6 +17,10 @@ public class ActivityModel implements Serializable {
         this.description = description;
     }
 
+    public ActivityModel () {
+
+    }
+
     public int getId (){return id;}
 
     public void setId(int id) {
