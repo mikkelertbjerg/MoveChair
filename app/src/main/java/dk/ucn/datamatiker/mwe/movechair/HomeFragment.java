@@ -49,7 +49,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //This makes you able to change toolbar title
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("My Plan");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
 
         //Instantiate sensormanager
         sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
