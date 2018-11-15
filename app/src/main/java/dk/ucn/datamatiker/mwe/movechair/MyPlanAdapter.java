@@ -2,6 +2,8 @@ package dk.ucn.datamatiker.mwe.movechair;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,7 +51,20 @@ public class MyPlanAdapter extends RecyclerView.Adapter<MyPlanAdapter.ViewHolder
 
         //Create onClick
         //TODO OnClick goes to workout view
-
+        workoutListView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) context;
+                WorkoutViewModel fragment = new WorkoutViewModel();
+                //Create bundle with Exercise ID
+                final int position = viewHolder.getAdapterPosition();
+                Bundle bundle = new Bundle();
+                ActivityModel activity = workouts.get(position);
+                bundle.putSerializable("activity", activity);
+                fragment.setArguments(bundle);
+                mainActivity.switchFragment(fragment);
+            }
+        });
 
         return viewHolder;
     }
