@@ -24,7 +24,6 @@ public class ActivitiesFragment extends Fragment implements View.OnClickListener
         //returning our layout file
         //change R.layout.yourlayoutfilename for each of your fragments
         return inflater.inflate(R.layout.fragment_activites, container, false);
-
     }
 
 

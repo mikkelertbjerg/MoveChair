@@ -1,5 +1,7 @@
 package dk.ucn.datamatiker.mwe.movechair;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,16 +12,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class ActivitiesListFragment extends Fragment implements View.OnClickListener {
 
     ArrayList<ActivityModel> activities;
     private String activityType;
-    private ActivityModel activityModel;
+//    private SharedPreferences sharedPreferences = getActivity().getApplicationContext().getSharedPreferences("My Filters", Context.MODE_PRIVATE);
 
     @Nullable
     @Override
@@ -47,17 +49,14 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
         switch(getArguments().getString("buttonText")){
             case "Exercises":
                 activities = createExercises(10);
-                activityModel = activities.get(0);
                 break;
 
             case "Workouts":
                 activities = createWorkouts(5);
-                activityModel = activities.get(0);
                 break;
 
             case "Workout Plans":
                 activities = createWorkoutPlans(5);
-                activityModel = activities.get(0);
                 break;
 
             default:
@@ -72,6 +71,9 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
         // Attach the adapter to the recyclerview to populate items
         rvActivities.setAdapter(adapter);
 
+        Bundle adapterBundle = new Bundle();
+        adapterBundle.putSerializable("activityAdapter", adapter);
+
         // Set layout manager to position the items
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -81,19 +83,32 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Activities", activities);
         FilterFragment filterFragment = new FilterFragment();
+        filterFragment.setArguments(bundle);
         MainActivity mainActivity = (MainActivity) v.getContext();
         mainActivity.switchFragment(filterFragment);
     }
 
-    //TODO Hvad er du?
-    private ArrayList<ActivityModel> getFilteredActivities(){
-        ArrayList<ActivityModel> filteredActivities = new ArrayList<>();
-            switch(activityType){
+/*    private List<ActivityModel> compareList(List<ActivityModel> activities){
+        List<ActivityModel> filteredActivities = new ArrayList<>();
+           for(int i = 0; i < activities.size(); i++) {
+               ExerciseModel temp = (ExerciseModel) activities.get(i);
+               for(int b = 0; b < temp.getMuscleGroups().size(); b++){
+                           if(sharedPreferences.getBoolean(temp.getMuscleGroups().get(b).getName(), true)){
+                       filteredActivities.add(activities.get(i));
+                   }
+               }
+           }
+           return filteredActivities;
+    }
+
+    public List<ActivityModel> getFilteredActivities(){
+        List<ActivityModel> filteredActivities = new ArrayList<>();
+            switch(activities.get(0).getClass().getSimpleName()){
                 case "ExerciseModel":
-                    for(int i = 0; i < activities.size(); i++) {
-                        //Do something with user input
-                    }
+
                     break;
 
                 case "WorkoutModel":
@@ -109,7 +124,7 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
                     break;
             }
         return filteredActivities;
-    }
+    }*/
 
 
 
