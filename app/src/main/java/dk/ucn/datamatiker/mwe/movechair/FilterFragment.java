@@ -3,10 +3,12 @@ package dk.ucn.datamatiker.mwe.movechair;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.MediaCas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +20,14 @@ import java.util.List;
 
 
 public class FilterFragment extends Fragment implements View.OnClickListener {
+    List<ActivityModel> activities;
     List<List<FilterItem>> filters = new ArrayList<>();
     private List<FilterItem> equipmentItems;
     private List<FilterItem> muscleGroupItems;
     private List<FilterItem> muscleItems;
     private List<FilterItem> difficultyItems;
     private SharedPreferences sharedPreferences;
+    private ActivityAdapter activityAdapter;
     SharedPreferences.Editor sharedPreferencesEditor;
 
     @Nullable
@@ -47,6 +51,8 @@ public class FilterFragment extends Fragment implements View.OnClickListener {
         loadSpinners(view);
         sharedPreferences = getActivity().getApplicationContext().getSharedPreferences("MyFilters", Context.MODE_PRIVATE);
         getFilters();
+        activities = (ArrayList<ActivityModel>)getArguments().getSerializable("Activities");
+        activityAdapter = (ActivityAdapter) getArguments().getSerializable("activityAdapter");
     }
 
     private void loadSpinners(View view){
@@ -75,16 +81,60 @@ public class FilterFragment extends Fragment implements View.OnClickListener {
         filters.add(difficultyItems);
     }
 
+    private List<ActivityModel> filterActivities(List<ActivityModel> activities){
+        List<ActivityModel> tempList = new ArrayList<>();
+        switch(activities.get(0).getClass().getSimpleName()){
+            case "Exercise":
+                for(int i = 0; i < activities.size(); i++) {
+                    ExerciseModel exerciseModel = (ExerciseModel) activities.get(i);
+                    boolean passed = true;
+                    for (int j = 0; j < exerciseModel.getMuscleGroups().size(); j++) {
+                        if (sharedPreferences.getBoolean(exerciseModel.getMuscleGroups().get(j).getName(), false) == false) {
+                            String temp = "false";
+                            if (sharedPreferences.getBoolean(exerciseModel.getMuscleGroups().get(j).getName(), false)) {
+                                temp = "true";
+                            }
+                            Log.d("musclegroup", "musclegroup" + exerciseModel.getEquipment().get(j).getName() + "" + temp);
+                            passed = false;
+                        }
+                    }
+                    for (int j = 0; j < exerciseModel.getEquipment().size(); j++) {
+                        if (sharedPreferences.getBoolean(exerciseModel.getEquipment().get(j).getName(), false) == false) {
+                            String temp = "false";
+                            if (sharedPreferences.getBoolean(exerciseModel.getEquipment().get(j).getName(), false)) {
+                                temp = "true";
+                            }
+                            Log.d("equipment", "equipment" + exerciseModel.getEquipment().get(j).getName() + "" + temp);
+                            passed = false;
+                        }
+                    }
+                    if(passed) {
+                        tempList.add(activities.get(i));
+                    }
+                }
+                break;
+
+            case "Workout":
+
+                break;
+
+            case "WorkoutPlan":
+
+                    break;
+        }
+        Log.d("list size", tempList.size() + "");
+        return tempList;
+    }
+
     private void getFilters(){
         for(int i = 0; i < filters.size(); i++){
             for(int j = 1; j < filters.get(i).size(); j++){
-                filters.get(i).get(j).setSelected(sharedPreferences.getBoolean(filters.get(i).get(j).getName(), filters.get(i).get(j).getSelected()));
+                filters.get(i).get(j).setSelected(sharedPreferences.getBoolean(filters.get(i).get(j).getName(), false));
             }
         }
     }
 
-    @Override
-    public void onClick(View v) {
+    private void setFilters(){
         sharedPreferencesEditor = sharedPreferences.edit();
         for(int i = 0; i < filters.size(); i++){
             for(int j = 1; j < filters.get(i).size(); j++){
@@ -92,7 +142,13 @@ public class FilterFragment extends Fragment implements View.OnClickListener {
                 sharedPreferencesEditor.commit();
             }
         }
+    }
 
+    @Override
+    public void onClick(View v) {
+        setFilters();
+        ActivityAdapter activityAdapter = new ActivityAdapter(filterActivities(activities));
+        activityAdapter.updateData(filterActivities(activities));
         getFragmentManager().popBackStack();
     }
 

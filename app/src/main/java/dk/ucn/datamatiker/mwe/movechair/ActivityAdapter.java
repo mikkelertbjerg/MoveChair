@@ -9,12 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 // Create the basic adapter extending from RecyclerView.Adapter
 // Note that we specify the custom ViewHolder which gives us access to our views
-public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHolder> {
+public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHolder> implements Serializable {
     Context context;
+
+    public ActivityAdapter (ArrayList<ActivityModel> activities){
+        this.activities = activities;
+    }
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
@@ -112,6 +118,12 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         activityItemDuration.setText("Duration: " + String.valueOf(activityModel.getDuration()));
         activityItemPoints.setText("Points: " + String.valueOf(activityModel.getPoints()));
 
+    }
+
+    public void updateData(List<ActivityModel> activities){
+            this.activities.clear();
+            this.activities.addAll(activities);
+            notifyDataSetChanged();
     }
 
     @Override
