@@ -1,5 +1,6 @@
 package dk.ucn.datamatiker.mwe.movechair;
 
+import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -14,7 +15,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.jjoe64.graphview.GraphView;
@@ -89,6 +92,19 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerViewAchievements.setLayoutManager(linearLayoutManager);
+
+        //OnClick switches to MyPlan view
+        Button my_plan_btn = getActivity().findViewById(R.id.my_plan_btn);
+        my_plan_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyPlanFragment myPlanFragment = new MyPlanFragment();
+                //Replacing the fragment
+                MainActivity mainActivity = (MainActivity)getActivity();
+                mainActivity.switchFragment(myPlanFragment);
+            }
+        });
+
     }
 
     @Override

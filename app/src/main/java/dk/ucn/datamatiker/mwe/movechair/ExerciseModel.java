@@ -39,6 +39,10 @@ public class ExerciseModel extends ActivityModel{
         this.muscleGroups = new ArrayList<MuscleGroupModel>();
     }
 
+    public ExerciseModel() {
+
+    }
+
     public ArrayList<MediaModel> getMedia() {
         return media;
     }

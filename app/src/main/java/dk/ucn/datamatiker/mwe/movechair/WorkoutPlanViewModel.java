@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 public class WorkoutPlanViewModel extends Fragment {
     @Nullable
@@ -51,6 +53,7 @@ public class WorkoutPlanViewModel extends Fragment {
 
         RecyclerView rvActivities = view.findViewById(R.id.rv_workouts);
         // Create adapter passing in the sample user data
+        //TODO FIX THIS JONAS
         ActivityAdapter adapter = new ActivityAdapter(activity.getWorkouts());
         // Attach the adapter to the recyclerview to populate items
         rvActivities.setAdapter(adapter);

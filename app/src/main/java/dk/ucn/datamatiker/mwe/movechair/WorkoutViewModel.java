@@ -55,6 +55,7 @@ public class WorkoutViewModel extends Fragment {
 
         RecyclerView rvActivities = view.findViewById(R.id.rv_exercises);
         // Create adapter passing in the sample user data
+        //TODO FIX THIS JONAS
         ActivityAdapter adapter = new ActivityAdapter(activity.getExercises());
         // Attach the adapter to the recyclerview to populate items
         rvActivities.setAdapter(adapter);

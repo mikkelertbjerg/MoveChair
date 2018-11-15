@@ -77,8 +77,8 @@ public class ActivitiesFragment extends Fragment implements View.OnClickListener
         }
 
         //Replacing the fragment
-        MainActivity mainAactivity = (MainActivity)getActivity();
-        mainAactivity.switchFragment(fragment);
+        MainActivity mainActivity = (MainActivity)getActivity();
+        mainActivity.switchFragment(fragment);
     }
 
 }
