@@ -12,17 +12,17 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilterAdapter extends ArrayAdapter<StateVO> {
+public class FilterAdapter extends ArrayAdapter<FilterItem> {
 
     private Context context;
-    private ArrayList<StateVO> listState;
+    private ArrayList<FilterItem> filterItems;
     private FilterAdapter filterAdapter;
     private boolean isFromView = false;
 
-    public FilterAdapter(Context context, int resource, List<StateVO> objects) {
+    public FilterAdapter(Context context, int resource, List<FilterItem> objects) {
         super(context, resource, objects);
         this.context = context;
-        this.listState = (ArrayList<StateVO>) objects;
+        this.filterItems = (ArrayList<FilterItem>) objects;
         this.filterAdapter = this;
     }
 
@@ -53,11 +53,11 @@ public class FilterAdapter extends ArrayAdapter<StateVO> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.textView.setText(listState.get(position).getTitle());
+        holder.textView.setText(filterItems.get(position).getName());
 
         // To check weather checked event fire from getview() or user input
         isFromView = true;
-        holder.checkBox.setChecked(listState.get(position).isSelected());
+        holder.checkBox.setChecked(filterItems.get(position).getSelected());
         isFromView = false;
 
         if ((position == 0)) {
@@ -73,7 +73,7 @@ public class FilterAdapter extends ArrayAdapter<StateVO> {
                 int getPosition = (Integer) buttonView.getTag();
 
                 if (!isFromView) {
-                    listState.get(position).setSelected(isChecked);
+                    filterItems.get(position).setSelected(isChecked);
                 }
             }
         });
