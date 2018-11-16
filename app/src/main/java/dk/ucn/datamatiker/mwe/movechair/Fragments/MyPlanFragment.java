@@ -22,9 +22,9 @@ public class MyPlanFragment extends Fragment {
     private MyPlanViewModel mMyPlanViewModel;
     private RecyclerView rvWorkouts;
 
-    public static MyPlanFragment newInstance() {
+/*    public static MyPlanFragment newInstance() {
         return new MyPlanFragment();
-    }
+    }*/
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -35,7 +35,9 @@ public class MyPlanFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         mMyPlanViewModel = ViewModelProviders.of(this).get(MyPlanViewModel.class);
+
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("My Plan");
         // TODO: Use the ViewModel
         WorkoutPlanModel wp = (WorkoutPlanModel)mMyPlanViewModel.getMyPlan(1);
