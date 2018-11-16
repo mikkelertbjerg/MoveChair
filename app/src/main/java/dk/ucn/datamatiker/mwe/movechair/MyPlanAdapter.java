@@ -1,17 +1,18 @@
 package dk.ucn.datamatiker.mwe.movechair;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+
+import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
+import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutViewModel;
 
 public class MyPlanAdapter extends RecyclerView.Adapter<MyPlanAdapter.ViewHolder> {
     Context context;

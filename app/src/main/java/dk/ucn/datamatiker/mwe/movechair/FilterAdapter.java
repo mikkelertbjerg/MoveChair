@@ -12,17 +12,19 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilterAdapter extends ArrayAdapter<FilterItem> {
+import dk.ucn.datamatiker.mwe.movechair.Models.FilterModel;
+
+public class FilterAdapter extends ArrayAdapter<FilterModel> {
 
     private Context context;
-    private ArrayList<FilterItem> filterItems;
+    private ArrayList<FilterModel> filterModels;
     private FilterAdapter filterAdapter;
     private boolean isFromView = false;
 
-    public FilterAdapter(Context context, int resource, List<FilterItem> objects) {
+    public FilterAdapter(Context context, int resource, List<FilterModel> objects) {
         super(context, resource, objects);
         this.context = context;
-        this.filterItems = (ArrayList<FilterItem>) objects;
+        this.filterModels = (ArrayList<FilterModel>) objects;
         this.filterAdapter = this;
     }
 
@@ -53,11 +55,11 @@ public class FilterAdapter extends ArrayAdapter<FilterItem> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.textView.setText(filterItems.get(position).getName());
+        holder.textView.setText(filterModels.get(position).getName());
 
         // To check weather checked event fire from getview() or user input
         isFromView = true;
-        holder.checkBox.setChecked(filterItems.get(position).getSelected());
+        holder.checkBox.setChecked(filterModels.get(position).getSelected());
         isFromView = false;
 
         if ((position == 0)) {
@@ -73,7 +75,7 @@ public class FilterAdapter extends ArrayAdapter<FilterItem> {
                 int getPosition = (Integer) buttonView.getTag();
 
                 if (!isFromView) {
-                    filterItems.get(position).setSelected(isChecked);
+                    filterModels.get(position).setSelected(isChecked);
                 }
             }
         });

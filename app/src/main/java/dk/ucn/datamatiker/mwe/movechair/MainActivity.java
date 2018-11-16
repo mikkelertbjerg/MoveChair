@@ -1,10 +1,8 @@
 package dk.ucn.datamatiker.mwe.movechair;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,7 +11,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import java.util.List;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.AchievementsFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.ActivitiesFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.ActivityLogFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.HighscoreFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.HomeFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.OptionsFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.ProfileFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.MyPlanFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

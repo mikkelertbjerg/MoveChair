@@ -13,6 +13,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
+import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExerciseViewModel;
+import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutPlanViewModel;
+import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutViewModel;
+
 // Create the basic adapter extending from RecyclerView.Adapter
 // Note that we specify the custom ViewHolder which gives us access to our views
 public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHolder> implements Serializable {
