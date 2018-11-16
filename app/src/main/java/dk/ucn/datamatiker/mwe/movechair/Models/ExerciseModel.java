@@ -67,7 +67,7 @@ public class ExerciseModel extends ActivityModel {
         this.difficulties = difficulties;
     }
 
-/*
+
     public String printDifficulties() {
         String temp = "";
         for(int i = 0; i < this.difficulties.size(); i++){
@@ -80,13 +80,13 @@ public class ExerciseModel extends ActivityModel {
 
         return temp;
     }
-*/
+
 
     public ArrayList<CategoryModel> getCategories() {
         return categories;
     }
 
-/*    public String printCategories(){
+    public String printCategories(){
         String temp = "";
         for(int i = 0; i < this.categories.size(); i++){
             temp += this.categories.get(i).getName();
@@ -96,7 +96,7 @@ public class ExerciseModel extends ActivityModel {
             }
         }
         return temp;
-    }*/
+    }
 
     public void setCategories(ArrayList<CategoryModel> categories) {
         this.categories = categories;
@@ -110,7 +110,7 @@ public class ExerciseModel extends ActivityModel {
         this.muscleGroups = muscleGroups;
     }
 
-/*    public String printMuscleGroups(){
+   public String printMuscleGroups(){
         String temp = "";
         for(int i = 0; i < this.muscleGroups.size(); i++){
             temp += this.muscleGroups.get(i).getName();
@@ -120,7 +120,7 @@ public class ExerciseModel extends ActivityModel {
             }
         }
         return temp;
-    }*/
+    }
 
     public ArrayList<EquipmentModel> getEquipment() {
         return equipment;
@@ -130,7 +130,7 @@ public class ExerciseModel extends ActivityModel {
         this.equipment = equipment;
     }
 
-/*    public String printEquipment(){
+   public String printEquipment(){
         String temp = "";
         for(int i = 0; i < this.equipment.size(); i++){
             temp += this.equipment.get(i).getName();
@@ -140,7 +140,7 @@ public class ExerciseModel extends ActivityModel {
             }
         }
         return temp;
-    }*/
+    }
 
     public double getPoints(){
         return points;

@@ -1,6 +1,9 @@
 package dk.ucn.datamatiker.mwe.movechair.ViewModels;
 
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.ViewModel;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 
@@ -16,20 +19,28 @@ import dk.ucn.datamatiker.mwe.movechair.Models.MuscleModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 
-public class MyPlanViewModel extends ViewModel {
+public class MyPlanViewModel extends AndroidViewModel {
+
+
+
+    public MyPlanViewModel(@NonNull Application application) {
+        super(application);
+    }
     // TODO: Implement the ViewModel
 
+
+/*
     public ActivityModel getMyPlan(int userId) {
         //TODO get from DB instead
 
         return createDummyData();
-    }
+    }*/
 
-    private ActivityModel createDummyData() {
+   /* private ActivityModel createDummyData() {
         WorkoutPlanModel wp = new WorkoutPlanModel();
         wp.setName("My First Workoutplan");
-        wp.setDuration(10);
-        wp.setPoints(529);
+        wp.setWorkoutPlanDuration(10);
+        wp.getWorkouts().get(1).;
         wp.setId(1);
 
         ArrayList<MediaModel> media = new ArrayList<>();
@@ -38,27 +49,27 @@ public class MyPlanViewModel extends ViewModel {
         ArrayList<MuscleGroupModel> muscleGroups = new ArrayList<>();
         ArrayList<EquipmentModel> equipment = new ArrayList<>();
 
-        /* DUMMY DATA - EQUIPMENT MODELS*/
+        *//* DUMMY DATA - EQUIPMENT MODELS*//*
         EquipmentModel barbell = new EquipmentModel("Barbell");
         equipment.add(barbell);
 
-        /* DUMMY DATA - DIFFICULTY MODELS*/
+        *//* DUMMY DATA - DIFFICULTY MODELS*//*
         DifficultyModel beginner = new DifficultyModel("Beginner", 1);
         difficulties.add(beginner);
 
-        /* DUMMY DATA - CATEGORY MODELS*/
+        *//* DUMMY DATA - CATEGORY MODELS*//*
         CategoryModel hypertrophy = new CategoryModel("Hypertrophy");
         categories.add(hypertrophy);
 
-        /* DUMMY DATA - MUSCLE MODELS */
+        *//* DUMMY DATA - MUSCLE MODELS *//*
         MuscleModel biceps = new MuscleModel("biceps");
 
-        /* DUMMY DATA - MUSCLEGROUP MODELS*/
+        *//* DUMMY DATA - MUSCLEGROUP MODELS*//*
         MuscleGroupModel arm = new MuscleGroupModel("Arm");
         arm.getMuscles().add(biceps);
         muscleGroups.add(arm);
 
-        /* DUMMY DATA - MEDIA TYPE MODELS*/
+        *//* DUMMY DATA - MEDIA TYPE MODELS*//*
         MediaTypeModel video = new MediaTypeModel("Video");
         MediaTypeModel audio = new MediaTypeModel("Audio");
         MediaModel media1 = new MediaModel("diller", video);
@@ -82,6 +93,6 @@ public class MyPlanViewModel extends ViewModel {
         wp.setWorkouts(workouts);
 
 
-        return wp;
-    }
+        return wp;*/
+
 }

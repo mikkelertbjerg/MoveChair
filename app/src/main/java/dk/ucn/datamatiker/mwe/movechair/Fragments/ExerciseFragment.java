@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.VideoView;
 
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
@@ -32,17 +34,13 @@ public class ExerciseFragment extends Fragment {
 
         mExerciseViewModel = ViewModelProviders.of(this).get(ExerciseViewModel.class);
 
-        ExerciseModel activity =  mExerciseViewModel.getExercise();
+        ExerciseModel exercise = mExerciseViewModel.getItem(1);
         //This makes you able to change toolbar title
         //((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Exercise name");
-    }
+        //Get activity object from fragment arguments
+        //TODO Replace this with db call to get specific exercise?
 
-
-    //Get activity object from fragment arguments
-
-    //TODO Replace this with db call to get specific exercise?
-
-   /*     //VideoView exercise_video = view.findViewById(R.id.exercise_video);
+        VideoView exercise_video = view.findViewById(R.id.exercise_video);
         TextView exercise_title = view.findViewById(R.id.exercise_title);
         TextView exercise_description = view.findViewById(R.id.exercise_description);
         TextView exercise_points = view.findViewById(R.id.exercise_points);
@@ -53,14 +51,14 @@ public class ExerciseFragment extends Fragment {
         TextView exercise_difficulty = view.findViewById(R.id.exercise_difficulty);
 
         //TODO exercise_video
-        exercise_title.setText("Title: " + exerciseModel.getName());
-        exercise_description.setText("Description: " + exerciseModel.getDescription());
-        exercise_points.setText("Points: " + Double.toString(exerciseModel.getPoints()));
-        exercise_duration.setText("Duration: " + Integer.toString(exerciseModel.getDuration()));
-        exercise_category.setText("Category: " + exerciseModel.printCategories());
-        exercise_equipment.setText("Equipment: " + exerciseModel.printEquipment());
-        exercise_muscle_group.setText("Muscle group(s): " + exerciseModel.printMuscleGroups());
-        exercise_difficulty.setText("Difficulty: " + exerciseModel.printDifficulties());
-        */
-}
+        exercise_title.setText("Title: " + exercise.getName());
+        exercise_description.setText("Description: " + exercise.getDescription());
+        exercise_points.setText("Points: " + Double.toString(exercise.getPoints()));
+        exercise_duration.setText("Duration: " + Double.toString(exercise.getDuration()));
+        exercise_category.setText("Category: " + exercise.printCategories());
+        exercise_equipment.setText("Equipment: " + exercise.printEquipment());
+        exercise_muscle_group.setText("Muscle group(s): " + exercise.printMuscleGroups());
+        exercise_difficulty.setText("Difficulty: " + exercise.printDifficulties());
 
+    }
+}

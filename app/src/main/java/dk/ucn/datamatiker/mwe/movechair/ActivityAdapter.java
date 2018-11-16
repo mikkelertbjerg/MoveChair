@@ -13,6 +13,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import dk.ucn.datamatiker.mwe.movechair.Fragments.ExerciseFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutPlanFragment;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExerciseViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutPlanViewModel;
@@ -84,13 +87,13 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
                 switch (type) {
                     case "ExerciseModel":
-                        fragment = new ExerciseViewModel();
+                        fragment = new ExerciseFragment();
                         break;
                     case "WorkoutModel":
-                        fragment = new WorkoutViewModel();
+                        fragment = new WorkoutFragment();
                         break;
                     case "WorkoutPlanModel":
-                        fragment = new WorkoutPlanViewModel();
+                        fragment = new WorkoutPlanFragment();
                         break;
                     default:
                         break;
@@ -112,7 +115,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         // Get the data model based on position
         ActivityModel activityModel = activities.get(position);
-
+/*
         // Set item views based on your views and data model
         //ImageView activityItemIcon = viewHolder.activityItemIcon;
         TextView activityItemTitle = viewHolder.activityItemTitle;
@@ -121,7 +124,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         //activityItemIcon.setImageIcon(activitiesListItem.getImg());
         activityItemTitle.setText("Title: " + activityModel.getName());
         activityItemDuration.setText("Duration: " + String.valueOf(activityModel.getDuration()));
-        activityItemPoints.setText("Points: " + String.valueOf(activityModel.getPoints()));
+ */
 
     }
 

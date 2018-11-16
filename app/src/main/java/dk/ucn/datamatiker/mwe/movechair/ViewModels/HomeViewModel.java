@@ -1,11 +1,24 @@
 package dk.ucn.datamatiker.mwe.movechair.ViewModels;
 
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.ViewModel;
+import android.support.annotation.NonNull;
 
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-public class HomeViewModel extends ViewModel {
+public class HomeViewModel extends AndroidViewModel {
+
+
+    public HomeViewModel(@NonNull Application application) {
+        super(application);
+    }
+
+    public User getUser(int id)
+    {
+        return null;
+    }
 
     public LineGraphSeries<DataPoint> getStrides() {
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
@@ -19,4 +32,6 @@ public class HomeViewModel extends ViewModel {
         });
         return series;
     }
+
+
 }
