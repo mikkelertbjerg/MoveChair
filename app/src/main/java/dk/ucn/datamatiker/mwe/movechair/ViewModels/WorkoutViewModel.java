@@ -1,0 +1,69 @@
+package dk.ucn.datamatiker.mwe.movechair.ViewModels;
+
+import android.arch.lifecycle.ViewModel;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import dk.ucn.datamatiker.mwe.movechair.ActivityAdapter;
+import dk.ucn.datamatiker.mwe.movechair.R;
+import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
+
+public class WorkoutViewModel extends ViewModel {
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //returning our layout file
+        //change R.layout.yourlayoutfilename for each of your fragments
+        return inflater.inflate(R.layout.fragment_workout_view, container, false);
+    }
+
+    //We need to show chosen exercise based on ID from Bundle
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        //Get activity object from fragment arguments
+        WorkoutModel activity = (WorkoutModel) getArguments().getSerializable("activity");
+        //This makes you able to change toolbar title
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(activity.getName());
+
+        WorkoutModel workoutModel = new WorkoutModel(activity.getName(),
+                activity.getDescription(),
+                activity.getId(),
+                activity.getExercises()
+        );
+
+
+        TextView workout_title = view.findViewById(R.id.workout_title);
+        TextView workout_duration = view.findViewById(R.id.workout_duration);
+        //TODO Do we need theese props? Not according to our domain
+        //TextView workout_category = view.findViewById(R.id.workout_category);
+        //TextView workout_difficulty = view.findViewById(R.id.workout_difficulty);
+        //TextView workout_muscle_group = view.findViewById(R.id.workout_muscle_group);
+        //TextView workout_equipment = view.findViewById(R.id.workout_equipment);
+        TextView workout_description = view.findViewById(R.id.workout_description);
+
+        workout_title.setText("Title: " + workoutModel.getName());
+        workout_duration.setText("Duration: " + workoutModel.getDuration());
+        workout_description.setText("Description: " + workoutModel.getName());
+
+        RecyclerView rvActivities = view.findViewById(R.id.rv_exercises);
+        // Create adapter passing in the sample user data
+        //TODO FIX THIS JONAS
+        ActivityAdapter adapter = new ActivityAdapter(activity.getExercises());
+        // Attach the adapter to the recyclerview to populate items
+        rvActivities.setAdapter(adapter);
+        // Set layout manager to position the items
+        rvActivities.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+}
+
