@@ -71,7 +71,7 @@ public class DummyData {
         ArrayList<ActivityModel> workouts = new ArrayList<ActivityModel>();
 
         for(int i = 0; i < numActivities; i++){
-            workouts.add(new WorkoutModel("Workout " + (i+1), "Description " + (i+1), i, createExercises(2)));
+            workouts.add(new WorkoutModel("Workout " + (i+1), "Description " + (i+1), i, i*10, i*2, createExercises(2)));
         }
         return workouts;
     }
@@ -79,7 +79,7 @@ public class DummyData {
         ArrayList<ActivityModel> workoutPlans = new ArrayList<ActivityModel>();
 
         for(int i = 0; i < numActivities; i++){
-            workoutPlans.add(new WorkoutPlanModel("Workout Plan " + (i+1), "Description " + (i+1), i, 3, createWorkouts(2)));
+            workoutPlans.add(new WorkoutPlanModel("Workout Plan " + (i+1), "Description " + (i+1), i, i*10, i*2, createWorkouts(2)));
         }
         return workoutPlans;
     }

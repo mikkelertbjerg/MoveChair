@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,6 +103,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
                 final int position = viewHolder.getAdapterPosition();
                 Bundle bundle = new Bundle();
                 ActivityModel activity = activities.get(position);
+                Log.d("", "Size(): " + activities.size());
                 bundle.putSerializable("activity", activity);
                 fragment.setArguments(bundle);
                 mainActivity.switchFragment(fragment);
@@ -115,7 +117,6 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         // Get the data model based on position
         ActivityModel activityModel = activities.get(position);
-/*
         // Set item views based on your views and data model
         //ImageView activityItemIcon = viewHolder.activityItemIcon;
         TextView activityItemTitle = viewHolder.activityItemTitle;
@@ -123,8 +124,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         TextView activityItemPoints = viewHolder.activityItemPoints;
         //activityItemIcon.setImageIcon(activitiesListItem.getImg());
         activityItemTitle.setText("Title: " + activityModel.getName());
-        activityItemDuration.setText("Duration: " + String.valueOf(activityModel.getDuration()));
- */
+        activityItemDuration.setText("Duration: " + String.valueOf(activityModel.getName()));
 
     }
 

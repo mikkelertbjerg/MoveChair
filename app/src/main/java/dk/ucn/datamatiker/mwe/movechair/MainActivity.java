@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import dk.ucn.datamatiker.mwe.movechair.Fragments.AchievementsFragment;
@@ -19,9 +20,14 @@ import dk.ucn.datamatiker.mwe.movechair.Fragments.HomeFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.OptionsFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.ProfileFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.MyPlanFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutPlanFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.dummy.DummyContent;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements WorkoutPlanFragment.OnListFragmentInteractionListener,
+        WorkoutFragment.OnListFragmentInteractionListener,
+        NavigationView.OnNavigationItemSelectedListener
+{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,4 +131,10 @@ public class MainActivity extends AppCompatActivity
                     .commit();
         }
     }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
+    }
+
 }

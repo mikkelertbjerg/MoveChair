@@ -15,10 +15,10 @@ public class HomeViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public User getUser(int id)
+/*    public User getUser(int id)
     {
         return null;
-    }
+    }*/
 
     public LineGraphSeries<DataPoint> getStrides() {
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{

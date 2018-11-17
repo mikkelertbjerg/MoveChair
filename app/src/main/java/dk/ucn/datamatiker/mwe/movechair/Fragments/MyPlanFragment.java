@@ -39,7 +39,7 @@ public class MyPlanFragment extends Fragment {
         mMyPlanViewModel = ViewModelProviders.of(this).get(MyPlanViewModel.class);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("My Plan");
-        // TODO: Use the ViewModel
+        // TODO: Use the ViewModel (VALUE IS HARDCODED TO 1)
         WorkoutPlanModel wp = (WorkoutPlanModel)mMyPlanViewModel.getMyPlan(1);
 
         //Fill out dummy data

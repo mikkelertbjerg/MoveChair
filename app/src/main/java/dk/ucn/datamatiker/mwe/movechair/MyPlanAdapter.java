@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutFragment;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutViewModel;
 
@@ -56,7 +58,7 @@ public class MyPlanAdapter extends RecyclerView.Adapter<MyPlanAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 MainActivity mainActivity = (MainActivity) context;
-                WorkoutViewModel fragment = new WorkoutViewModel();
+                WorkoutFragment fragment = new WorkoutFragment();
                 //Create bundle with Exercise ID
                 final int position = viewHolder.getAdapterPosition();
                 Bundle bundle = new Bundle();
@@ -84,11 +86,11 @@ public class MyPlanAdapter extends RecyclerView.Adapter<MyPlanAdapter.ViewHolder
         //TODO The current value "24" represents the users progress on the achievement
         double totalPoints = 0;
         for(int i = 0;i < workoutModel.getExercises().size();i++) {
-            totalPoints += workoutModel.getExercises().get(i).getPoints();
+            totalPoints += ((ExerciseModel) workoutModel.getExercises().get(i)).getPoints();
         }
         workoutItemPoints.setText("Points: " + Double.toString(totalPoints));
 
-        workoutItemDuration.setText("Duration:" + workoutModel.getDuration());
+        workoutItemDuration.setText("Duration:" + ((WorkoutModel) workoutModel).getWorkoutDuration());
     }
 
     @Override

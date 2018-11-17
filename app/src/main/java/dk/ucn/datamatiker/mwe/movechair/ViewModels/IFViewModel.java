@@ -4,5 +4,4 @@ import java.util.List;
 
 public interface IFViewModel<T> {
     T getItem(int id);
-    List<T> getAll();
 }

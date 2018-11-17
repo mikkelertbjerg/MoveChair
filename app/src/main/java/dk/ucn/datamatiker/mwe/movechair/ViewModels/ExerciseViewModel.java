@@ -7,7 +7,9 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
+import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 
 public class ExerciseViewModel extends AndroidViewModel implements IFViewModel<ExerciseModel> {
 
@@ -23,13 +25,8 @@ public class ExerciseViewModel extends AndroidViewModel implements IFViewModel<E
     @Override
     public ExerciseModel getItem(int id) {
         //TODO Method that retrieves an ExerciseModel from DB
-        return null;
+        List<ActivityModel> temp = new DummyData().createExercises(10);
+        return (ExerciseModel) temp.get(id);
     }
 
-    @Override
-    public List<ExerciseModel> getAll() {
-        //TODO Method that retrieves all ExerciseModels from the DB
-
-        return null;
-    }
 }

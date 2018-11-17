@@ -18,6 +18,7 @@ import dk.ucn.datamatiker.mwe.movechair.Models.MuscleGroupModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.MuscleModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
+import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 
 public class MyPlanViewModel extends AndroidViewModel {
 
@@ -29,12 +30,12 @@ public class MyPlanViewModel extends AndroidViewModel {
     // TODO: Implement the ViewModel
 
 
-/*
+
     public ActivityModel getMyPlan(int userId) {
         //TODO get from DB instead
 
-        return createDummyData();
-    }*/
+        return new DummyData().createWorkoutPlans(10).get(userId);
+    }
 
    /* private ActivityModel createDummyData() {
         WorkoutPlanModel wp = new WorkoutPlanModel();

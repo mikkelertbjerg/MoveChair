@@ -18,26 +18,29 @@ import android.widget.TextView;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.ActivityAdapter;
+import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
+import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 
 
-public class WorkoutPlanViewModel extends AndroidViewModel implements IFViewModel<WorkoutPlanModel> {
+public class WorkoutPlanViewModel extends ViewModel implements IFViewModel<WorkoutPlanModel> {
 
 
+/*
     public WorkoutPlanViewModel(@NonNull Application application) {
         super(application);
+    }
+*/
+
+    public WorkoutPlanViewModel() {
     }
 
     @Override
     public WorkoutPlanModel getItem(int id) {
         //TODO Method that retrieves an WorkoutPlanModel from DB
-        return null;
+        List<ActivityModel> temp = new DummyData().createWorkoutPlans(10);
+        return (WorkoutPlanModel) temp.get(id);
     }
 
-    @Override
-    public List<WorkoutPlanModel> getAll() {
-        //TODO Method that retrieves all WorkoutPlanModels from the DB
-        return null;
-    }
 }

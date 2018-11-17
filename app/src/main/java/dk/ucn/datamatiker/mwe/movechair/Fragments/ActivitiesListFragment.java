@@ -1,5 +1,6 @@
 package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,11 +19,13 @@ import dk.ucn.datamatiker.mwe.movechair.ActivityAdapter;
 import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
+import dk.ucn.datamatiker.mwe.movechair.ViewModels.ActivityListViewModel;
+import dk.ucn.datamatiker.mwe.movechair.ViewModels.HomeViewModel;
 
 public class ActivitiesListFragment extends Fragment implements View.OnClickListener {
 
     ArrayList<ActivityModel> activities;
-//    private SharedPreferences sharedPreferences = getActivity().getApplicationContext().getSharedPreferences("My Filters", Context.MODE_PRIVATE);
+    ActivityListViewModel vModel;
 
     @Nullable
     @Override
@@ -37,8 +40,8 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
         super.onViewCreated(view, savedInstanceState);
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getArguments().getString("buttonText"));
-        //TODO Generate dummy data
-        DummyData dummyData = new DummyData();
+
+        vModel = ViewModelProviders.of(this).get(ActivityListViewModel.class);
 
         RecyclerView rvActivities = view.findViewById(R.id.rv_activities);
 
@@ -52,15 +55,15 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
 
         switch(getArguments().getString("buttonText")){
             case "Exercises":
-                activities = dummyData.createExercises(10);
+                activities = new DummyData().createExercises(10);
                 break;
 
             case "Workouts":
-                activities = dummyData.createWorkouts(5);
+                activities = new DummyData().createWorkouts(5);
                 break;
 
             case "Workout Plans":
-                activities = dummyData.createWorkoutPlans(5);
+                activities = new DummyData().createWorkoutPlans(5);
                 break;
 
             default:
@@ -72,9 +75,6 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
 
         // Attach the adapter to the recyclerview to populate items
         rvActivities.setAdapter(adapter);
-
-        Bundle adapterBundle = new Bundle();
-        adapterBundle.putSerializable("activityAdapter", adapter);
 
         // Set layout manager to position the items
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
