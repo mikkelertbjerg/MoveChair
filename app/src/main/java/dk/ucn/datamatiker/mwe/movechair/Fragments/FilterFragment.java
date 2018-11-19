@@ -152,8 +152,9 @@ public class FilterFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         setFilters();
-        ActivityAdapter activityAdapter = new ActivityAdapter(filterActivities(activities));
-        activityAdapter.updateData(filterActivities(activities));
+        // TODO this was handled generic
+/*        ActivityAdapter activityAdapter = new ActivityAdapter(filterActivities(activities));
+        activityAdapter.updateData(filterActivities(activities));*/
         getFragmentManager().popBackStack();
     }
 

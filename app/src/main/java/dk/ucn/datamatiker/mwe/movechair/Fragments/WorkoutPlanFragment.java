@@ -15,11 +15,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import dk.ucn.datamatiker.mwe.movechair.ActivityAdapter;
+import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 import dk.ucn.datamatiker.mwe.movechair.MyWorkoutPlanRecyclerViewAdapter;
+import dk.ucn.datamatiker.mwe.movechair.MyWorkoutRecyclerViewAdapter;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.dummy.DummyContent;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.dummy.DummyContent.DummyItem;
+import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutPlanViewModel;
 
 /**
@@ -77,7 +80,7 @@ public class WorkoutPlanFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyWorkoutPlanRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyWorkoutPlanRecyclerViewAdapter(new DummyData().createWorkoutPlans(5), mListener));
         }
         return view;
     }
@@ -105,8 +108,8 @@ public class WorkoutPlanFragment extends Fragment {
 
         RecyclerView rvActivities = view.findViewById(R.id.rv_workouts);
         // Create adapter passing in the sample user data
-        //TODO FIX THIS JONAS
-        ActivityAdapter adapter = new ActivityAdapter(activity.getWorkouts());
+        //TODO dummy data
+        MyWorkoutPlanRecyclerViewAdapter adapter = new MyWorkoutPlanRecyclerViewAdapter(new DummyData().createWorkoutPlans(5), mListener);
         // Attach the adapter to the recyclerview to populate items
         rvActivities.setAdapter(adapter);
         // Set layout manager to position the items
@@ -143,6 +146,6 @@ public class WorkoutPlanFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(WorkoutPlanModel item);
     }
 }

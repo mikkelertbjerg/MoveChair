@@ -41,34 +41,5 @@ public class ActivityListViewModel extends AndroidViewModel {
 
 
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////
-    // MOFO WEED LINES // WHATTEN FLOR STYLE /
-    private List<ActivityModel> activities;
-    private ArrayAdapter<ActivityModel> mAdapter;
-
-    public List<ActivityModel> getActivities() {
-        if (activities == null) {
-            activities = new ArrayList<ActivityModel>();
-            loadActivities();
-            mAdapter.clear();
-            mAdapter.addAll(activities);
-            mAdapter.notifyDataSetChanged();
-        }
-        return activities;
-    }
-
-    private void loadActivities() {
-        this.activities = new DummyData().createExercises(4);
-    }
-
-    public void setActivities(List<ActivityModel> activities) {
-        this.activities = activities;
-        mAdapter.clear();
-        mAdapter.addAll(activities);
-        mAdapter.notifyDataSetChanged();
-    }
-
-    // MOFO WEED LINES // WHATTEN FLOR STYLE /
-    /////////////////////////////////////////////////////////////////////////////////////////////////
 
 }

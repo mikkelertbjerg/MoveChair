@@ -23,6 +23,8 @@ import dk.ucn.datamatiker.mwe.movechair.Fragments.MyPlanFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutPlanFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.dummy.DummyContent;
+import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 
 public class MainActivity extends AppCompatActivity implements WorkoutPlanFragment.OnListFragmentInteractionListener,
         WorkoutFragment.OnListFragmentInteractionListener,
@@ -36,8 +38,6 @@ public class MainActivity extends AppCompatActivity implements WorkoutPlanFragme
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Menu 1");
         setSupportActionBar(toolbar);
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -133,8 +133,12 @@ public class MainActivity extends AppCompatActivity implements WorkoutPlanFragme
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onListFragmentInteraction(WorkoutModel item) {
 
     }
 
+    @Override
+    public void onListFragmentInteraction(WorkoutPlanModel item) {
+
+    }
 }

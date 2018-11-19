@@ -34,9 +34,9 @@ public class MyPlanAdapter extends RecyclerView.Adapter<MyPlanAdapter.ViewHolder
 
         }
     }
-        private List<ActivityModel> workouts;
+        private List<WorkoutModel> workouts;
 
-        public MyPlanAdapter(List<ActivityModel> workouts) {
+        public MyPlanAdapter(List<WorkoutModel> workouts) {
             this.workouts = workouts;
         }
 

@@ -11,6 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
+import dk.ucn.datamatiker.mwe.movechair.MyWorkoutPlanRecyclerViewAdapter;
+import dk.ucn.datamatiker.mwe.movechair.MyWorkoutRecyclerViewAdapter;
 import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 
 import java.util.ArrayList;
@@ -24,7 +30,9 @@ import dk.ucn.datamatiker.mwe.movechair.ViewModels.HomeViewModel;
 
 public class ActivitiesListFragment extends Fragment implements View.OnClickListener {
 
-    ArrayList<ActivityModel> activities;
+    ArrayList<ExerciseModel> exercises;
+    ArrayList<WorkoutModel> workouts;
+    ArrayList<WorkoutPlanModel> workoutPlans;
     ActivityListViewModel vModel;
 
     @Nullable
@@ -55,26 +63,35 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
 
         switch(getArguments().getString("buttonText")){
             case "Exercises":
-                activities = new DummyData().createExercises(10);
+                exercises = new DummyData().createExercises(10);
+                // Create adapter passing in the sample user data
+               /* ActivityAdapter exerciseAdapter = new ActivityAdapter(exercises);
+
+                // Attach the adapter to the recyclerview to populate items
+                rvActivities.setAdapter(exerciseAdapter);*/
                 break;
 
             case "Workouts":
-                activities = new DummyData().createWorkouts(5);
+                workouts = new DummyData().createWorkouts(5);
+                // Create adapter passing in the sample user data
+                /*MyWorkoutRecyclerViewAdapter workoutAdapter = new MyWorkoutRecyclerViewAdapter(workouts);
+
+                // Attach the adapter to the recyclerview to populate items
+                rvActivities.setAdapter(workoutAdapter);*/
                 break;
 
             case "Workout Plans":
-                activities = new DummyData().createWorkoutPlans(5);
+                workoutPlans = new DummyData().createWorkoutPlans(5);
+                /*MyWorkoutPlanRecyclerViewAdapter workoutPlanAdapter = new MyWorkoutPlanRecyclerViewAdapter(workouts);
+
+                // Attach the adapter to the recyclerview to populate items
+                rvActivities.setAdapter(workoutPlanAdapter);*/
                 break;
 
             default:
                 break;
         }
 
-        // Create adapter passing in the sample user data
-        ActivityAdapter adapter = new ActivityAdapter(activities);
-
-        // Attach the adapter to the recyclerview to populate items
-        rvActivities.setAdapter(adapter);
 
         // Set layout manager to position the items
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -86,9 +103,9 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
     @Override
     public void onClick(View v) {
         FilterFragment filterFragment = new FilterFragment();
-        Bundle bundleActivities = new Bundle();
+        /*Bundle bundleActivities = new Bundle();
         bundleActivities.putSerializable("Activities", activities);
-        filterFragment.setArguments(bundleActivities);
+        filterFragment.setArguments(bundleActivities);*/
         MainActivity mainActivity = (MainActivity) v.getContext();
         mainActivity.switchFragment(filterFragment);
     }

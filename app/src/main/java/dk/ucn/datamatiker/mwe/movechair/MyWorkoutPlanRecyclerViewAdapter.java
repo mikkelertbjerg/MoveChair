@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutPlanFragment.OnListFragmentInteractionListener;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.dummy.DummyContent.DummyItem;
+import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 
 import java.util.List;
 
@@ -18,10 +19,10 @@ import java.util.List;
  */
 public class MyWorkoutPlanRecyclerViewAdapter extends RecyclerView.Adapter<MyWorkoutPlanRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<WorkoutPlanModel> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyWorkoutPlanRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyWorkoutPlanRecyclerViewAdapter(List<WorkoutPlanModel> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -36,8 +37,8 @@ public class MyWorkoutPlanRecyclerViewAdapter extends RecyclerView.Adapter<MyWor
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText(mValues.get(position).getId());
+        holder.mContentView.setText(mValues.get(position).getName());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +61,7 @@ public class MyWorkoutPlanRecyclerViewAdapter extends RecyclerView.Adapter<MyWor
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public WorkoutPlanModel mItem;
 
         public ViewHolder(View view) {
             super(view);

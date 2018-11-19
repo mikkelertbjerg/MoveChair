@@ -18,6 +18,7 @@ import dk.ucn.datamatiker.mwe.movechair.Fragments.ExerciseFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutPlanFragment;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExerciseViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutPlanViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutViewModel;
@@ -27,7 +28,7 @@ import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutViewModel;
 public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHolder> implements Serializable {
     Context context;
 
-    public ActivityAdapter (ArrayList<ActivityModel> activities){
+    public ActivityAdapter (ArrayList<ExerciseModel> activities){
         this.activities = activities;
     }
 
@@ -59,10 +60,10 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         // ... view holder defined above...
 
         // Store a member variable for the activities
-        private List<ActivityModel> activities;
+        private List<ExerciseModel> activities;
 
         // Pass in the activities array into the constructor
-        public ActivityAdapter(List<ActivityModel> activities) {
+        public ActivityAdapter(List<ExerciseModel> activities) {
             this.activities = activities;
         }
 
@@ -128,7 +129,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
     }
 
-    public void updateData(List<ActivityModel> activities){
+    public void updateData(List<ExerciseModel> activities){
             this.activities.clear();
             this.activities.addAll(activities);
             notifyDataSetChanged();

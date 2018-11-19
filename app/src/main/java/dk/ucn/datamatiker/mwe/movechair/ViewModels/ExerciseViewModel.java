@@ -25,8 +25,8 @@ public class ExerciseViewModel extends AndroidViewModel implements IFViewModel<E
     @Override
     public ExerciseModel getItem(int id) {
         //TODO Method that retrieves an ExerciseModel from DB
-        List<ActivityModel> temp = new DummyData().createExercises(10);
-        return (ExerciseModel) temp.get(id);
+        List<ExerciseModel> temp = new DummyData().createExercises(10);
+        return temp.get(id);
     }
 
 }

@@ -39,8 +39,8 @@ public class DummyData {
         }
         return equipment;
     }
-    public ArrayList<ActivityModel> createExercises(int numActivities) {
-        ArrayList<ActivityModel> exercises = new ArrayList<ActivityModel>();
+    public ArrayList<ExerciseModel> createExercises(int numActivities) {
+        ArrayList<ExerciseModel> exercises = new ArrayList<ExerciseModel>();
 
         /* DUMMY DATA - DIFFICULTY MODELS*/
         DifficultyModel beginner = new DifficultyModel("Beginner", 1);
@@ -67,16 +67,16 @@ public class DummyData {
         }
         return exercises;
     }
-    public ArrayList<ActivityModel> createWorkouts(int numActivities){
-        ArrayList<ActivityModel> workouts = new ArrayList<ActivityModel>();
+    public ArrayList<WorkoutModel> createWorkouts(int numActivities){
+        ArrayList<WorkoutModel> workouts = new ArrayList<WorkoutModel>();
 
         for(int i = 0; i < numActivities; i++){
             workouts.add(new WorkoutModel("Workout " + (i+1), "Description " + (i+1), i, i*10, i*2, createExercises(2)));
         }
         return workouts;
     }
-    public ArrayList<ActivityModel> createWorkoutPlans(int numActivities){
-        ArrayList<ActivityModel> workoutPlans = new ArrayList<ActivityModel>();
+    public ArrayList<WorkoutPlanModel> createWorkoutPlans(int numActivities){
+        ArrayList<WorkoutPlanModel> workoutPlans = new ArrayList<WorkoutPlanModel>();
 
         for(int i = 0; i < numActivities; i++){
             workoutPlans.add(new WorkoutPlanModel("Workout Plan " + (i+1), "Description " + (i+1), i, i*10, i*2, createWorkouts(2)));

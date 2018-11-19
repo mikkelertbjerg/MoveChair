@@ -20,6 +20,7 @@ import dk.ucn.datamatiker.mwe.movechair.MyWorkoutRecyclerViewAdapter;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.dummy.DummyContent;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.dummy.DummyContent.DummyItem;
+import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutViewModel;
 
 /**
@@ -77,7 +78,8 @@ public class WorkoutFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyWorkoutRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            // TODO dummy data
+            recyclerView.setAdapter(new MyWorkoutRecyclerViewAdapter(new DummyData().createWorkouts(5), mListener));
         }
         return view;
     }
@@ -145,6 +147,6 @@ public class WorkoutFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(WorkoutModel item);
     }
 }

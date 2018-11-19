@@ -1,17 +1,18 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 
 
 public class WorkoutModel extends ActivityModel {
 
-    private ArrayList<ActivityModel> exercises;
+    private List<ExerciseModel> exercises;
     private double workoutDuration;
     private double restDuration;
 
-    public WorkoutModel(String name, String description, int id, double workoutDuration, double restDuration, ArrayList<ActivityModel> exercises) {
+    public WorkoutModel(String name, String description, int id, double workoutDuration, double restDuration, List<ExerciseModel> exercises) {
         super(name, description, id);
         this.workoutDuration = workoutDuration;
         this.restDuration = restDuration;
@@ -20,7 +21,7 @@ public class WorkoutModel extends ActivityModel {
 
     public WorkoutModel(String name, String description, int id) {
         super(name, description, id);
-        this.exercises = new ArrayList<ActivityModel>();
+        this.exercises = new ArrayList<ExerciseModel>();
     }
 
     public double getWorkoutDuration() {
@@ -39,11 +40,11 @@ public class WorkoutModel extends ActivityModel {
         this.workoutDuration = workoutDuration;
     }
 
-    public ArrayList<ActivityModel> getExercises() {
+    public List<ExerciseModel> getExercises() {
         return exercises;
     }
 
-    public void setExercises(ArrayList<ActivityModel> exercises) {
+    public void setExercises(ArrayList<ExerciseModel> exercises) {
         this.exercises = exercises;
     }
 }

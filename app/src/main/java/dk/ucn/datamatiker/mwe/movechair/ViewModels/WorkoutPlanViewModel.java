@@ -22,7 +22,7 @@ public class WorkoutPlanViewModel extends ViewModel implements IFViewModel<Worko
     @Override
     public WorkoutPlanModel getItem(int id) {
         //TODO Method that retrieves an WorkoutPlanModel from DB
-        List<ActivityModel> temp = new DummyData().createWorkoutPlans(10);
+        List<WorkoutPlanModel> temp = new DummyData().createWorkoutPlans(10);
         return (WorkoutPlanModel) temp.get(id);
     }
 
