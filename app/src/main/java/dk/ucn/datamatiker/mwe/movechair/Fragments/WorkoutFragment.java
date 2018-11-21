@@ -86,13 +86,15 @@ public class WorkoutFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //Get activity object from fragment arguments
+        WorkoutModel activity = (WorkoutModel) getArguments().getSerializable("activity");
+
         mWorkoutViewModel = ViewModelProviders.of(this).get(WorkoutViewModel.class);
 
-        WorkoutModel workoutModel = (WorkoutModel) mWorkoutViewModel.getItem(1);
+        WorkoutModel workout = (WorkoutModel) mWorkoutViewModel.getItem(activity.getId());
 
-        //Get activity object from fragment arguments
         //This makes you able to change toolbar title
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(workoutModel.getName());
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(workout.getName());
 
         TextView workout_title = view.findViewById(R.id.workout_title);
         TextView workout_duration = view.findViewById(R.id.workout_duration);
@@ -103,13 +105,13 @@ public class WorkoutFragment extends Fragment {
         //TextView workout_equipment = view.findViewById(R.id.workout_equipment);
         TextView workout_description = view.findViewById(R.id.workout_description);
 
-        workout_title.setText("Title: " + workoutModel.getName());
-        workout_duration.setText("Duration: " + workoutModel.getWorkoutDuration());
-        workout_description.setText("Description: " + workoutModel.getName());
+        workout_title.setText("Title: " + workout.getName());
+        workout_duration.setText("Duration: " + workout.getWorkoutDuration());
+        workout_description.setText("Description: " + workout.getName());
 
         RecyclerView rvActivities = view.findViewById(R.id.rv_exercises);
         // Create adapter passing in the sample user data
-        ActivityAdapter adapter = new ActivityAdapter((List<ActivityModel>)(List<?>) workoutModel.getExercises());
+        ActivityAdapter adapter = new ActivityAdapter((List<ActivityModel>)(List<?>) workout.getExercises());
         //ActivityAdapter adapter = new ActivityAdapter(workoutModel.getExercises());
 
         // Attach the adapter to the recyclerview to populate items

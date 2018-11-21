@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import dk.ucn.datamatiker.mwe.movechair.ActivityAdapter;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
@@ -30,6 +31,7 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
     List<ActivityModel> workouts;
     List<ActivityModel> workoutPlans;
     ActivityListViewModel vModel;
+    ActivityAdapter activityAdapter;
 
     @Nullable
     @Override
@@ -61,27 +63,27 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
             case "Exercises":
                 exercises = new DummyData().createExercises(10);
                 // Create adapter passing in the sample user data
-               /* ActivityAdapter exerciseAdapter = new ActivityAdapter(exercises);
+                activityAdapter = new ActivityAdapter(exercises);
 
                 // Attach the adapter to the recyclerview to populate items
-                rvActivities.setAdapter(exerciseAdapter);*/
+                rvActivities.setAdapter(activityAdapter);
                 break;
 
             case "Workouts":
                 workouts = new DummyData().createWorkouts(5);
                 // Create adapter passing in the sample user data
-                /*MyWorkoutRecyclerViewAdapter workoutAdapter = new MyWorkoutRecyclerViewAdapter(workouts);
+                activityAdapter = new ActivityAdapter(workouts);
 
                 // Attach the adapter to the recyclerview to populate items
-                rvActivities.setAdapter(workoutAdapter);*/
+                rvActivities.setAdapter(activityAdapter);
                 break;
 
             case "Workout Plans":
                 workoutPlans = new DummyData().createWorkoutPlans(5);
-                /*MyWorkoutPlanRecyclerViewAdapter workoutPlanAdapter = new MyWorkoutPlanRecyclerViewAdapter(workouts);
+                activityAdapter = new ActivityAdapter(workoutPlans);
 
                 // Attach the adapter to the recyclerview to populate items
-                rvActivities.setAdapter(workoutPlanAdapter);*/
+                rvActivities.setAdapter(activityAdapter);
                 break;
 
             default:

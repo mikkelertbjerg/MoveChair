@@ -96,7 +96,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
                     default:
                         break;
                 }
-                //Create bundle with Exercise ID
+                //Create bundle with activity ID
                 final int position = viewHolder.getAdapterPosition();
                 Bundle bundle = new Bundle();
                 ActivityModel activity = activities.get(position);

@@ -1,5 +1,6 @@
 package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
+import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
@@ -86,27 +87,28 @@ public class WorkoutPlanFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mWorkoutPlanViewModel = ViewModelProviders.of(this).get(WorkoutPlanViewModel.class);
-
-        WorkoutPlanModel workoutPlanModel = (WorkoutPlanModel) mWorkoutPlanViewModel.getItem(1);
-
         //Get activity object from fragment arguments
         WorkoutPlanModel activity = (WorkoutPlanModel) getArguments().getSerializable("activity");
         //This makes you able to change toolbar title
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(workoutPlanModel.getName());
+
+        mWorkoutPlanViewModel = ViewModelProviders.of(this).get(WorkoutPlanViewModel.class);
+
+        WorkoutPlanModel workoutPlan = (WorkoutPlanModel) mWorkoutPlanViewModel.getItem(activity.getId());
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(workoutPlan.getName());
 
         TextView workout_plan_title = view.findViewById(R.id.workout_plan_title);
         TextView workout_plan_duration = view.findViewById(R.id.workout_plan_duration);
         TextView workout_plan_description = view.findViewById(R.id.workout_plan_description);
 
-        workout_plan_title.setText("Title: " + workoutPlanModel.getName());
-        workout_plan_duration.setText("Duration: " + workoutPlanModel.getWorkoutPlanDuration());
-        workout_plan_description.setText("Description: " + workoutPlanModel.getDescription());
+        workout_plan_title.setText("Title: " + workoutPlan.getName());
+        workout_plan_duration.setText("Duration: " + workoutPlan.getWorkoutPlanDuration());
+        workout_plan_description.setText("Description: " + workoutPlan.getDescription());
 
         RecyclerView rvActivities = view.findViewById(R.id.rv_workouts);
         // Create adapter passing in the sample user data
         //TODO dummy data
-        ActivityAdapter adapter = new ActivityAdapter((List<ActivityModel>)(List<?>) workoutPlanModel.getWorkouts());
+        ActivityAdapter adapter = new ActivityAdapter((List<ActivityModel>)(List<?>) workoutPlan.getWorkouts());
         // Attach the adapter to the recyclerview to populate items
         rvActivities.setAdapter(adapter);
         // Set layout manager to position the items

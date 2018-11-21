@@ -56,7 +56,7 @@ public class DummyData {
 
 
         for (int i = 0; i < numActivities; i++) {
-           exercises.add(new ExerciseModel("Exercise" + (i + 1), "Description " + (i + 1), i, 1, 90, null,
+           exercises.add(new ExerciseModel("Exercise " + (i + 1), "Description " + (i + 1), i, 1, 90, null,
                    categories, createMuscles(2), createEquipment(2)));
         }
         return exercises;

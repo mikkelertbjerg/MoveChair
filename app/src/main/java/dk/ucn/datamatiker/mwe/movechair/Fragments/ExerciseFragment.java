@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,13 +32,14 @@ public class ExerciseFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //Get activity object from fragment arguments
+        ExerciseModel activity = (ExerciseModel) getArguments().getSerializable("activity");
+
         mExerciseViewModel = ViewModelProviders.of(this).get(ExerciseViewModel.class);
 
-        ExerciseModel exercise = (ExerciseModel) mExerciseViewModel.getItem(1);
+        ExerciseModel exercise = (ExerciseModel) mExerciseViewModel.getItem(activity.getId());
         //This makes you able to change toolbar title
-        //((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Exercise name");
-        //Get activity object from fragment arguments
-        //TODO Replace this with db call to get specific exercise?
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(exercise.getName());
 
         VideoView exercise_video = view.findViewById(R.id.exercise_video);
         TextView exercise_title = view.findViewById(R.id.exercise_title);
@@ -55,12 +57,12 @@ public class ExerciseFragment extends Fragment {
         exercise_duration.setText("Duration: " + Double.toString(exercise.getDuration()));
         exercise_category.setText("Category: " + getCategories(exercise));
         exercise_equipment.setText("Equipment: " + getEquipment(exercise));
-        exercise_muscle.setText("Muscle group(s): " + getMuscles(exercise));
+        exercise_muscle.setText("Muscle(s): " + getMuscles(exercise));
 
     }
 
     private String getCategories(ExerciseModel exercise){
-        String categories = null;
+        String categories = "";
         for (int i = 0; i < exercise.getCategories().size(); i++) {
             String temp;
             temp = exercise.getCategories().get(i).getName();
@@ -75,7 +77,7 @@ public class ExerciseFragment extends Fragment {
     }
 
     private String getEquipment(ExerciseModel exercise){
-        String equipment = null;
+        String equipment = "";
         for (int i = 0; i < exercise.getEquipment().size(); i++) {
             String temp;
             temp = exercise.getEquipment().get(i).getName();
@@ -90,7 +92,7 @@ public class ExerciseFragment extends Fragment {
     }
 
     private String getMuscles(ExerciseModel exercise){
-        String muscles = null;
+        String muscles = "";
         for (int i = 0; i < exercise.getMuscles().size(); i++) {
             String temp;
             temp = exercise.getMuscles().get(i).getName();
