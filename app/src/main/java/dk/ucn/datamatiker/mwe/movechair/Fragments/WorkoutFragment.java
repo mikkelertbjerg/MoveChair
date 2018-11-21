@@ -107,7 +107,7 @@ public class WorkoutFragment extends Fragment {
 
         workout_title.setText("Title: " + workout.getName());
         workout_duration.setText("Duration: " + workout.getWorkoutDuration());
-        workout_description.setText("Description: " + workout.getName());
+        workout_description.setText("Description: " + workout.getDescription());
 
         RecyclerView rvActivities = view.findViewById(R.id.rv_exercises);
         // Create adapter passing in the sample user data

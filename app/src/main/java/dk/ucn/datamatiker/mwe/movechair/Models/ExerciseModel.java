@@ -56,25 +56,8 @@ public class ExerciseModel extends ActivityModel {
         this.media = media;
     }
 
-
-    public List<CategoryModel> getCategories() {
-        return categories;
-    }
-
     public void setCategories(ArrayList<CategoryModel> categories) {
         this.categories = categories;
-    }
-
-    public List<MuscleModel> getMuscles() {
-        return muscles;
-    }
-
-    public void setMuscles(ArrayList<MuscleModel> muscles) {
-        this.muscles = muscles;
-    }
-
-    public List<EquipmentModel> getEquipment() {
-        return equipment;
     }
 
     public void setEquipment(ArrayList<EquipmentModel> equipment) {
@@ -87,6 +70,51 @@ public class ExerciseModel extends ActivityModel {
 
     public void setPoints(double points){
         this.points = points;
+    }
+
+    public String getMuscles(){
+        String muscles = "";
+        for (int i = 0; i < this.muscles.size(); i++) {
+            String temp;
+            temp = this.muscles.get(i).getName();
+
+            if (this.muscles.size() > 1) {
+                muscles += temp + ", ";
+            } else {
+                muscles = temp;
+            }
+        }
+        return muscles;
+    }
+
+    public String getEquipment(){
+        String equipment = "";
+        for (int i = 0; i < this.equipment.size(); i++) {
+            String temp;
+            temp = this.equipment.get(i).getName();
+
+            if (this.equipment.size() > 1) {
+                equipment += temp + ", ";
+            } else {
+                equipment = temp;
+            }
+        }
+        return equipment;
+    }
+
+    public String getCategories(){
+        String categories = "";
+        for (int i = 0; i < this.categories.size(); i++) {
+            String temp;
+            temp = this.categories.get(i).getName();
+
+            if (this.categories.size() > 1) {
+                categories += temp + ", ";
+            } else {
+                categories = temp;
+            }
+        }
+        return categories;
     }
 
 }

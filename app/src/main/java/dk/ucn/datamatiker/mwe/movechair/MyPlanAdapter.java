@@ -29,8 +29,8 @@ public class MyPlanAdapter extends RecyclerView.Adapter<MyPlanAdapter.ViewHolder
             super(myPlanItemView);
 
             workoutTitle = myPlanItemView.findViewById(R.id.activity_title);
-            workoutPoints = myPlanItemView.findViewById(R.id.activity_points);
-            workoutDuration = myPlanItemView.findViewById(R.id.activity_duration);
+            workoutPoints = myPlanItemView.findViewById(R.id.activity_field_one);
+            workoutDuration = myPlanItemView.findViewById(R.id.activity_field_two);
 
         }
     }

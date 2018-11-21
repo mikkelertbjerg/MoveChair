@@ -58,4 +58,13 @@ public class WorkoutModel extends ActivityModel {
     public void setExercises(List<ExerciseModel> exercises) {
         this.exercises = exercises;
     }
+
+    public double getPoints(){
+        double points = 0;
+        for(int i = 0; i < exercises.size(); i++){
+            points += exercises.get(i).getPoints() * difficulty.getMultiplier();
+
+        }
+        return points;
+    }
 }

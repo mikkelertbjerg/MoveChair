@@ -55,54 +55,9 @@ public class ExerciseFragment extends Fragment {
         exercise_description.setText("Description: " + exercise.getDescription());
         exercise_points.setText("Points: " + Double.toString(exercise.getPoints()));
         exercise_duration.setText("Duration: " + Double.toString(exercise.getDuration()));
-        exercise_category.setText("Category: " + getCategories(exercise));
-        exercise_equipment.setText("Equipment: " + getEquipment(exercise));
-        exercise_muscle.setText("Muscle(s): " + getMuscles(exercise));
+        exercise_category.setText("Category: " + exercise.getCategories());
+        exercise_equipment.setText("Equipment: " + exercise.getEquipment());
+        exercise_muscle.setText("Muscle(s): " + exercise.getMuscles());
 
-    }
-
-    private String getCategories(ExerciseModel exercise){
-        String categories = "";
-        for (int i = 0; i < exercise.getCategories().size(); i++) {
-            String temp;
-            temp = exercise.getCategories().get(i).getName();
-
-            if (exercise.getCategories().size() > 1) {
-                categories += temp + ", ";
-            } else {
-                categories = temp;
-            }
-        }
-        return categories;
-    }
-
-    private String getEquipment(ExerciseModel exercise){
-        String equipment = "";
-        for (int i = 0; i < exercise.getEquipment().size(); i++) {
-            String temp;
-            temp = exercise.getEquipment().get(i).getName();
-
-            if (exercise.getEquipment().size() > 1) {
-                equipment += temp + ", ";
-            } else {
-                equipment = temp;
-            }
-        }
-        return equipment;
-    }
-
-    private String getMuscles(ExerciseModel exercise){
-        String muscles = "";
-        for (int i = 0; i < exercise.getMuscles().size(); i++) {
-            String temp;
-            temp = exercise.getMuscles().get(i).getName();
-
-            if (exercise.getMuscles().size() > 1) {
-                muscles += temp + ", ";
-            } else {
-                muscles = temp;
-            }
-        }
-        return muscles;
     }
 }

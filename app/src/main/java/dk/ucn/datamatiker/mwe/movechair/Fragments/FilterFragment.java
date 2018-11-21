@@ -86,7 +86,7 @@ public class FilterFragment extends Fragment implements View.OnClickListener {
         filters.add(difficultyItems);
     }
 
-    private List<ActivityModel> filterActivities(List<ActivityModel> activities){
+/*    private List<ActivityModel> filterActivities(List<ActivityModel> activities){
         List<ActivityModel> tempList = new ArrayList<>();
         switch(activities.get(0).getClass().getSimpleName()){
             case "Exercise":
@@ -129,7 +129,7 @@ public class FilterFragment extends Fragment implements View.OnClickListener {
         }
         Log.d("list size", tempList.size() + "");
         return tempList;
-    }
+    }*/
 
     private void getFilters(){
         for(int i = 0; i < filters.size(); i++){

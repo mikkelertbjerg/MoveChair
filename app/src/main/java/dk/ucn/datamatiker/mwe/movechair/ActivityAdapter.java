@@ -19,6 +19,8 @@ import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutPlanFragment;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExerciseViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutPlanViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutViewModel;
@@ -43,8 +45,8 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         // for any view that will be set as you render a row
         //public ImageView activityItemIcon;
         public TextView activityItemTitle;
-        public TextView activityItemDuration;
-        public TextView activityItemPoints;
+        public TextView activityFieldOne;
+        public TextView activityFieldTwo;
 
 
         // We also create a constructor that accepts the entire item row
@@ -56,8 +58,8 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
             //activityItemIcon = (ImageView) activityItemView.findViewById(R.id.activity_item_icon);
             activityItemTitle = (TextView) activityItemView.findViewById(R.id.activity_title);
-            activityItemDuration = (TextView) activityItemView.findViewById(R.id.activity_duration);
-            activityItemPoints = (TextView) activityItemView.findViewById(R.id.activity_points);
+            activityFieldOne = (TextView) activityItemView.findViewById(R.id.activity_field_one);
+            activityFieldTwo = (TextView) activityItemView.findViewById(R.id.activity_field_two);
         }
     }
 
@@ -100,7 +102,6 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
                 final int position = viewHolder.getAdapterPosition();
                 Bundle bundle = new Bundle();
                 ActivityModel activity = activities.get(position);
-                Log.d("", "Size(): " + activities.size());
                 bundle.putSerializable("activity", activity);
                 fragment.setArguments(bundle);
                 mainActivity.switchFragment(fragment);
@@ -112,16 +113,42 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        // Get the data model based on position
-        ActivityModel activityModel = activities.get(position);
-        // Set item views based on your views and data model
         //ImageView activityItemIcon = viewHolder.activityItemIcon;
         TextView activityItemTitle = viewHolder.activityItemTitle;
-        TextView activityItemDuration = viewHolder.activityItemDuration;
-        TextView activityItemPoints = viewHolder.activityItemPoints;
+        TextView activityFieldOne = viewHolder.activityFieldOne;
+        TextView activityFieldTwo = viewHolder.activityFieldTwo;
+
+        // Get the data model based on position
+        ActivityModel activity = activities.get(position);
+        String type = activities.get(0).getClass().getSimpleName();
+
+        // Set item views based on your views and data model
+        switch(type){
+            case "ExerciseModel":
+                ExerciseModel exercise = (ExerciseModel) activity;
+                activityItemTitle.setText("Title: " + exercise.getName());
+                activityFieldOne.setText("Muscle(s): " + exercise.getMuscles());
+                activityFieldTwo.setText("Points: " + String.valueOf(exercise.getPoints()));
+                break;
+
+            case "WorkoutModel":
+                WorkoutModel workout = (WorkoutModel) activity;
+                activityItemTitle.setText("Title: " + workout.getName());
+                activityFieldOne.setText("Difficulty: " + workout.getDifficulty().getName());
+                activityFieldTwo.setText("Points: " + String.valueOf(workout.getPoints()));
+                break;
+
+                case "WorkoutPlanModel":
+                    WorkoutPlanModel workoutPlan = (WorkoutPlanModel) activity;
+                    activityItemTitle.setText("Title: " + workoutPlan.getName());
+                    activityFieldOne.setText("Weeks: " + String.valueOf(workoutPlan.getWorkoutPlanDuration()));
+                    activityFieldTwo.setText("Rest days: " + String.valueOf(workoutPlan.getRestDays()));
+                    break;
+
+        }
+
+
         //activityItemIcon.setImageIcon(activitiesListItem.getImg());
-        activityItemTitle.setText("Title: " + activityModel.getName());
-        activityItemDuration.setText("Duration: " + String.valueOf(activityModel.getName()));
 
     }
 

@@ -70,8 +70,8 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         //Dummy data for upcoming workout
         //TODO change to values from DB
         TextView workout_title = getActivity().findViewById(R.id.activity_title);
-        TextView workout_duration = getActivity().findViewById(R.id.activity_duration);
-        TextView workout_points = getActivity().findViewById(R.id.activity_points);
+        TextView workout_duration = getActivity().findViewById(R.id.activity_field_one);
+        TextView workout_points = getActivity().findViewById(R.id.activity_field_two);
 
         getActivity().findViewById(R.id.activity_divider).setAlpha(0);
         workout_title.setText("Title: Lord");
