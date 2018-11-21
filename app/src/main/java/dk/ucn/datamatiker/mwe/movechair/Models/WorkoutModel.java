@@ -11,17 +11,20 @@ public class WorkoutModel extends ActivityModel {
     private List<ExerciseModel> exercises;
     private double workoutDuration;
     private double restDuration;
+    private DifficultyModel difficulty;
 
-    public WorkoutModel(String name, String description, int id, double workoutDuration, double restDuration, List<ExerciseModel> exercises) {
+    public WorkoutModel(String name, String description, int id, double workoutDuration, double restDuration, DifficultyModel difficulty, List<ExerciseModel> exercises) {
         super(name, description, id);
         this.workoutDuration = workoutDuration;
         this.restDuration = restDuration;
+        this.difficulty = difficulty;
         this.exercises = exercises;
     }
 
     public WorkoutModel(String name, String description, int id) {
         super(name, description, id);
-        this.exercises = new ArrayList<ExerciseModel>();
+        this.exercises = new ArrayList<ExerciseModel>() {
+        };
     }
 
     public double getWorkoutDuration() {
@@ -40,11 +43,19 @@ public class WorkoutModel extends ActivityModel {
         this.workoutDuration = workoutDuration;
     }
 
+    public DifficultyModel getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(DifficultyModel difficulty) {
+        this.difficulty = difficulty;
+    }
+
     public List<ExerciseModel> getExercises() {
         return exercises;
     }
 
-    public void setExercises(ArrayList<ExerciseModel> exercises) {
+    public void setExercises(List<ExerciseModel> exercises) {
         this.exercises = exercises;
     }
 }

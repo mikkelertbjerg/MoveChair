@@ -7,24 +7,21 @@ public class ExerciseModel extends ActivityModel {
     private double points;
     private double duration;
     private ArrayList<MediaModel> media;
-    private ArrayList<DifficultyModel> difficulties;
     private ArrayList<CategoryModel> categories;
-    private ArrayList<MuscleGroupModel> muscleGroups;
+    private ArrayList<MuscleModel> muscles;
     private ArrayList<EquipmentModel> equipment;
 
     public ExerciseModel(String name, String description, int id, double points, int duration,
                          ArrayList<MediaModel> media,
-                         ArrayList<DifficultyModel> difficulties,
                          ArrayList<CategoryModel> categories,
-                         ArrayList<MuscleGroupModel> muscleGroups,
+                         ArrayList<MuscleModel> muscles,
                          ArrayList<EquipmentModel> equipment) {
         super(name, description, id);
         this.points = points;
         this.duration = duration;
         this.media = media;
-        this.difficulties = difficulties;
         this.categories = categories;
-        this.muscleGroups = muscleGroups;
+        this.muscles = muscles;
         this.equipment = equipment;
     }
 
@@ -34,9 +31,8 @@ public class ExerciseModel extends ActivityModel {
         this.duration = duration;
         this.categories = new ArrayList<CategoryModel>();
         this.media = new ArrayList<MediaModel>();
-        this.difficulties = new ArrayList<DifficultyModel>();
         this.equipment = new ArrayList<EquipmentModel>();
-        this.muscleGroups = new ArrayList<MuscleGroupModel>();
+        this.muscles = new ArrayList<MuscleModel>();
     }
 
     public ExerciseModel() {
@@ -59,67 +55,21 @@ public class ExerciseModel extends ActivityModel {
         this.media = media;
     }
 
-    public ArrayList<DifficultyModel> getDifficulties() {
-        return difficulties;
-    }
-
-    public void setDifficulties(ArrayList<DifficultyModel> difficulties) {
-        this.difficulties = difficulties;
-    }
-
-
-    public String printDifficulties() {
-        String temp = "";
-        for(int i = 0; i < this.difficulties.size(); i++){
-            temp += this.difficulties.get(i).getName();
-
-            if (i < this.difficulties.size()-1) {
-                temp += ", ";
-            }
-        }
-
-        return temp;
-    }
-
 
     public ArrayList<CategoryModel> getCategories() {
         return categories;
-    }
-
-    public String printCategories(){
-        String temp = "";
-        for(int i = 0; i < this.categories.size(); i++){
-            temp += this.categories.get(i).getName();
-
-            if(i < this.difficulties.size()-1){
-                temp += ", ";
-            }
-        }
-        return temp;
     }
 
     public void setCategories(ArrayList<CategoryModel> categories) {
         this.categories = categories;
     }
 
-    public ArrayList<MuscleGroupModel> getMuscleGroups() {
-        return muscleGroups;
+    public ArrayList<MuscleModel> getMuscles() {
+        return muscles;
     }
 
-    public void setMuscleGroups(ArrayList<MuscleGroupModel> muscleGroups) {
-        this.muscleGroups = muscleGroups;
-    }
-
-   public String printMuscleGroups(){
-        String temp = "";
-        for(int i = 0; i < this.muscleGroups.size(); i++){
-            temp += this.muscleGroups.get(i).getName();
-
-            if(i < this.muscleGroups.size()-1){
-                temp += ", ";
-            }
-        }
-        return temp;
+    public void setMuscles(ArrayList<MuscleModel> muscles) {
+        this.muscles = muscles;
     }
 
     public ArrayList<EquipmentModel> getEquipment() {
@@ -128,18 +78,6 @@ public class ExerciseModel extends ActivityModel {
 
     public void setEquipment(ArrayList<EquipmentModel> equipment) {
         this.equipment = equipment;
-    }
-
-   public String printEquipment(){
-        String temp = "";
-        for(int i = 0; i < this.equipment.size(); i++){
-            temp += this.equipment.get(i).getName();
-
-            if(i < this.equipment.size()-1){
-                temp += ", ";
-            }
-        }
-        return temp;
     }
 
     public double getPoints(){
