@@ -4,14 +4,12 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExerciseViewModel;
@@ -48,8 +46,7 @@ public class ExerciseFragment extends Fragment {
         TextView exercise_duration = view.findViewById(R.id.exercise_duration);
         TextView exercise_category = view.findViewById(R.id.exercise_category);
         TextView exercise_equipment = view.findViewById(R.id.exercise_equipment);
-        TextView exercise_muscle_group = view.findViewById(R.id.exercise_muscle_group);
-        TextView exercise_difficulty = view.findViewById(R.id.exercise_difficulty);
+        TextView exercise_muscle = view.findViewById(R.id.exercise_muscles);
 
         //TODO exercise_video
         exercise_title.setText("Title: " + exercise.getName());
@@ -57,10 +54,8 @@ public class ExerciseFragment extends Fragment {
         exercise_points.setText("Points: " + Double.toString(exercise.getPoints()));
         exercise_duration.setText("Duration: " + Double.toString(exercise.getDuration()));
         exercise_category.setText("Category: " + getCategories(exercise));
-
-/*      exercise_equipment.setText("Equipment: " + exercise.printEquipment());
-        exercise_muscle_group.setText("Muscle group(s): " + exercise.printMuscleGroups());
-        exercise_difficulty.setText("Difficulty: " + exercise.printDifficulties());*/
+        exercise_equipment.setText("Equipment: " + getEquipment(exercise));
+        exercise_muscle.setText("Muscle group(s): " + getMuscles(exercise));
 
     }
 
@@ -77,5 +72,35 @@ public class ExerciseFragment extends Fragment {
             }
         }
         return categories;
+    }
+
+    private String getEquipment(ExerciseModel exercise){
+        String equipment = null;
+        for (int i = 0; i < exercise.getEquipment().size(); i++) {
+            String temp;
+            temp = exercise.getEquipment().get(i).getName();
+
+            if (exercise.getEquipment().size() > 1) {
+                equipment += temp + ", ";
+            } else {
+                equipment = temp;
+            }
+        }
+        return equipment;
+    }
+
+    private String getMuscles(ExerciseModel exercise){
+        String muscles = null;
+        for (int i = 0; i < exercise.getMuscles().size(); i++) {
+            String temp;
+            temp = exercise.getMuscles().get(i).getName();
+
+            if (exercise.getMuscles().size() > 1) {
+                muscles += temp + ", ";
+            } else {
+                muscles = temp;
+            }
+        }
+        return muscles;
     }
 }

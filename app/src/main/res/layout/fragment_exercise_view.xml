@@ -58,12 +58,12 @@
         app:layout_constraintTop_toBottomOf="@+id/exercise_title" />
 
     <TextView
-        android:id="@+id/exercise_muscle_group"
+        android:id="@+id/exercise_muscles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/exercise_muscle_group"
+        android:text="@string/exercise_muscle"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/exercise_difficulty" />
@@ -86,7 +86,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/exercise_equipment"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exercise_muscle_group" />
+        app:layout_constraintTop_toBottomOf="@+id/exercise_muscles" />
 
     <TextView
         android:id="@+id/exercise_description"

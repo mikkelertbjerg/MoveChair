@@ -22,7 +22,6 @@ import dk.ucn.datamatiker.mwe.movechair.Fragments.ProfileFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.MyPlanFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutPlanFragment;
-import dk.ucn.datamatiker.mwe.movechair.Fragments.dummy.DummyContent;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 

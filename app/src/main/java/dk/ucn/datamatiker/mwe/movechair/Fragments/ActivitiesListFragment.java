@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
@@ -25,9 +26,9 @@ import dk.ucn.datamatiker.mwe.movechair.ViewModels.ActivityListViewModel;
 
 public class ActivitiesListFragment extends Fragment implements View.OnClickListener {
 
-    List<ExerciseModel> exercises;
-    List<WorkoutModel> workouts;
-    List<WorkoutPlanModel> workoutPlans;
+    List<ActivityModel> exercises;
+    List<ActivityModel> workouts;
+    List<ActivityModel> workoutPlans;
     ActivityListViewModel vModel;
 
     @Nullable

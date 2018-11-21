@@ -63,6 +63,7 @@
     <string name="exercise_difficulty">Difficulty: </string>
     <string name="exercise_category">Category: </string>
     <string name="exercise_muscle_group">Muscle group(s): </string>
+    <string name="exercise_muscle">Muscle(s): </string>
 
     <!-- Strings related to workouts -->
     <string name="workout_title">Title: </string>
