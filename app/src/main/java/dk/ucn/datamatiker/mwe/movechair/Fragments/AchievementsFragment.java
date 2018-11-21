@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import dk.ucn.datamatiker.mwe.movechair.Data.UserDAO;
 import dk.ucn.datamatiker.mwe.movechair.R;
 
 public class AchievementsFragment extends Fragment {
@@ -27,5 +29,10 @@ public class AchievementsFragment extends Fragment {
 
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Achievements");
+
+        UserDAO dao = new UserDAO();
+        Log.d("login attempt returned: ", dao.login("mail@mail.com", "12345").toString());
     }
+
+
 }

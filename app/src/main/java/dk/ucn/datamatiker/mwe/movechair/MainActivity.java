@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
+import dk.ucn.datamatiker.mwe.movechair.Data.UserDAO;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.AchievementsFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.ActivitiesFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.ActivityLogFragment;
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements WorkoutPlanFragme
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
 
         //Adding default page fragment
         HomeFragment startFragment = new HomeFragment();
