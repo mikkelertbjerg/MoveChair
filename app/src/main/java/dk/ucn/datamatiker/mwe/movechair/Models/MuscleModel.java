@@ -1,6 +1,6 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
-public class MuscleModel {
+public class MuscleModel{
     private String name;
 
     public MuscleModel(String name){

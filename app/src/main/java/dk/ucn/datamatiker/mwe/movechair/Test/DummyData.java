@@ -1,6 +1,7 @@
 package dk.ucn.datamatiker.mwe.movechair.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.CategoryModel;
@@ -15,41 +16,32 @@ import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 
 public class DummyData {
 
-    public ArrayList<MuscleModel> createMuscles(int numActivities){
-        ArrayList<MuscleModel> muscles = new ArrayList<MuscleModel>();
+    public List<MuscleModel> createMuscles(int numActivities){
+        List<MuscleModel> muscles = new ArrayList<MuscleModel>();
 
         for(int i = 0; i < numActivities; i++){
             muscles.add(new MuscleModel("Muscle" + (i+1)));
         }
         return muscles;
     }
-    public ArrayList<MuscleGroupModel> createMuscleGroups(int numActivities){
-        ArrayList<MuscleGroupModel> muscleGroups = new ArrayList<MuscleGroupModel>();
+    public List<MuscleGroupModel> createMuscleGroups(int numActivities){
+        List<MuscleGroupModel> muscleGroups = new ArrayList<MuscleGroupModel>();
 
         for(int i = 0; i < numActivities; i++){
             muscleGroups.add(new MuscleGroupModel("Muscle Group" + (i+1), createMuscles(3)));
         }
         return muscleGroups;
     }
-    public ArrayList<EquipmentModel> createEquipment(int numActivities){
-        ArrayList<EquipmentModel> equipment = new ArrayList<EquipmentModel>();
+    public List<EquipmentModel> createEquipment(int numActivities){
+        List<EquipmentModel> equipment = new ArrayList<EquipmentModel>();
 
         for(int i = 0; i < numActivities; i++){
             equipment.add(new EquipmentModel("Equipment" + (i+1)));
         }
         return equipment;
     }
-    public ArrayList<ExerciseModel> createExercises(int numActivities) {
-        ArrayList<ExerciseModel> exercises = new ArrayList<ExerciseModel>();
-
-        /* DUMMY DATA - DIFFICULTY MODELS*/
-        DifficultyModel beginner = new DifficultyModel("Beginner", 1);
-        DifficultyModel intermediate = new DifficultyModel("Intermediate", 1.25);
-        DifficultyModel advanced = new DifficultyModel("Advanced", 1.5);
-        ArrayList<DifficultyModel> difficulties = new ArrayList<>();
-        difficulties.add(beginner);
-        difficulties.add(intermediate);
-        difficulties.add(advanced);
+    public List<ActivityModel> createExercises(int numActivities) {
+        List<ActivityModel> exercises = new ArrayList<>();
 
         /* DUMMY DATA - CATEGORY MODELS*/
         CategoryModel hypertrophy = new CategoryModel("Hypertrophy");
@@ -60,30 +52,37 @@ public class DummyData {
         categories.add(cardio);
         categories.add(strength);
 
+        createMuscleGroups(numActivities);
+
 
         for (int i = 0; i < numActivities; i++) {
-            exercises.add(new ExerciseModel("Exercise" + (i + 1), "Description " + (i + 1), i, 1, 90, null,
-                    difficulties, categories, createMuscleGroups(2), createEquipment(2)));
+           exercises.add(new ExerciseModel("Exercise" + (i + 1), "Description " + (i + 1), i, 1, 90, null,
+                   categories, createMuscles(2), createEquipment(2)));
         }
         return exercises;
     }
-    public ArrayList<WorkoutModel> createWorkouts(int numActivities){
-        ArrayList<WorkoutModel> workouts = new ArrayList<WorkoutModel>();
+    public List<ActivityModel> createWorkouts(int numActivities){
+        List<ActivityModel> workouts = new ArrayList<>();
+
+        /* DUMMY DATA - DIFFICULTY MODELS*/
+        DifficultyModel beginner = new DifficultyModel("Beginner", 1);
+        DifficultyModel intermediate = new DifficultyModel("Intermediate", 1.25);
+        DifficultyModel advanced = new DifficultyModel("Advanced", 1.5);
 
         for(int i = 0; i < numActivities; i++){
-            workouts.add(new WorkoutModel("Workout " + (i+1), "Description " + (i+1), i, i*10, i*2, createExercises(2)));
+            workouts.add(new WorkoutModel("Workout " + (i+1), "Description " + (i+1), i, i*10, i*2, beginner, (List<ExerciseModel>)(List<?>)createExercises(2)));
         }
         return workouts;
     }
-    public ArrayList<WorkoutPlanModel> createWorkoutPlans(int numActivities){
-        ArrayList<WorkoutPlanModel> workoutPlans = new ArrayList<WorkoutPlanModel>();
-
+    public List<ActivityModel> createWorkoutPlans(int numActivities){
+        List<ActivityModel> workoutPlans = new ArrayList<>();
         for(int i = 0; i < numActivities; i++){
-            workoutPlans.add(new WorkoutPlanModel("Workout Plan " + (i+1), "Description " + (i+1), i, i*10, i*2, createWorkouts(2)));
+            workoutPlans.add(new WorkoutPlanModel("Workout Plan " + (i+1), "Description " + (i+1), i, i*10, i*2, (List<WorkoutModel>)(List<?>)createWorkouts(2)));
         }
         return workoutPlans;
     }
 
+/*
     public ArrayList<ActivityModel> createDummyData() {
         ArrayList<ActivityModel> activities = new ArrayList<ActivityModel>();
         ArrayList<ExerciseModel> armBlaster = new ArrayList<ExerciseModel>();
@@ -93,22 +92,30 @@ public class DummyData {
         ArrayList<WorkoutModel> projectArms = new ArrayList<WorkoutModel>();
 
 
-        /* DUMMY DATA - EQUIPMENT MODELS*/
+        */
+/* DUMMY DATA - EQUIPMENT MODELS*//*
+
         EquipmentModel barbell = new EquipmentModel("Barbell");
         EquipmentModel dumbbell = new EquipmentModel("Dumbbell");
         EquipmentModel kettlebell = new EquipmentModel("Kettlebell");
 
-        /* DUMMY DATA - DIFFICULTY MODELS*/
+        */
+/* DUMMY DATA - DIFFICULTY MODELS*//*
+
         DifficultyModel beginner = new DifficultyModel("Beginner", 1);
         DifficultyModel intermediate = new DifficultyModel("Intermediate", 1.25);
         DifficultyModel advanced = new DifficultyModel("Advanced", 1.5);
 
-        /* DUMMY DATA - CATEGORY MODELS*/
+        */
+/* DUMMY DATA - CATEGORY MODELS*//*
+
         CategoryModel hypertrophy = new CategoryModel("Hypertrophy");
         CategoryModel cardio = new CategoryModel("Cardio");
         CategoryModel stregth = new CategoryModel("Strength");
 
-        /* DUMMY DATA - MUSCLE MODELS */
+        */
+/* DUMMY DATA - MUSCLE MODELS *//*
+
         MuscleModel biceps = new MuscleModel("biceps");
         MuscleModel triceps = new MuscleModel("triceps");
         MuscleModel frontDelt = new MuscleModel("front deltoid");
@@ -120,7 +127,9 @@ public class DummyData {
         MuscleModel trapezius = new MuscleModel("trapezius");
         MuscleModel rhomboids = new MuscleModel("rhomboids");
 
-        /* DUMMY DATA - MUSCLEGROUP MODELS*/
+        */
+/* DUMMY DATA - MUSCLEGROUP MODELS*//*
+
         MuscleGroupModel arm = new MuscleGroupModel("Arm");
         arm.getMuscles().add(biceps);
         arm.getMuscles().add(triceps);
@@ -136,11 +145,15 @@ public class DummyData {
         chest.getMuscles().add(upperPecs);
         chest.getMuscles().add(lowerPecs);
 
-        /* DUMMY DATA - MEDIA TYPE MODELS*/
+        */
+/* DUMMY DATA - MEDIA TYPE MODELS*//*
+
         MediaTypeModel video = new MediaTypeModel("Video");
         MediaTypeModel audio = new MediaTypeModel("Audio");
 
-        /* DUMMY DATA EXERCISE MODELS */
+        */
+/* DUMMY DATA EXERCISE MODELS *//*
+
         ExerciseModel curls = new ExerciseModel("Bicep curl", "Raise the arm from the hip, towards the shoulder. Pin the elbow, and tighten the core", 1, 1, 90);
         curls.getEquipment().add(dumbbell);
         curls.getDifficulties().add(beginner);
@@ -205,5 +218,6 @@ public class DummyData {
 
         return activities;
     }
+*/
 
 }

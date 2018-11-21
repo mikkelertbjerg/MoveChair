@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExerciseViewModel;
@@ -34,7 +35,7 @@ public class ExerciseFragment extends Fragment {
 
         mExerciseViewModel = ViewModelProviders.of(this).get(ExerciseViewModel.class);
 
-        ExerciseModel exercise = mExerciseViewModel.getItem(1);
+        ExerciseModel exercise = (ExerciseModel) mExerciseViewModel.getItem(1);
         //This makes you able to change toolbar title
         //((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Exercise name");
         //Get activity object from fragment arguments
@@ -55,10 +56,26 @@ public class ExerciseFragment extends Fragment {
         exercise_description.setText("Description: " + exercise.getDescription());
         exercise_points.setText("Points: " + Double.toString(exercise.getPoints()));
         exercise_duration.setText("Duration: " + Double.toString(exercise.getDuration()));
-        exercise_category.setText("Category: " + exercise.printCategories());
-        exercise_equipment.setText("Equipment: " + exercise.printEquipment());
-        exercise_muscle_group.setText("Muscle group(s): " + exercise.printMuscleGroups());
-        exercise_difficulty.setText("Difficulty: " + exercise.printDifficulties());
+        exercise_category.setText("Category: " + getCategories(exercise));
 
+/*      exercise_equipment.setText("Equipment: " + exercise.printEquipment());
+        exercise_muscle_group.setText("Muscle group(s): " + exercise.printMuscleGroups());
+        exercise_difficulty.setText("Difficulty: " + exercise.printDifficulties());*/
+
+    }
+
+    private String getCategories(ExerciseModel exercise){
+        String categories = null;
+        for (int i = 0; i < exercise.getCategories().size(); i++) {
+            String temp;
+            temp = exercise.getCategories().get(i).getName();
+
+            if (exercise.getCategories().size() > 1) {
+                categories += temp + ", ";
+            } else {
+                categories = temp;
+            }
+        }
+        return categories;
     }
 }

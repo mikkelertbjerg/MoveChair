@@ -93,10 +93,10 @@ public class FilterFragment extends Fragment implements View.OnClickListener {
                 for(int i = 0; i < activities.size(); i++) {
                     ExerciseModel exerciseModel = (ExerciseModel) activities.get(i);
                     boolean passed = true;
-                    for (int j = 0; j < exerciseModel.getMuscleGroups().size(); j++) {
-                        if (sharedPreferences.getBoolean(exerciseModel.getMuscleGroups().get(j).getName(), false) == false) {
+                    for (int j = 0; j < exerciseModel.getMuscles().size(); j++) {
+                        if (sharedPreferences.getBoolean(exerciseModel.getMuscles().get(j).getName(), false) == false) {
                             String temp = "false";
-                            if (sharedPreferences.getBoolean(exerciseModel.getMuscleGroups().get(j).getName(), false)) {
+                            if (sharedPreferences.getBoolean(exerciseModel.getMuscles().get(j).getName(), false)) {
                                 temp = "true";
                             }
                             Log.d("musclegroup", "musclegroup" + exerciseModel.getEquipment().get(j).getName() + "" + temp);

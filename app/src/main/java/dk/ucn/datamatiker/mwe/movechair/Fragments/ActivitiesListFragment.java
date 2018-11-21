@@ -15,24 +15,19 @@ import android.widget.Button;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
-import dk.ucn.datamatiker.mwe.movechair.MyWorkoutPlanRecyclerViewAdapter;
-import dk.ucn.datamatiker.mwe.movechair.MyWorkoutRecyclerViewAdapter;
 import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import dk.ucn.datamatiker.mwe.movechair.ActivityAdapter;
 import dk.ucn.datamatiker.mwe.movechair.MainActivity;
-import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ActivityListViewModel;
-import dk.ucn.datamatiker.mwe.movechair.ViewModels.HomeViewModel;
 
 public class ActivitiesListFragment extends Fragment implements View.OnClickListener {
 
-    ArrayList<ExerciseModel> exercises;
-    ArrayList<WorkoutModel> workouts;
-    ArrayList<WorkoutPlanModel> workoutPlans;
+    List<ExerciseModel> exercises;
+    List<WorkoutModel> workouts;
+    List<WorkoutPlanModel> workoutPlans;
     ActivityListViewModel vModel;
 
     @Nullable

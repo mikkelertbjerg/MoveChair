@@ -14,14 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import dk.ucn.datamatiker.mwe.movechair.ActivityAdapter;
-import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
-import dk.ucn.datamatiker.mwe.movechair.MyWorkoutPlanRecyclerViewAdapter;
-import dk.ucn.datamatiker.mwe.movechair.MyWorkoutRecyclerViewAdapter;
 import dk.ucn.datamatiker.mwe.movechair.R;
-import dk.ucn.datamatiker.mwe.movechair.Fragments.dummy.DummyContent;
-import dk.ucn.datamatiker.mwe.movechair.Fragments.dummy.DummyContent.DummyItem;
 import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutPlanViewModel;
 
@@ -37,7 +35,6 @@ public class WorkoutPlanFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
     private WorkoutPlanViewModel mWorkoutPlanViewModel;
 
     /**
@@ -80,7 +77,7 @@ public class WorkoutPlanFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyWorkoutPlanRecyclerViewAdapter(new DummyData().createWorkoutPlans(5), mListener));
+            recyclerView.setAdapter(new ActivityAdapter(new DummyData().createWorkoutPlans(5)));
         }
         return view;
     }
@@ -91,7 +88,7 @@ public class WorkoutPlanFragment extends Fragment {
 
         mWorkoutPlanViewModel = ViewModelProviders.of(this).get(WorkoutPlanViewModel.class);
 
-        WorkoutPlanModel workoutPlanModel = mWorkoutPlanViewModel.getItem(1);
+        WorkoutPlanModel workoutPlanModel = (WorkoutPlanModel) mWorkoutPlanViewModel.getItem(1);
 
         //Get activity object from fragment arguments
         WorkoutPlanModel activity = (WorkoutPlanModel) getArguments().getSerializable("activity");
@@ -109,7 +106,7 @@ public class WorkoutPlanFragment extends Fragment {
         RecyclerView rvActivities = view.findViewById(R.id.rv_workouts);
         // Create adapter passing in the sample user data
         //TODO dummy data
-        MyWorkoutPlanRecyclerViewAdapter adapter = new MyWorkoutPlanRecyclerViewAdapter(new DummyData().createWorkoutPlans(5), mListener);
+        ActivityAdapter adapter = new ActivityAdapter((List<ActivityModel>)(List<?>) workoutPlanModel.getWorkouts());
         // Attach the adapter to the recyclerview to populate items
         rvActivities.setAdapter(adapter);
         // Set layout manager to position the items
@@ -117,7 +114,7 @@ public class WorkoutPlanFragment extends Fragment {
 
 
     }
-    @Override
+/*    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnListFragmentInteractionListener) {
@@ -132,7 +129,7 @@ public class WorkoutPlanFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
+    }*/
 
     /**
      * This interface must be implemented by activities that contain this

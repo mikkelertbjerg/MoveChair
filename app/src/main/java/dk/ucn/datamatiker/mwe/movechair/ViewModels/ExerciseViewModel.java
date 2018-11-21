@@ -11,7 +11,7 @@ import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 
-public class ExerciseViewModel extends AndroidViewModel implements IFViewModel<ExerciseModel> {
+public class ExerciseViewModel extends AndroidViewModel implements IFViewModel<ActivityModel> {
 
 
     public ExerciseViewModel(@NonNull Application application) {
@@ -19,14 +19,10 @@ public class ExerciseViewModel extends AndroidViewModel implements IFViewModel<E
     }
     //TODO Implement ExerciseViewModel
 
-
-
-
     @Override
-    public ExerciseModel getItem(int id) {
+    public ActivityModel getItem(int id) {
         //TODO Method that retrieves an ExerciseModel from DB
-        List<ExerciseModel> temp = new DummyData().createExercises(10);
-        return temp.get(id);
+        return new DummyData().createExercises(10).get(id);
     }
 
 }

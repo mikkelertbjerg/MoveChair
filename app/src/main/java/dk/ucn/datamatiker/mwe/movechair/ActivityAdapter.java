@@ -28,7 +28,11 @@ import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutViewModel;
 public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHolder> implements Serializable {
     Context context;
 
-    public ActivityAdapter (ArrayList<ExerciseModel> activities){
+    // Store a member variable for the activities
+    private List<ActivityModel> activities;
+
+    // Pass in the activities array into the constructor
+    public ActivityAdapter (List<ActivityModel> activities){
         this.activities = activities;
     }
 
@@ -58,14 +62,6 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
     }
 
         // ... view holder defined above...
-
-        // Store a member variable for the activities
-        private List<ExerciseModel> activities;
-
-        // Pass in the activities array into the constructor
-        public ActivityAdapter(List<ExerciseModel> activities) {
-            this.activities = activities;
-        }
 
     @Override
     public ActivityAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

@@ -14,12 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import dk.ucn.datamatiker.mwe.movechair.ActivityAdapter;
+import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
-import dk.ucn.datamatiker.mwe.movechair.MyWorkoutRecyclerViewAdapter;
 import dk.ucn.datamatiker.mwe.movechair.R;
-import dk.ucn.datamatiker.mwe.movechair.Fragments.dummy.DummyContent;
-import dk.ucn.datamatiker.mwe.movechair.Fragments.dummy.DummyContent.DummyItem;
 import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutViewModel;
 
@@ -35,7 +35,6 @@ public class WorkoutFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
     private WorkoutViewModel mWorkoutViewModel;
 
     /**
@@ -79,7 +78,7 @@ public class WorkoutFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             // TODO dummy data
-            recyclerView.setAdapter(new MyWorkoutRecyclerViewAdapter(new DummyData().createWorkouts(5), mListener));
+            recyclerView.setAdapter(new ActivityAdapter(new DummyData().createWorkouts(5)));
         }
         return view;
     }
@@ -89,7 +88,7 @@ public class WorkoutFragment extends Fragment {
 
         mWorkoutViewModel = ViewModelProviders.of(this).get(WorkoutViewModel.class);
 
-        WorkoutModel workoutModel = mWorkoutViewModel.getItem(1);
+        WorkoutModel workoutModel = (WorkoutModel) mWorkoutViewModel.getItem(1);
 
         //Get activity object from fragment arguments
         //This makes you able to change toolbar title
@@ -110,15 +109,16 @@ public class WorkoutFragment extends Fragment {
 
         RecyclerView rvActivities = view.findViewById(R.id.rv_exercises);
         // Create adapter passing in the sample user data
-        //TODO FIX THIS JONAS
-        ActivityAdapter adapter = new ActivityAdapter(workoutModel.getExercises());
+        ActivityAdapter adapter = new ActivityAdapter((List<ActivityModel>)(List<?>) workoutModel.getExercises());
+        //ActivityAdapter adapter = new ActivityAdapter(workoutModel.getExercises());
+
         // Attach the adapter to the recyclerview to populate items
         rvActivities.setAdapter(adapter);
         // Set layout manager to position the items
         rvActivities.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-    @Override
+/*    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnListFragmentInteractionListener) {
@@ -133,7 +133,7 @@ public class WorkoutFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
+    }*/
 
     /**
      * This interface must be implemented by activities that contain this

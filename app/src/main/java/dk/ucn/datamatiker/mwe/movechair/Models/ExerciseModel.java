@@ -1,21 +1,22 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ExerciseModel extends ActivityModel {
 
     private double points;
     private double duration;
-    private ArrayList<MediaModel> media;
-    private ArrayList<CategoryModel> categories;
-    private ArrayList<MuscleModel> muscles;
-    private ArrayList<EquipmentModel> equipment;
+    private List<MediaModel> media;
+    private List<CategoryModel> categories;
+    private List<MuscleModel> muscles;
+    private List<EquipmentModel> equipment;
 
     public ExerciseModel(String name, String description, int id, double points, int duration,
-                         ArrayList<MediaModel> media,
-                         ArrayList<CategoryModel> categories,
-                         ArrayList<MuscleModel> muscles,
-                         ArrayList<EquipmentModel> equipment) {
+                         List<MediaModel> media,
+                         List<CategoryModel> categories,
+                         List<MuscleModel> muscles,
+                         List<EquipmentModel> equipment) {
         super(name, description, id);
         this.points = points;
         this.duration = duration;
@@ -25,15 +26,15 @@ public class ExerciseModel extends ActivityModel {
         this.equipment = equipment;
     }
 
-    public ExerciseModel(String name, String description, int id, double points, int duration) {
+/*    public ExerciseModel(String name, String description, int id, double points, int duration) {
         super(name, description, id);
         this.points = points;
         this.duration = duration;
         this.categories = new ArrayList<CategoryModel>();
         this.media = new ArrayList<MediaModel>();
-        this.equipment = new ArrayList<EquipmentModel>();
         this.muscles = new ArrayList<MuscleModel>();
-    }
+        this.equipment = new ArrayList<EquipmentModel>();
+    }*/
 
     public ExerciseModel() {
 
@@ -47,7 +48,7 @@ public class ExerciseModel extends ActivityModel {
         this.duration = duration;
     }
 
-    public ArrayList<MediaModel> getMedia() {
+    public List<MediaModel> getMedia() {
         return media;
     }
 
@@ -56,7 +57,7 @@ public class ExerciseModel extends ActivityModel {
     }
 
 
-    public ArrayList<CategoryModel> getCategories() {
+    public List<CategoryModel> getCategories() {
         return categories;
     }
 
@@ -64,7 +65,7 @@ public class ExerciseModel extends ActivityModel {
         this.categories = categories;
     }
 
-    public ArrayList<MuscleModel> getMuscles() {
+    public List<MuscleModel> getMuscles() {
         return muscles;
     }
 
@@ -72,7 +73,7 @@ public class ExerciseModel extends ActivityModel {
         this.muscles = muscles;
     }
 
-    public ArrayList<EquipmentModel> getEquipment() {
+    public List<EquipmentModel> getEquipment() {
         return equipment;
     }
 
