@@ -30,8 +30,6 @@ public class AchievementsFragment extends Fragment {
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Achievements");
 
-        UserDAO dao = new UserDAO();
-        Log.d("login attempt returned: ", dao.login("mail@mail.com", "12345").toString());
     }
 
 

@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,7 +13,7 @@ import java.net.URL;
 
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 
-public class UserDAO implements DAOIF<UserModel> {
+public class UserDAO implements DAOIF<UserModel>  {
 
     private DAOIF<UserModel> dao;
 
@@ -42,5 +43,4 @@ public class UserDAO implements DAOIF<UserModel> {
 
         return new Gson().fromJson(reader, UserModel.class);
     }
-
 }
