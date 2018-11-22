@@ -2,63 +2,60 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_layout"
+    android:id="@+id/activity_log_item_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true">
+    android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/activity_icon"
+        android:id="@+id/activity_log_icon"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/wheelchair" />
 
     <TextView
-        android:id="@+id/activity_title"
+        android:id="@+id/activity_log_item_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/activity_title"
-        app:layout_constraintStart_toEndOf="@+id/activity_icon"
+        android:layout_marginEnd="8dp"
+        android:text="@string/activity_log_item_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/activity_log_icon"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/activity_field_one"
+        android:id="@+id/activity_log_item_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/activity_log_item_type"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/activity_log_icon" />
+
+    <TextView
+        android:id="@+id/activity_log_item_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/activity_duration"
+        android:text="@string/activity_log_item_date"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/activity_field_two"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/activity_points"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/activity_icon" />
-
     <View
-        android:id="@+id/activity_divider"
+        android:id="@+id/activity_log_item_divider"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="4dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_icon" />
-
+        app:layout_constraintTop_toBottomOf="@+id/activity_log_icon" />
 </android.support.constraint.ConstraintLayout>
