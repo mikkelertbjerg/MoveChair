@@ -12,12 +12,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.ParseException;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.ActivityAdapter;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
@@ -29,7 +32,11 @@ import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutViewModel;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class WorkoutFragment extends Fragment {
+public class WorkoutFragment extends Fragment implements View.OnClickListener {
+
+    //TODO DELETE THEESE/TESTING PURPOSE
+    private WorkoutModel workout;
+    private UserModel user;
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -89,9 +96,15 @@ public class WorkoutFragment extends Fragment {
         //Get activity object from fragment arguments
         WorkoutModel activity = (WorkoutModel) getArguments().getSerializable("activity");
 
+        Button startWorkoutButton = (Button) view.findViewById(R.id.start_workout_button);
+        startWorkoutButton.setOnClickListener(this);
+
+        //TODO DELETE THIS DUMMY DATA
+        user = new DummyData().createUser();
+
         mWorkoutViewModel = ViewModelProviders.of(this).get(WorkoutViewModel.class);
 
-        WorkoutModel workout = (WorkoutModel) mWorkoutViewModel.getItem(activity.getId());
+        workout = (WorkoutModel) mWorkoutViewModel.getItem(activity.getId());
 
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(workout.getName());
@@ -118,6 +131,15 @@ public class WorkoutFragment extends Fragment {
         rvActivities.setAdapter(adapter);
         // Set layout manager to position the items
         rvActivities.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    @Override
+    public void onClick(View v) {
+        try {
+            mWorkoutViewModel.addActivityToUser(user, workout);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
 /*    @Override

@@ -9,6 +9,38 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <TextView
+        android:id="@+id/exercise_category"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/exercise_category"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exercise_title" />
+
+    <Button
+        android:id="@+id/start_exercise_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="13dp"
+        android:text="@string/action_start_exercise"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exercise_video" />
+
+    <TextView
+        android:id="@+id/exercise_difficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/exercise_difficulty"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exercise_category" />
+
     <VideoView
         android:id="@+id/exercise_video"
         android:layout_width="wrap_content"
@@ -18,24 +50,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/exercise_title"
+        android:id="@+id/exercise_equipment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/exercise_title"
+        android:text="@string/exercise_equipment"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exercise_video" />
-
-    <TextView
-        android:id="@+id/exercise_duration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/exercise_duration"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exercise_video" />
+        app:layout_constraintTop_toBottomOf="@+id/exercise_muscles" />
 
     <TextView
         android:id="@+id/exercise_points"
@@ -48,14 +70,14 @@
         app:layout_constraintTop_toBottomOf="@+id/exercise_duration" />
 
     <TextView
-        android:id="@+id/exercise_category"
-        android:layout_width="0dp"
+        android:id="@+id/exercise_duration"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/exercise_category"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exercise_title" />
+        android:layout_marginEnd="8dp"
+        android:text="@string/exercise_duration"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/start_exercise_button" />
 
     <TextView
         android:id="@+id/exercise_muscles"
@@ -69,26 +91,6 @@
         app:layout_constraintTop_toBottomOf="@+id/exercise_difficulty" />
 
     <TextView
-        android:id="@+id/exercise_difficulty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/exercise_difficulty"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exercise_category" />
-
-    <TextView
-        android:id="@+id/exercise_equipment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/exercise_equipment"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exercise_muscles" />
-
-    <TextView
         android:id="@+id/exercise_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -100,5 +102,15 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/exercise_equipment" />
+
+    <TextView
+        android:id="@+id/exercise_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/exercise_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/start_exercise_button" />
 
 </android.support.constraint.ConstraintLayout>

@@ -146,12 +146,10 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
                     break;
 
         }
-
-
         //activityItemIcon.setImageIcon(activitiesListItem.getImg());
-
     }
 
+    //Unused method for filtering
     public void updateData(List<ExerciseModel> activities){
             this.activities.clear();
             this.activities.addAll(activities);

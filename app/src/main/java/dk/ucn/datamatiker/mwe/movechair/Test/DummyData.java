@@ -5,12 +5,15 @@ import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.CategoryModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.DailyLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.DifficultyModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.EquipmentModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.GenderModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.MediaTypeModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.MuscleGroupModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.MuscleModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 
@@ -80,6 +83,24 @@ public class DummyData {
             workoutPlans.add(new WorkoutPlanModel("Workout Plan " + (i+1), "Description " + (i+1), i, i*10, i*2, (List<WorkoutModel>)(List<?>)createWorkouts(2)));
         }
         return workoutPlans;
+    }
+
+    public UserModel createUser(){
+        List<DailyLogModel> dailyLogs = new ArrayList<DailyLogModel>();
+        GenderModel male = new GenderModel("1", "Male");
+
+        UserModel user = new UserModel();
+        user.setId("1");
+        user.setName("Lars");
+        user.setAge("65");
+        user.setWeight("65");
+        user.setHeight("175");
+        user.setEmail("lars@lars.lars");
+        user.setGender(male);
+        user.setDailyLogs(dailyLogs);
+
+
+        return user;
     }
 
 /*

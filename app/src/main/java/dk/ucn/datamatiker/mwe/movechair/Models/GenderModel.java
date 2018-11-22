@@ -8,9 +8,18 @@ public class GenderModel {
     @SerializedName("id")
     @Expose
     private String id;
+
     @SerializedName("name")
     @Expose
     private String name;
+
+    public GenderModel(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public GenderModel() {
+    }
 
     public String getId() {
         return id;

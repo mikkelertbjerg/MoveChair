@@ -2,6 +2,9 @@ package dk.ucn.datamatiker.mwe.movechair.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserModel {
 
     @SerializedName("id")
@@ -34,6 +37,26 @@ public class UserModel {
     @SerializedName("options")
     @Expose
     private OptionsModel options;
+
+    private List<DailyLogModel> dailyLogs;
+
+    public UserModel(String id, String name, String age, String weight, String height, String email, String hashedPassword, String salt, GenderModel gender, OptionsModel options) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.weight = weight;
+        this.height = height;
+        this.email = email;
+        this.hashedPassword = hashedPassword;
+        this.salt = salt;
+        this.gender = gender;
+        this.options = options;
+        this.dailyLogs = new ArrayList<DailyLogModel>();
+    }
+
+    public UserModel() {
+
+    }
 
     public String getId() {
         return id;
@@ -115,4 +138,11 @@ public class UserModel {
         this.options = options;
     }
 
+    public List<DailyLogModel> getDailyLogs() {
+        return dailyLogs;
+    }
+
+    public void setDailyLogs(List<DailyLogModel> dailyLogs) {
+        this.dailyLogs = dailyLogs;
+    }
 }

@@ -64,6 +64,7 @@
     <string name="exercise_category">Category: </string>
     <string name="exercise_muscle_group">Muscle group(s): </string>
     <string name="exercise_muscle">Muscle(s): </string>
+    <string name="action_start_exercise">Start Exercise</string>
 
     <!-- Strings related to workouts -->
     <string name="workout_title">Title: </string>

@@ -8,16 +8,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import java.text.ParseException;
+
+import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
+import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExerciseViewModel;
 
-public class ExerciseFragment extends Fragment {
+public class ExerciseFragment extends Fragment implements View.OnClickListener {
 
     private ExerciseViewModel mExerciseViewModel;
+    //TODO DELETE THEESE/TESTING PURPOSE
+    private ExerciseModel exercise;
+    private UserModel user;
 
 
     @Nullable
@@ -32,12 +41,18 @@ public class ExerciseFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //TODO DELETE THIS DUMMY DATA
+        user = new DummyData().createUser();
+
         //Get activity object from fragment arguments
         ExerciseModel activity = (ExerciseModel) getArguments().getSerializable("activity");
 
+        Button startExerciseButton = (Button) view.findViewById(R.id.start_exercise_button);
+        startExerciseButton.setOnClickListener(this);
+
         mExerciseViewModel = ViewModelProviders.of(this).get(ExerciseViewModel.class);
 
-        ExerciseModel exercise = (ExerciseModel) mExerciseViewModel.getItem(activity.getId());
+        exercise = (ExerciseModel) mExerciseViewModel.getItem(activity.getId());
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(exercise.getName());
 
@@ -60,4 +75,17 @@ public class ExerciseFragment extends Fragment {
         exercise_muscle.setText("Muscle(s): " + exercise.getMuscles());
 
     }
+
+    @Override
+    public void onClick(View v) {
+        //TODO Start activityGo
+        try {
+            mExerciseViewModel.addActivityToUser(user, exercise);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 }

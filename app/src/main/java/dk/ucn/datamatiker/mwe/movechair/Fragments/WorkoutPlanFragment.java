@@ -1,6 +1,5 @@
 package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
-import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
@@ -13,12 +12,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.ParseException;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.ActivityAdapter;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
@@ -30,7 +32,11 @@ import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutPlanViewModel;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class WorkoutPlanFragment extends Fragment {
+public class WorkoutPlanFragment extends Fragment implements View.OnClickListener {
+
+    //TODO DELETE THEESE/TESTING PURPOSE
+    private WorkoutPlanModel workoutPlan;
+    private UserModel user;
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -91,9 +97,15 @@ public class WorkoutPlanFragment extends Fragment {
         WorkoutPlanModel activity = (WorkoutPlanModel) getArguments().getSerializable("activity");
         //This makes you able to change toolbar title
 
+        //TODO DELETE THIS DUMMY DATA
+        user = new DummyData().createUser();
+
+        Button startWorkoutPlanButton = (Button) view.findViewById(R.id.start_workout_plan_button);
+        startWorkoutPlanButton.setOnClickListener(this);
+
         mWorkoutPlanViewModel = ViewModelProviders.of(this).get(WorkoutPlanViewModel.class);
 
-        WorkoutPlanModel workoutPlan = (WorkoutPlanModel) mWorkoutPlanViewModel.getItem(activity.getId());
+        workoutPlan = (WorkoutPlanModel) mWorkoutPlanViewModel.getItem(activity.getId());
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(workoutPlan.getName());
 
@@ -116,6 +128,16 @@ public class WorkoutPlanFragment extends Fragment {
 
 
     }
+
+    @Override
+    public void onClick(View v) {
+        try {
+            mWorkoutPlanViewModel.addActivityToUser(user, workoutPlan);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
 /*    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
