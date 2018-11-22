@@ -1,12 +1,13 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 
 
-public class WorkoutModel extends ActivityModel {
+public class WorkoutModel extends ActivityModel implements Serializable {
 
     private List<ExerciseModel> exercises;
     private double workoutDuration;

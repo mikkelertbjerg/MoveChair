@@ -1,6 +1,8 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
-public class MuscleModel{
+import java.io.Serializable;
+
+public class MuscleModel implements Serializable {
     private String name;
 
     public MuscleModel(String name){

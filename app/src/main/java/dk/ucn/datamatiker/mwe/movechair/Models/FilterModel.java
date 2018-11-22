@@ -1,6 +1,8 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
-public class FilterModel {
+import java.io.Serializable;
+
+public class FilterModel implements Serializable {
 
     private String name;
     private boolean selected;

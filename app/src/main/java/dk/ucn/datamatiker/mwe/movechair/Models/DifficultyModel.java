@@ -1,6 +1,8 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
-public class DifficultyModel {
+import java.io.Serializable;
+
+public class DifficultyModel implements Serializable {
     private String name;
     private double multiplier;
 

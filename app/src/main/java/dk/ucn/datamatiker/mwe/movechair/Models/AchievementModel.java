@@ -1,6 +1,8 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
-public class AchievementModel {
+import java.io.Serializable;
+
+public class AchievementModel implements Serializable {
     private String name;
     private int threshold;
     private AchievementTypeModel achievementType;

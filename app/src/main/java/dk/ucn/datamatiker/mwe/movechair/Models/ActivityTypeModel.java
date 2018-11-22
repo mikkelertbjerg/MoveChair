@@ -1,6 +1,8 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
-public class ActivityTypeModel {
+import java.io.Serializable;
+
+public class ActivityTypeModel implements Serializable {
     private String activityType;
 
     public ActivityTypeModel(String activityType){

@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import dk.ucn.datamatiker.mwe.movechair.Data.UserDAO;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.AchievementsFragment;
@@ -23,6 +25,7 @@ import dk.ucn.datamatiker.mwe.movechair.Fragments.ProfileFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.MyPlanFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutPlanFragment;
+import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 
@@ -31,6 +34,10 @@ public class MainActivity extends AppCompatActivity implements WorkoutPlanFragme
         NavigationView.OnNavigationItemSelectedListener
 {
 
+    // This field holds the authenticated user
+    public UserModel loggedInUser;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements WorkoutPlanFragme
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Menu 1");
         setSupportActionBar(toolbar);
+
+        // Loads the logged in user from previous "login" activity
+        loggedInUser = (UserModel) getIntent().getSerializableExtra("user");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -48,14 +58,20 @@ public class MainActivity extends AppCompatActivity implements WorkoutPlanFragme
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
         //Adding default page fragment
         HomeFragment startFragment = new HomeFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_frame, startFragment, startFragment.getClass().toString())
                 .commit();
+
+        // Find header so we can access its views
+        //Then fill them with the logged in users info
+        View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
+        TextView username = header.findViewById(R.id.header_username);
+        TextView email = header.findViewById(R.id.header_email);
+        username.setText(loggedInUser.getName());
+        email.setText(loggedInUser.getEmail());
     }
 
 

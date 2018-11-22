@@ -2,20 +2,31 @@ package dk.ucn.datamatiker.mwe.movechair.Data;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.Reader;
 
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.HttpEntity;
+import cz.msebera.android.httpclient.HttpHeaders;
+import cz.msebera.android.httpclient.HttpResponse;
+import cz.msebera.android.httpclient.client.HttpClient;
+import cz.msebera.android.httpclient.client.methods.HttpUriRequest;
+import cz.msebera.android.httpclient.client.methods.RequestBuilder;
+import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 
-public class UserDAO implements DAOIF<UserModel>  {
+public class UserDAO implements DAOIF<UserModel> {
 
     private DAOIF<UserModel> dao;
+    private UserModel user = null;
 
     @Override
     public void getConnection(DAOIF<UserModel> db) {
@@ -24,23 +35,19 @@ public class UserDAO implements DAOIF<UserModel>  {
 
     @Override
     public UserModel getItem(int id) {
-        return dao.getItem(id);
+        return null;
     }
 
     public UserModel login(String email, String password) {
-        URL url = null;
-        InputStreamReader reader = null;
-        try {
-            url = new URL("http://mikkelertbjerg.dk/moveChair/index.php?controller=login&json" + "&email=" + email + "&password=" + password);
-            Log.d("req url: ", url.toString());
-            reader = new InputStreamReader(url.openStream());
+        return null;
+    }
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @SuppressWarnings("deprecation")
 
-        return new Gson().fromJson(reader, UserModel.class);
+
+
+    private UserModel retrieveJson(UserModel result) {
+        return result;
+
     }
 }

@@ -1,9 +1,10 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MuscleGroupModel {
+public class MuscleGroupModel implements Serializable {
     private String name;
     private List<MuscleModel> muscles;
 

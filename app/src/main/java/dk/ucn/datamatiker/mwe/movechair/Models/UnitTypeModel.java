@@ -3,7 +3,9 @@ package dk.ucn.datamatiker.mwe.movechair.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UnitTypeModel {
+import java.io.Serializable;
+
+public class UnitTypeModel implements Serializable {
 
     @SerializedName("id")
     @Expose

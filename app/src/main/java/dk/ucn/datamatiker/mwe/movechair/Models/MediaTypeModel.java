@@ -1,6 +1,8 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
-public class MediaTypeModel {
+import java.io.Serializable;
+
+public class MediaTypeModel implements Serializable {
     private String name;
 
     public MediaTypeModel(String name) {

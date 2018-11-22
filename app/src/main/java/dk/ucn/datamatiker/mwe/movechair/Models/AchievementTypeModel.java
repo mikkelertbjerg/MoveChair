@@ -1,6 +1,8 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
-public class AchievementTypeModel {
+import java.io.Serializable;
+
+public class AchievementTypeModel implements Serializable {
     private String name;
     private int iconId;
 

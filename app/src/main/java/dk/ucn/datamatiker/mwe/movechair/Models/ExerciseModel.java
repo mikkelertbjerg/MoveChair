@@ -1,9 +1,10 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExerciseModel extends ActivityModel {
+public class ExerciseModel extends ActivityModel implements Serializable {
 
     private double points;
     private double duration;

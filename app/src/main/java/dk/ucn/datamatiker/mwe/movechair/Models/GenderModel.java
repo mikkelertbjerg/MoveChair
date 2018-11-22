@@ -3,7 +3,9 @@ package dk.ucn.datamatiker.mwe.movechair.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class GenderModel {
+import java.io.Serializable;
+
+public class GenderModel implements Serializable {
 
     @SerializedName("id")
     @Expose
