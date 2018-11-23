@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements WorkoutPlanFragme
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         //Adding default page fragment
@@ -67,9 +67,8 @@ public class MainActivity extends AppCompatActivity implements WorkoutPlanFragme
 
         // Find header so we can access its views
         //Then fill them with the logged in users info
-        View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
-        TextView username = header.findViewById(R.id.header_username);
-        TextView email = header.findViewById(R.id.header_email);
+        TextView username = navigationView.findViewById(R.id.header_username);
+        TextView email = navigationView.findViewById(R.id.header_email);
         username.setText(loggedInUser.getName());
         email.setText(loggedInUser.getEmail());
     }
