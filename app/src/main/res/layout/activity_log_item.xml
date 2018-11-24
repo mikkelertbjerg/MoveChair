@@ -17,34 +17,31 @@
         app:srcCompat="@drawable/wheelchair" />
 
     <TextView
-        android:id="@+id/activity_log_item_title"
+        android:id="@+id/activity_log_field1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/activity_log_item_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/activity_log_icon"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/activity_log_item_type"
+        android:id="@+id/activity_log_field2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/activity_log_item_type"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/activity_log_icon" />
 
     <TextView
-        android:id="@+id/activity_log_item_date"
+        android:id="@+id/activity_log_field3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/activity_log_item_date"
+        android:layout_marginBottom="13dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

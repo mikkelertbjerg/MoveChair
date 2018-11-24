@@ -100,7 +100,7 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener {
         startWorkoutButton.setOnClickListener(this);
 
         //TODO DELETE THIS DUMMY DATA
-        user = new DummyData().createUser();
+        user = new DummyData().createUser(2, 5);
 
         mWorkoutViewModel = ViewModelProviders.of(this).get(WorkoutViewModel.class);
 

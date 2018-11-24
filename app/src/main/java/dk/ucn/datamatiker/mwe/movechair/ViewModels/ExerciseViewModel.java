@@ -46,9 +46,7 @@ public class ExerciseViewModel extends AndroidViewModel implements IFViewModel<A
     //TODO Change params to recive a user or userid
     public void addActivityToUser(UserModel user, ActivityModel activity) throws ParseException {
         SessionLogModel sessionLog = new SessionLogModel();
-        List<ActivityModel> activities = new ArrayList<ActivityModel>();
-        activities.add(activity);
-        sessionLog.setActivities(activities);
+        sessionLog.setActivity(activity);
         //Compare the todays date and the users sessionLogs dates, if he doesn't have a session today, a new dailyLog will be added.
         Date today = new Date(); //Today
         if(user.getDailyLogs().isEmpty()){
@@ -62,7 +60,7 @@ public class ExerciseViewModel extends AndroidViewModel implements IFViewModel<A
             //Assign the dailyLog to the user
             user.getDailyLogs().add(dailyLog);
         }
-        else if(!compareDates(user.getDailyLogs().get(user.getDailyLogs().size()-1).getDate(), today)){
+        else if(!compareDates(user.getDailyLogs().get(user.getDailyLogs().size()-1).getSessionLogs().get(0).getDate(), today)){
             //Users created with the constructor always have an empty list
             //Create new session Log list
             List<SessionLogModel> sessionLogs = new ArrayList<SessionLogModel>();

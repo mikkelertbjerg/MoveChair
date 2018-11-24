@@ -98,7 +98,7 @@ public class WorkoutPlanFragment extends Fragment implements View.OnClickListene
         //This makes you able to change toolbar title
 
         //TODO DELETE THIS DUMMY DATA
-        user = new DummyData().createUser();
+        user = new DummyData().createUser(2, 5);
 
         Button startWorkoutPlanButton = (Button) view.findViewById(R.id.start_workout_plan_button);
         startWorkoutPlanButton.setOnClickListener(this);

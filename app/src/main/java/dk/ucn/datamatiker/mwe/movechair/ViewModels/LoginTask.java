@@ -18,6 +18,7 @@ import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.client.methods.HttpUriRequest;
 import cz.msebera.android.httpclient.client.methods.RequestBuilder;
 import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
+import cz.msebera.android.httpclient.impl.client.HttpClients;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 
 public class LoginTask extends AsyncTask<String, Integer, UserModel> {
@@ -39,10 +40,10 @@ public class LoginTask extends AsyncTask<String, Integer, UserModel> {
 
     @Override
     protected UserModel doInBackground(String... strings) {
-        HttpClient client = new DefaultHttpClient();
+        HttpClient client = HttpClients.createDefault();
         UserModel result = null;
         HttpUriRequest request = RequestBuilder.get()
-                .setUri("http://192.168.87.101:8080/moveChair/index.php?controller=login&email="+email+"&json")
+                .setUri("http://100.83.20.209:80/moveChair/index.php?controller=login&email=mail@mail.com")
                 .setHeader(HttpHeaders.ACCEPT, "application/json")
                 .build();
         //Perform the request and check the status code

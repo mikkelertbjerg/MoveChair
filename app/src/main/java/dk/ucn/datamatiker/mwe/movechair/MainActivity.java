@@ -41,13 +41,13 @@ public class MainActivity extends AppCompatActivity implements WorkoutPlanFragme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loggedInUser = (UserModel) getIntent().getSerializableExtra("user");
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Menu 1");
         setSupportActionBar(toolbar);
 
         // Loads the logged in user from previous "login" activity
-        loggedInUser = (UserModel) getIntent().getSerializableExtra("user");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -69,8 +69,10 @@ public class MainActivity extends AppCompatActivity implements WorkoutPlanFragme
         //Then fill them with the logged in users info
         TextView username = navigationView.findViewById(R.id.header_username);
         TextView email = navigationView.findViewById(R.id.header_email);
-        username.setText(loggedInUser.getName());
-        email.setText(loggedInUser.getEmail());
+        if (loggedInUser != null) {
+            username.setText(loggedInUser.getName());
+            email.setText(loggedInUser.getEmail());
+        }
     }
 
 

@@ -4,14 +4,28 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import dk.ucn.datamatiker.mwe.movechair.ActivityLogAdapter;
+import dk.ucn.datamatiker.mwe.movechair.Models.DailyLogModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
+import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 
 
 public class ActivityLogFragment extends Fragment {
+
+    UserModel user;
+    ActivityLogAdapter activityLogAdapter;
+    List<DailyLogModel> allDailyLogs;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -26,5 +40,30 @@ public class ActivityLogFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Activity Log");
+
+        user = new DummyData().createUser(2, 5);
+
+        TextView dailyLogsTotal = view.findViewById(R.id.activity_log_total);
+        TextView dailyLogsTotalStrides = view.findViewById(R.id.activity_log_strides);
+
+        dailyLogsTotal.setText("Total logs: " + String.valueOf(user.getDailyLogs().size()));
+
+        int strides = 0;
+        for(int i = 0; i < user.getDailyLogs().size(); i++){
+            strides += user.getDailyLogs().get(i).getStrides();
+        }
+        dailyLogsTotalStrides.setText("Total strides: " + String.valueOf(strides));
+
+        RecyclerView rvActivityLogs = view.findViewById(R.id.rv_activity_log_items);
+
+
+        activityLogAdapter = new ActivityLogAdapter(user.getDailyLogs());
+
+        rvActivityLogs.setAdapter(activityLogAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        linearLayoutManager.setStackFromEnd(true);
+        rvActivityLogs.setLayoutManager(linearLayoutManager);
+
     }
 }

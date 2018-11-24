@@ -42,7 +42,7 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
 
         //TODO DELETE THIS DUMMY DATA
-        user = new DummyData().createUser();
+        user = new DummyData().createUser(2,5);
 
         //Get activity object from fragment arguments
         ExerciseModel activity = (ExerciseModel) getArguments().getSerializable("activity");

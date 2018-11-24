@@ -14,16 +14,16 @@ public class WorkoutModel extends ActivityModel implements Serializable {
     private double restDuration;
     private DifficultyModel difficulty;
 
-    public WorkoutModel(String name, String description, int id, double workoutDuration, double restDuration, DifficultyModel difficulty, List<ExerciseModel> exercises) {
-        super(name, description, id);
+    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityTypeModel, double workoutDuration, double restDuration, DifficultyModel difficulty, List<ExerciseModel> exercises) {
+        super(name, description, id, activityTypeModel);
         this.workoutDuration = workoutDuration;
         this.restDuration = restDuration;
         this.difficulty = difficulty;
         this.exercises = exercises;
     }
 
-    public WorkoutModel(String name, String description, int id) {
-        super(name, description, id);
+    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityTypeModel) {
+        super(name, description, id, activityTypeModel);
         this.exercises = new ArrayList<ExerciseModel>() {
         };
     }

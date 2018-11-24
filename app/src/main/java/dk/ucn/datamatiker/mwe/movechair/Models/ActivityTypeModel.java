@@ -1,23 +1,31 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
-import java.io.Serializable;
+public class ActivityTypeModel {
+    private int id;
+    private String name;
 
-public class ActivityTypeModel implements Serializable {
-    private String activityType;
-
-    public ActivityTypeModel(String activityType){
-        this.activityType = activityType;
+    public ActivityTypeModel(String name, int id){
+        this.id = id;
+        this.name = name;
     }
 
     public ActivityTypeModel(){
 
     }
 
-    public String getActivityType() {
-        return activityType;
+    public String getName() {
+        return name;
     }
 
-    public void setActivityType(String activityType) {
-        this.activityType = activityType;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

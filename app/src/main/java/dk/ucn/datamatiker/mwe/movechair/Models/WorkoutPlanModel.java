@@ -12,15 +12,15 @@ public class WorkoutPlanModel extends ActivityModel implements Serializable {
     private int restDays;
     private int workoutPlanDuration;
 
-    public WorkoutPlanModel(String name, String description, int id, int restDays, int workoutPlanDuration, List<WorkoutModel> workouts) {
-        super(name, description, id);
+    public WorkoutPlanModel(String name, String description, int id, ActivityTypeModel activityTypeModel, int restDays, int workoutPlanDuration, List<WorkoutModel> workouts) {
+        super(name, description, id, activityTypeModel);
         this.restDays = restDays;
         this.workoutPlanDuration = workoutPlanDuration;
         this.workouts = workouts;
     }
 
-    public WorkoutPlanModel(String name, String description, int id, int restDays, int workoutPlanDuration) {
-        super(name, description, id);
+    public WorkoutPlanModel(String name, String description, int id, ActivityTypeModel activityTypeModel, int restDays, int workoutPlanDuration) {
+        super(name, description, id, activityTypeModel);
         this.restDays = restDays;
         this.workoutPlanDuration = workoutPlanDuration;
         this.workouts = new ArrayList<WorkoutModel>();

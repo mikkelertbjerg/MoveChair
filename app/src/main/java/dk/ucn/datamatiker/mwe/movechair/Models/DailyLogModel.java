@@ -6,7 +6,11 @@ import java.util.List;
 public class DailyLogModel {
     private List<SessionLogModel> sessionLogs;
     private int strides;
-    private Date date = new Date();
+
+    public DailyLogModel(List<SessionLogModel> sessionLogs, int strides) {
+        this.sessionLogs = sessionLogs;
+        this.strides = strides;
+    }
 
     public DailyLogModel(List<SessionLogModel> sessionLogs) {
         this.sessionLogs = sessionLogs;
@@ -33,13 +37,5 @@ public class DailyLogModel {
 
     public void setStrides(int strides) {
         this.strides = strides;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 }

@@ -13,12 +13,12 @@ public class ExerciseModel extends ActivityModel implements Serializable {
     private List<MuscleModel> muscles;
     private List<EquipmentModel> equipment;
 
-    public ExerciseModel(String name, String description, int id, double points, int duration,
+    public ExerciseModel(String name, String description, int id, ActivityTypeModel activityTypeModel, double points, int duration,
                          List<MediaModel> media,
                          List<CategoryModel> categories,
                          List<MuscleModel> muscles,
                          List<EquipmentModel> equipment) {
-        super(name, description, id);
+        super(name, description, id, activityTypeModel);
         this.points = points;
         this.duration = duration;
         this.media = media;

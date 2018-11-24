@@ -1,36 +1,39 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 public class SessionLogModel {
-    private List<ActivityModel> activities;
+    private ActivityModel activity;
+    private Date date;
 
-    public SessionLogModel(List<ActivityModel> activities) {
-        this.activities = activities;
+    public SessionLogModel(ActivityModel activity, Date date) {
+        this.activity = activity;
+        this.date = date;
     }
 
     public SessionLogModel() {
     }
 
-    //Returns a string so we can compare it in the sessionLog Class
-
-    public void setActivities(List<ActivityModel> activities) {
-        this.activities = activities;
+    public ActivityModel getActivity() {
+        return activity;
     }
 
-    public String getActivities(){
-        String activities = "";
-        for(int i = 0; i < this.activities.size(); i++){
-            String temp;
-            temp = this.activities.get(i).getName();
-            if(this.activities.size() > 1){
-                activities += temp + " ,";
-            }
-            else{
-                activities = temp;
-            }
-        }
-        return activities;
+    public void setActivity(ActivityModel activity) {
+        this.activity = activity;
+    }
+
+    public Date getDate() {
+        return this.date;
+    }
+
+    public String getDateFormat(String format) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat (format);
+        return dateFormat.format(this.date);
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
