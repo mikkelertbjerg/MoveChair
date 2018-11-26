@@ -11,27 +11,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import dk.ucn.datamatiker.mwe.movechair.ActivityLogAdapter;
-import dk.ucn.datamatiker.mwe.movechair.Models.DailyLogModel;
+import dk.ucn.datamatiker.mwe.movechair.DailyLogAdapter;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 
 
-public class ActivityLogFragment extends Fragment {
+public class DailyLogFragment extends Fragment {
 
     UserModel user;
-    ActivityLogAdapter activityLogAdapter;
-    List<DailyLogModel> allDailyLogs;
+    DailyLogAdapter dailyLogAdapter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //returning our layout file
         //change R.layout.yourlayoutfilename for each of your fragments
-        return inflater.inflate(R.layout.fragment_activity_log, container, false);
+        return inflater.inflate(R.layout.fragment_daily_log, container, false);
     }
 
 
@@ -43,8 +38,8 @@ public class ActivityLogFragment extends Fragment {
 
         user = new DummyData().createUser(20, 5);
 
-        TextView dailyLogsTotal = view.findViewById(R.id.activity_log_total);
-        TextView dailyLogsTotalStrides = view.findViewById(R.id.activity_log_strides);
+        TextView dailyLogsTotal = view.findViewById(R.id.daily_log_total);
+        TextView dailyLogsTotalStrides = view.findViewById(R.id.daily_log_strides);
 
         dailyLogsTotal.setText("Total logs: " + String.valueOf(user.getDailyLogs().size()));
 
@@ -54,16 +49,16 @@ public class ActivityLogFragment extends Fragment {
         }
         dailyLogsTotalStrides.setText("Total strides: " + String.valueOf(strides));
 
-        RecyclerView rvActivityLogs = view.findViewById(R.id.rv_activity_log_items);
+        RecyclerView rvDailyLogs = view.findViewById(R.id.rv_daily_log_items);
 
 
-        activityLogAdapter = new ActivityLogAdapter(user.getDailyLogs());
+        dailyLogAdapter = new DailyLogAdapter(user.getDailyLogs());
 
-        rvActivityLogs.setAdapter(activityLogAdapter);
+        rvDailyLogs.setAdapter(dailyLogAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         linearLayoutManager.setStackFromEnd(true);
-        rvActivityLogs.setLayoutManager(linearLayoutManager);
+        rvDailyLogs.setLayoutManager(linearLayoutManager);
 
     }
 }

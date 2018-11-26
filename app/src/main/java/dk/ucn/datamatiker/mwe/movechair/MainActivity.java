@@ -9,15 +9,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
-import dk.ucn.datamatiker.mwe.movechair.Data.UserDAO;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.AchievementsFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.ActivitiesFragment;
-import dk.ucn.datamatiker.mwe.movechair.Fragments.ActivityLogFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.DailyLogFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.HighscoreFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.HomeFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.OptionsFragment;
@@ -105,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements WorkoutPlanFragme
                 fragment = new HomeFragment();
                 break;
             case R.id.nav_activity_log:
-                fragment = new ActivityLogFragment();
+                fragment = new DailyLogFragment();
                 break;
             case R.id.nav_activities:
                 fragment = new ActivitiesFragment();

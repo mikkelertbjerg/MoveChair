@@ -7,14 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Fragments.SessionLogFragment;
 import dk.ucn.datamatiker.mwe.movechair.Models.DailyLogModel;
 
-public class ActivityLogAdapter extends RecyclerView.Adapter<ActivityLogAdapter.ViewHolder> {
+public class DailyLogAdapter extends RecyclerView.Adapter<DailyLogAdapter.ViewHolder> {
 
 
     // Store a member variable for the sessionLogs
@@ -22,7 +21,7 @@ public class ActivityLogAdapter extends RecyclerView.Adapter<ActivityLogAdapter.
     private DailyLogModel dailyLog;
 
     // Pass in the sessionLogs array into the constructor
-    public ActivityLogAdapter(List<DailyLogModel> dailyLogs) {
+    public DailyLogAdapter(List<DailyLogModel> dailyLogs) {
         this.dailyLogs = dailyLogs;
     }
 
@@ -37,15 +36,15 @@ public class ActivityLogAdapter extends RecyclerView.Adapter<ActivityLogAdapter.
         public TextView activityLogField2;
         public TextView activityLogField3;
 
-        public ViewHolder(@NonNull View activityLogListView) {
+        public ViewHolder(@NonNull View dailyLogListView) {
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
-            super(activityLogListView);
+            super(dailyLogListView);
 
-            //activityLogIcon = (ImageView) activityLogListView.findViewById(R.id.activity_log_icon);
-            activityLogField1 = (TextView) activityLogListView.findViewById(R.id.activity_log_field1);
-            activityLogField2 = (TextView) activityLogListView.findViewById(R.id.activity_log_field2);
-            activityLogField3 = (TextView) activityLogListView.findViewById(R.id.activity_log_field3);
+            //activityLogIcon = (ImageView) dailyLogListView.findViewById(R.id.activity_log_icon);
+            activityLogField1 = (TextView) dailyLogListView.findViewById(R.id.activity_log_field1);
+            activityLogField2 = (TextView) dailyLogListView.findViewById(R.id.activity_log_field2);
+            //activityLogField3 = (TextView) dailyLogListView.findViewById(R.id.activity_log_field3);
         }
     }
 
@@ -53,19 +52,19 @@ public class ActivityLogAdapter extends RecyclerView.Adapter<ActivityLogAdapter.
 
     @NonNull
     @Override
-    public ActivityLogAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public DailyLogAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         final Context context = viewGroup.getContext();
 
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
-        final View activityLogListView = inflater.inflate(R.layout.activity_log_item, viewGroup, false);
+        final View dailyLogListView = inflater.inflate(R.layout.activity_log_item, viewGroup, false);
 
         // return a new holder instance
-        final ViewHolder viewHolder = new ViewHolder(activityLogListView);
+        final ViewHolder viewHolder = new ViewHolder(dailyLogListView);
 
         //Create onClick
-        activityLogListView.setOnClickListener(new View.OnClickListener() {
+        dailyLogListView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MainActivity mainActivity = (MainActivity) context;
@@ -88,13 +87,15 @@ public class ActivityLogAdapter extends RecyclerView.Adapter<ActivityLogAdapter.
 
         TextView activityLogField1 = viewHolder.activityLogField1;
         TextView activityLogField2 = viewHolder.activityLogField2;
+        //TextView activityLogField3 = viewHolder.activityLogField3;
 
         // Get the data model based on position
-        DailyLogModel dailyLog = dailyLogs.get(position);
+        dailyLog = dailyLogs.get(position);
 
         // Set item views based on your views and data model
-        activityLogField1.setText(dailyLog.getSessionLogs().get(0).getDateFormat("dd-mm-yyyy"));
-        activityLogField2.setText("Total strides: " +String.valueOf(dailyLog.getStrides()));
+        activityLogField1.setText("Daily Log: " + dailyLog.getSessionLogs().get(0).getDateFormat("dd-mm-yyyy"));
+        activityLogField2.setText("Strides: " +String.valueOf(dailyLog.getStrides()));
+        //activityLogField3.setText("");
     }
     @Override
     public int getItemCount () {
