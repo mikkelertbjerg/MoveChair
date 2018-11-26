@@ -12,7 +12,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import dk.ucn.datamatiker.mwe.movechair.Fragments.ExerciseFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.SessionLogFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutPlanFragment;
 import dk.ucn.datamatiker.mwe.movechair.Models.DailyLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
@@ -74,13 +77,36 @@ public class SessionLogAdapter extends RecyclerView.Adapter<SessionLogAdapter.Vi
             @Override
             public void onClick(View v) {
                 MainActivity mainActivity = (MainActivity) context;
-
-                //Create bundle with log ID
+                Fragment fragment = null;
                 final int position = viewHolder.getAdapterPosition();
+                String type = dailyLog.getSessionLogs().get(position).getActivity().getActivityType().getName();
+                //Create bundle with activity id
                 Bundle bundle = new Bundle();
+
+                //TODO SHOULD WORK WHEN DATABASE CALL WORK
+                //TODO IN THE RESPECTIVE FRAGMENT, MAKE NULL CHECK ON BUNDLE
+                //TODO IF BUNDLE != NULL FETCH ACTIVITY BASE ON GIVEN ID (BUNDLE)
+                switch (type){
+                    case "Exercise":
+                        fragment = new ExerciseFragment();
+                        int exerciseId = dailyLog.getSessionLogs().get(position).getActivity().getId();
+                        bundle.putInt("ExerciseId", exerciseId);
+                        break;
+
+                    case "Workout":
+                        fragment = new WorkoutFragment();
+                        int workoutId = dailyLog.getSessionLogs().get(position).getActivity().getId();
+                        bundle.putInt("WorkoutId", workoutId);
+                        break;
+
+                    case "Workout Plan":
+                        fragment = new WorkoutPlanFragment();
+                        int workoutPlanId = dailyLog.getSessionLogs().get(position).getActivity().getId();
+                        bundle.putInt("WorkoutPlanId", workoutPlanId);
+                        break;
+                }
+
                 sessionLog = dailyLog.getSessionLogs().get(position);
-                bundle.putSerializable("Activity", sessionLog);
-                Fragment fragment = new SessionLogFragment();
                 fragment.setArguments(bundle);
                 mainActivity.switchFragment(fragment);
             }
@@ -101,6 +127,7 @@ public class SessionLogAdapter extends RecyclerView.Adapter<SessionLogAdapter.Vi
         // Set item views based on your views and data model
         activityLogField1.setText("Activity Title: " + sessionLog.getActivity().getName());
         activityLogField2.setText("Activity Type: " + sessionLog.getActivity().getActivityType().getName());
+
         String type =  sessionLog.getActivity().getActivityType().getName();
         double points = 0;
         switch(type){
