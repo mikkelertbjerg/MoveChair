@@ -1,8 +1,17 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
-public class ActivityTypeModel {
-    private int id;
-    private String name;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+public class ActivityTypeModel implements Serializable {
+    @SerializedName("id")
+    @Expose
+    public int id;
+    @SerializedName("name")
+    @Expose
+    public String name;
 
     public ActivityTypeModel(String name, int id){
         this.id = id;

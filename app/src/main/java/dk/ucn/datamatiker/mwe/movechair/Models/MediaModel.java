@@ -1,9 +1,16 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class MediaModel implements Serializable {
+    @SerializedName("path")
+    @Expose
     private String path;
+    @SerializedName("mediaType")
+    @Expose
     private MediaTypeModel mediaType;
 
     public MediaModel(String path, MediaTypeModel mediaType) {

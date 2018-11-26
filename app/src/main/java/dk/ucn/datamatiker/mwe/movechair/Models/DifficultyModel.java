@@ -1,9 +1,16 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class DifficultyModel implements Serializable {
+    @SerializedName("name")
+    @Expose
     private String name;
+    @SerializedName("multiplier")
+    @Expose
     private double multiplier;
 
     public DifficultyModel(String name, double multiplier) {

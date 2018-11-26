@@ -1,17 +1,36 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ExerciseModel extends ActivityModel implements Serializable {
 
+    @SerializedName("points")
+    @Expose
     private double points;
+    @SerializedName("duration")
+    @Expose
     private double duration;
+    @SerializedName("media")
+    @Expose
     private List<MediaModel> media;
+    @SerializedName("categories")
+    @Expose
     private List<CategoryModel> categories;
+    @SerializedName("muscles")
+    @Expose
     private List<MuscleModel> muscles;
+    @SerializedName("equipment")
+    @Expose
     private List<EquipmentModel> equipment;
+    @SerializedName("activity_type")
+    @Expose
+    private ActivityTypeModel activityType;
+
 
     public ExerciseModel(String name, String description, int id, ActivityTypeModel activityTypeModel, double points, int duration,
                          List<MediaModel> media,
@@ -61,6 +80,16 @@ public class ExerciseModel extends ActivityModel implements Serializable {
 
     public void setPoints(double points){
         this.points = points;
+    }
+
+    @Override
+    public ActivityTypeModel getActivityType() {
+        return activityType;
+    }
+
+    @Override
+    public void setActivityType(ActivityTypeModel activityType) {
+        this.activityType = activityType;
     }
 
     public String getMuscles(){
