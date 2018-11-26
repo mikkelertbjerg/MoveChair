@@ -40,11 +40,13 @@ public class LoginTask extends AsyncTask<String, Integer, UserModel> {
 
     @Override
     protected UserModel doInBackground(String... strings) {
-        HttpClient client = HttpClients.createDefault();
+        HttpClient client = HttpClients.custom()
+                .setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
+                .build();
         UserModel result = null;
         HttpUriRequest request = RequestBuilder.get()
-                .setUri("http://100.83.20.209:80/moveChair/index.php?controller=login&email=mail@mail.com")
-                .setHeader(HttpHeaders.ACCEPT, "application/json")
+                .setUri("http://jvo-web.dk/index.php?controller=login&email="+this.email+"&json")
+                .setHeader(HttpHeaders.ACCEPT, "*/*")
                 .build();
         //Perform the request and check the status code
         try {
@@ -57,6 +59,8 @@ public class LoginTask extends AsyncTask<String, Integer, UserModel> {
                 Reader reader = new InputStreamReader(content);
                 Gson gson = new Gson();
                 result = gson.fromJson(reader, UserModel.class);
+                String string = reader.toString();
+                String cont = content.toString();
                 content.close();
 
             } else {

@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import dk.ucn.datamatiker.mwe.movechair.Data.UserDAO;
@@ -58,6 +59,14 @@ public class MainActivity extends AppCompatActivity implements WorkoutPlanFragme
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        if (loggedInUser != null) {
+            View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
+            TextView username = header.findViewById(R.id.header_username);
+            TextView email = header.findViewById(R.id.header_email);
+            username.setText(loggedInUser.getName());
+            email.setText(loggedInUser.getEmail());
+        }
+
         //Adding default page fragment
         HomeFragment startFragment = new HomeFragment();
         getSupportFragmentManager()
@@ -67,12 +76,7 @@ public class MainActivity extends AppCompatActivity implements WorkoutPlanFragme
 
         // Find header so we can access its views
         //Then fill them with the logged in users info
-        TextView username = navigationView.findViewById(R.id.header_username);
-        TextView email = navigationView.findViewById(R.id.header_email);
-        if (loggedInUser != null) {
-            username.setText(loggedInUser.getName());
-            email.setText(loggedInUser.getEmail());
-        }
+
     }
 
 
