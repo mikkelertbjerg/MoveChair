@@ -28,16 +28,16 @@ public class WorkoutModel extends ActivityModel implements Serializable {
     @Expose
     private ActivityTypeModel activityType;
 
-    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityTypeModel, double workoutDuration, double restDuration, DifficultyModel difficulty, List<ExerciseModel> exercises) {
-        super(name, description, id, activityTypeModel);
+    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityType, double workoutDuration, double restDuration, DifficultyModel difficulty, List<ExerciseModel> exercises) {
+        super(name, description, id, activityType);
         this.workoutDuration = workoutDuration;
         this.restDuration = restDuration;
         this.difficulty = difficulty;
         this.exercises = exercises;
     }
 
-    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityTypeModel) {
-        super(name, description, id, activityTypeModel);
+    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityType) {
+        super(name, description, id, activityType);
         this.exercises = new ArrayList<ExerciseModel>() {
         };
     }
@@ -85,7 +85,7 @@ public class WorkoutModel extends ActivityModel implements Serializable {
 
     @Override
     public ActivityTypeModel getActivityType() {
-        return activityType;
+        return super.getActivityType();
     }
 
     @Override

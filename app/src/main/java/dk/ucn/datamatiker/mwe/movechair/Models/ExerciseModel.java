@@ -32,12 +32,12 @@ public class ExerciseModel extends ActivityModel implements Serializable {
     private ActivityTypeModel activityType;
 
 
-    public ExerciseModel(String name, String description, int id, ActivityTypeModel activityTypeModel, double points, int duration,
+    public ExerciseModel(String name, String description, int id, ActivityTypeModel activityType, double points, int duration,
                          List<MediaModel> media,
                          List<CategoryModel> categories,
                          List<MuscleModel> muscles,
                          List<EquipmentModel> equipment) {
-        super(name, description, id, activityTypeModel);
+        super(name, description, id, activityType);
         this.points = points;
         this.duration = duration;
         this.media = media;
@@ -84,7 +84,7 @@ public class ExerciseModel extends ActivityModel implements Serializable {
 
     @Override
     public ActivityTypeModel getActivityType() {
-        return activityType;
+        return super.getActivityType();
     }
 
     @Override

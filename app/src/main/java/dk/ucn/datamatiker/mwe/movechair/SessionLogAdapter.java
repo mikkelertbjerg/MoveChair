@@ -73,15 +73,16 @@ public class SessionLogAdapter extends RecyclerView.Adapter<SessionLogAdapter.Vi
             @Override
             public void onClick(View v) {
                 MainActivity mainActivity = (MainActivity) context;
-                Fragment fragment = null;
                 final int position = viewHolder.getAdapterPosition();
-                String type = dailyLog.getSessionLogs().get(position).getActivity().getActivityType().getName();
+
                 //Create bundle with activity id
                 Bundle bundle = new Bundle();
+                Fragment fragment = null;
 
                 //TODO SHOULD WORK WHEN DATABASE CALL WORK
                 //TODO IN THE RESPECTIVE FRAGMENT, MAKE NULL CHECK ON BUNDLE
                 //TODO IF BUNDLE != NULL FETCH ACTIVITY BASE ON GIVEN ID (BUNDLE)
+                String type = dailyLog.getSessionLogs().get(position).getActivity().getActivityType().getName();
                 switch (type){
                     case "Exercise":
                         fragment = new ExerciseFragment();
