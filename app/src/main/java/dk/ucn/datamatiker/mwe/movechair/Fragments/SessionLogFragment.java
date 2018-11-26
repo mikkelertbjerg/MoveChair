@@ -31,7 +31,7 @@ public class SessionLogFragment extends Fragment{
         //Get object from fragment arguments
         DailyLogModel dailyLog = (DailyLogModel) getArguments().getSerializable("Daily Log");
         //This makes you able to change toolbar title
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Daily Log: " + dailyLog.getSessionLogs().get(0).getDateFormat("dd/mm/yyyy"));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Daily Log: " + dailyLog.getSessionLogs().get(0).getDateFormat("dd/MM/yyyy"));
 
         TextView sessionLogTotal = view.findViewById(R.id.session_log_total);
         TextView sessionLogTotalActivities = view.findViewById(R.id.session_log_total_activities);

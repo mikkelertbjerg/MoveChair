@@ -1,6 +1,10 @@
 package dk.ucn.datamatiker.mwe.movechair.Test;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -121,8 +125,10 @@ public class DummyData {
         activities.addAll(createExercises(magicNumber));
         activities.addAll(createWorkouts(magicNumber));
         activities.addAll(createWorkoutPlans(magicNumber));
+
         for(int i = 0; i < numActivities; i++){
-            SessionLogModel sessionLog = new SessionLogModel(activities.get(i), new Date());
+            SessionLogModel sessionLog = new SessionLogModel(activities.get(i),
+                    new Date());
             sessionLogs.add(sessionLog);
         }
         return sessionLogs;
@@ -139,9 +145,19 @@ public class DummyData {
 
     public UserModel createUser(int numDailyLogs, int numSessionLogs){
         List<DailyLogModel> dailyLogs = createDailyLogs(numDailyLogs);
+
+
+
         for(int i = 0; i < numDailyLogs; i++){
             dailyLogs.get(i).setSessionLogs(createSessionLogs(numSessionLogs));
+            LocalDate localDate = LocalDate.now().minusDays(i);
+            Date date = new Date().from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            for(int j = 0; j < dailyLogs.get(i).getSessionLogs().size(); j++) {
+                dailyLogs.get(i).getSessionLogs().get(j).setDate(date);
+            }
         }
+
+
 
         GenderModel male = new GenderModel("1", "Male");
 

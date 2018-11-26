@@ -93,7 +93,7 @@ public class DailyLogAdapter extends RecyclerView.Adapter<DailyLogAdapter.ViewHo
         dailyLog = dailyLogs.get(position);
 
         // Set item views based on your views and data model
-        activityLogField1.setText("Daily Log: " + dailyLog.getSessionLogs().get(0).getDateFormat("dd-mm-yyyy"));
+        activityLogField1.setText("Daily Log: " + dailyLog.getSessionLogs().get(0).getDateFormat("dd/MM/yyyy"));
         activityLogField2.setText("Strides: " +String.valueOf(dailyLog.getStrides()));
         //activityLogField3.setText("");
     }
