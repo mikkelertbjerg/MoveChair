@@ -46,7 +46,7 @@ public class LoginTask extends AsyncTask<String, Integer, UserModel> {
         UserModel result = null;
         HttpUriRequest request = RequestBuilder.get()
                 .setUri("http://jvo-web.dk/index.php?controller=login&email="+this.email+"&json")
-                .setHeader(HttpHeaders.ACCEPT, "*/*")
+                .setHeader(HttpHeaders.ACCEPT, "application/json")
                 .build();
         //Perform the request and check the status code
         try {
