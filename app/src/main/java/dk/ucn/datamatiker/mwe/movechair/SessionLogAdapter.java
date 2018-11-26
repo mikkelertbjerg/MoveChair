@@ -9,11 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import java.util.List;
-
 import dk.ucn.datamatiker.mwe.movechair.Fragments.ExerciseFragment;
-import dk.ucn.datamatiker.mwe.movechair.Fragments.SessionLogFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutPlanFragment;
 import dk.ucn.datamatiker.mwe.movechair.Models.DailyLogModel;
