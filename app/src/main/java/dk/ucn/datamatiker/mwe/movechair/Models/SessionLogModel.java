@@ -1,10 +1,11 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class SessionLogModel {
+public class SessionLogModel{
     private ActivityModel activity;
     private Date date;
 

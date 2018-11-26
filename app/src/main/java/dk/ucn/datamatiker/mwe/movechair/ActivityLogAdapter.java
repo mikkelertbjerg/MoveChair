@@ -1,7 +1,9 @@
 package dk.ucn.datamatiker.mwe.movechair;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import dk.ucn.datamatiker.mwe.movechair.Fragments.SessionLogFragment;
 import dk.ucn.datamatiker.mwe.movechair.Models.DailyLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 
@@ -19,6 +23,7 @@ public class ActivityLogAdapter extends RecyclerView.Adapter<ActivityLogAdapter.
 
     // Store a member variable for the sessionLogs
     private List<DailyLogModel> dailyLogs;
+    private List<SessionLogModel> sessionLogs;
 
     // Pass in the sessionLogs array into the constructor
     public ActivityLogAdapter(List<DailyLogModel> dailyLogs) {
@@ -63,8 +68,31 @@ public class ActivityLogAdapter extends RecyclerView.Adapter<ActivityLogAdapter.
         // return a new holder instance
         final ViewHolder viewHolder = new ViewHolder(activityLogListView);
 
-        //Create onClick
+/*        //Create onClick
+        activityLogListView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) context;
+                Fragment fragment = null;
+                String type = dailyLogs.get(0).getSessionLogs().get(0).getClass().getSimpleName();
 
+                switch(type){
+                    case "SessionLogModel":
+                        fragment = new SessionLogFragment();
+                        break;
+                }
+
+                //Create bundle with log ID
+                final int position = viewHolder.getAdapterPosition();
+                Bundle bundle = new Bundle();
+                sessionLogs = new ArrayList<>();
+                for(int i = 0; i < dailyLogs.get(i).getSessionLogs().size(); i++){
+                    sessionLogs = dailyLogs.get(i).getSessionLogs();
+                }
+                bundle.putSerializable("SessionLogs", sessionLogs);
+                mainActivity.switchFragment(fragment);
+            }
+        });*/
         return viewHolder;
     }
 
@@ -77,8 +105,17 @@ public class ActivityLogAdapter extends RecyclerView.Adapter<ActivityLogAdapter.
 
         // Get the data model based on position
         DailyLogModel dailyLog = this.dailyLogs.get(position);
+        String type = dailyLogs.get(0).getClass().getSimpleName();
         activityLogField1.setText(dailyLog.getSessionLogs().get(0).getDateFormat("dd-mm-yyyy"));
         activityLogField2.setText("Total strides: " +String.valueOf(dailyLog.getStrides()));
+
+/*        // Set item views based on your views and data model
+        if(type == "DailyLogModel"){
+            sessionLogs = new ArrayList<>();
+            for(int i = 0; i < dailyLogs.size(); i++){
+                    sessionLogs.add(dailyLogs.get(0).getSessionLogs().get(i));
+            }
+        }*/
     }
     @Override
     public int getItemCount () {

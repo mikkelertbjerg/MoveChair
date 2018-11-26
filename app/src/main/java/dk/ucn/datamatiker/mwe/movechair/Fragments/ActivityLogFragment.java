@@ -41,7 +41,7 @@ public class ActivityLogFragment extends Fragment {
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Activity Log");
 
-        user = new DummyData().createUser(2, 5);
+        user = new DummyData().createUser(20, 5);
 
         TextView dailyLogsTotal = view.findViewById(R.id.activity_log_total);
         TextView dailyLogsTotalStrides = view.findViewById(R.id.activity_log_strides);
