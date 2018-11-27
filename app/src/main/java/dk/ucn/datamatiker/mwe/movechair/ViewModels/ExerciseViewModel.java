@@ -17,15 +17,40 @@ import dk.ucn.datamatiker.mwe.movechair.Models.DailyLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.ActivityListTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.ExerciseTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.ExercisesListTask;
 import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 
 public class ExerciseViewModel extends AndroidViewModel implements IFViewModel<ActivityModel> {
+
+    private ExercisesListTask.AsyncJsonResponse getAllExercisesCallback;
+    private ExerciseTask.AsyncJsonResponse getExerciseCallback;
 
     public ExerciseViewModel(@NonNull Application application) {
         super(application);
     }
     //TODO Implement ExerciseViewModel
 
+    public void getExercises(ExercisesListTask.AsyncJsonResponse callback) {
+        //Defines callback method for task and starts the task that gets all activities with type.
+        this.getAllExercisesCallback = callback;
+        ExercisesListTask task = new ExercisesListTask(callback);
+        task.execute();
+    }
+
+    public void getExercise(ExerciseTask.AsyncJsonResponse callback, int exerciseId) {
+        //Defines callback method for task and starts the task that gets all activities with type.
+        this.getExerciseCallback = callback;
+        ExerciseTask task = new ExerciseTask(callback, exerciseId);
+        task.execute();
+    }
+
+
+
+
+
+    //TODO Remove or edit this deprecated code?
     @Override
     public ActivityModel getItem(int id) {
         //TODO Method that retrieves an ExerciseModel from DB

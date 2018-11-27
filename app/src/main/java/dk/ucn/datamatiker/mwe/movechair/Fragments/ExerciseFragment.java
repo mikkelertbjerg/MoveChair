@@ -13,20 +13,32 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import java.text.ParseException;
+import java.util.List;
 
+import dk.ucn.datamatiker.mwe.movechair.ActivityAdapter;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.ActivityListTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.ExerciseTask;
 import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExerciseViewModel;
 
-public class ExerciseFragment extends Fragment implements View.OnClickListener {
+public class ExerciseFragment extends Fragment implements View.OnClickListener, ExerciseTask.AsyncJsonResponse {
 
     private ExerciseViewModel mExerciseViewModel;
-    //TODO DELETE THEESE/TESTING PURPOSE
-    private ExerciseModel exercise;
     private UserModel user;
+
+    //UI Elements
+    VideoView exercise_video;
+    TextView exercise_title;
+    TextView exercise_description;
+    TextView exercise_points;
+    TextView exercise_duration;
+    TextView exercise_category;
+    TextView exercise_equipment;
+    TextView exercise_muscle;
 
 
     @Nullable
@@ -41,51 +53,49 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //TODO DELETE THIS DUMMY DATA
-        user = new DummyData().createUser(2,5);
+        //Get viewModel
+        mExerciseViewModel = ViewModelProviders.of(this).get(ExerciseViewModel.class);
 
         //Get activity object from fragment arguments
         ExerciseModel activity = (ExerciseModel) getArguments().getSerializable("activity");
 
+        //This makes you able to change toolbar title
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(activity.getName());
+
+        //Pass the id of the activity to the ViewModel which delegates to task
+        mExerciseViewModel.getExercise(this,activity.getId());
+
+        //Find button and set onClick
         Button startExerciseButton = (Button) view.findViewById(R.id.start_exercise_button);
         startExerciseButton.setOnClickListener(this);
 
-        mExerciseViewModel = ViewModelProviders.of(this).get(ExerciseViewModel.class);
-
-        exercise = (ExerciseModel) mExerciseViewModel.getItem(activity.getId());
-        //This makes you able to change toolbar title
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(exercise.getName());
-
-        VideoView exercise_video = view.findViewById(R.id.exercise_video);
-        TextView exercise_title = view.findViewById(R.id.exercise_title);
-        TextView exercise_description = view.findViewById(R.id.exercise_description);
-        TextView exercise_points = view.findViewById(R.id.exercise_points);
-        TextView exercise_duration = view.findViewById(R.id.exercise_duration);
-        TextView exercise_category = view.findViewById(R.id.exercise_category);
-        TextView exercise_equipment = view.findViewById(R.id.exercise_equipment);
-        TextView exercise_muscle = view.findViewById(R.id.exercise_muscles);
-
-        //TODO exercise_video
-        exercise_title.setText("Title: " + exercise.getName());
-        exercise_description.setText("Description: " + exercise.getDescription());
-        exercise_points.setText("Points: " + Double.toString(exercise.getPoints()));
-        exercise_duration.setText("Duration: " + Double.toString(exercise.getDuration()));
-        exercise_category.setText("Category: " + exercise.getCategories());
-        exercise_equipment.setText("Equipment: " + exercise.getEquipment());
-        exercise_muscle.setText("Muscle(s): " + exercise.getMuscles());
-
+        //Instantiate ui elements
+        exercise_video = view.findViewById(R.id.exercise_video);
+        exercise_title = view.findViewById(R.id.exercise_title);
+        exercise_description = view.findViewById(R.id.exercise_description);
+        exercise_points = view.findViewById(R.id.exercise_points);
+        exercise_duration = view.findViewById(R.id.exercise_duration);
+        exercise_category = view.findViewById(R.id.exercise_category);
+        exercise_equipment = view.findViewById(R.id.exercise_equipment);
+        exercise_muscle = view.findViewById(R.id.exercise_muscles);
     }
 
     @Override
     public void onClick(View v) {
         //TODO Start activityGo
-        try {
-            mExerciseViewModel.addActivityToUser(user, exercise);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
     }
 
+    //This method is the callback for our ActivityListTask
+    @Override
+    public void processFinish(ExerciseModel res) {
+        //TODO exercise_video
+        exercise_title.setText("Title: " + res.getName());
+        exercise_description.setText("Description: " + res.getDescription());
+        exercise_points.setText("Points: " + Double.toString(res.getPoints()));
+        exercise_duration.setText("Duration: " + Double.toString(res.getDuration()));
+        exercise_category.setText("Category: " + res.getCategories());
+        exercise_equipment.setText("Equipment: " + res.getEquipment());
+        exercise_muscle.setText("Muscle(s): " + res.getMuscles());
+    }
 
 }

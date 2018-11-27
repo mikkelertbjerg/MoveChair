@@ -168,6 +168,18 @@ public class UserModel implements Serializable {
     @Expose
     private OptionsModel options;
 
+    @SerializedName("workoutplans")
+    @Expose
+    private List<WorkoutPlanModel> workoutPlans;
+
+    public List<WorkoutPlanModel> getWorkoutPlans() {
+        return workoutPlans;
+    }
+
+    public void setWorkoutPlans(List<WorkoutPlanModel> workoutPlans) {
+        this.workoutPlans = workoutPlans;
+    }
+
     public String getId() {
         return id;
     }

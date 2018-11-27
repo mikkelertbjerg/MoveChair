@@ -16,6 +16,9 @@ import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.AddWorkoutPlanTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.ExerciseTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.ExercisesListTask;
 import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 
 
@@ -28,6 +31,18 @@ public class WorkoutPlanViewModel extends AndroidViewModel implements IFViewMode
     }
 
 
+    private AddWorkoutPlanTask.AsyncJsonResponse addWorkoutToUserCallback;
+
+    public void addWorkoutPlanToUser(AddWorkoutPlanTask.AsyncJsonResponse callback, int workoutPlanId) {
+        //Defines callback method for task and starts the task that gets all activities with type.
+        this.addWorkoutToUserCallback = callback;
+        AddWorkoutPlanTask task = new AddWorkoutPlanTask(callback,workoutPlanId);
+        task.execute();
+    }
+
+
+
+    //TODO Remove dummy data code ?
     @Override
     public ActivityModel getItem(int id) {
         //TODO Method that retrieves an WorkoutPlanModel from DB

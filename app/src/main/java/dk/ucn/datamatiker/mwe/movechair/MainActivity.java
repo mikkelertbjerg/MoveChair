@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import dk.ucn.datamatiker.mwe.movechair.Fragments.AchievementsFragment;
@@ -22,6 +23,7 @@ import dk.ucn.datamatiker.mwe.movechair.Fragments.ProfileFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.MyPlanFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutPlanFragment;
+import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
@@ -32,19 +34,20 @@ public class MainActivity extends AppCompatActivity implements WorkoutPlanFragme
 {
 
     // This field holds the authenticated user
-    public UserModel loggedInUser;
+    //public UserModel loggedInUser;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loggedInUser = (UserModel) getIntent().getSerializableExtra("user");
+
+        UserHelper.getUser();
+        //loggedInUser = (UserModel) getIntent().getSerializableExtra("user");
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Menu 1");
         setSupportActionBar(toolbar);
-
-        // Loads the logged in user from previous "login" activity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -55,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements WorkoutPlanFragme
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
+
         //Adding default page fragment
         HomeFragment startFragment = new HomeFragment();
         getSupportFragmentManager()
@@ -64,11 +69,11 @@ public class MainActivity extends AppCompatActivity implements WorkoutPlanFragme
 
         // Find header so we can access its views
         //Then fill them with the logged in users info
-        TextView username = navigationView.findViewById(R.id.header_username);
-        TextView email = navigationView.findViewById(R.id.header_email);
-        if (loggedInUser != null) {
-            username.setText(loggedInUser.getName());
-            email.setText(loggedInUser.getEmail());
+        TextView username = header.findViewById(R.id.header_username);
+        TextView email = header.findViewById(R.id.header_email);
+        if (UserHelper.getUser() != null) {
+            username.setText(UserHelper.getUser().getName());
+            email.setText(UserHelper.getUser().getEmail());
         }
     }
 

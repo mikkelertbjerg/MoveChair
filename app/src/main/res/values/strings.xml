@@ -97,7 +97,7 @@
     <string name="workout_plan_category">Category: </string>
     <string name="workout_plan_muscle_group">Muscle group(s): </string>
     <string name="workout_plan_duration">Duration: </string>
-    <string name="action_start_workout_plan">Start Workout Plan</string>
+    <string name="action_add_workout_plan">Add to MyPlan</string>
 
     <!-- String related to activities menu -->
     <string name="action_exercises">Exercises</string>

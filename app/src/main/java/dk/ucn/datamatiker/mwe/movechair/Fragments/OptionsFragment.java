@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.LoginActivity;
 import dk.ucn.datamatiker.mwe.movechair.R;
 
@@ -38,6 +39,7 @@ public class OptionsFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         Intent i = new Intent(getActivity(), LoginActivity.class);
         getActivity().finish(); //Kill the current activity
+        UserHelper.setUser(null);
         startActivity(i);
     }
 }
