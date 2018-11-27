@@ -27,9 +27,6 @@ public class ExerciseModel extends ActivityModel implements Serializable {
     @SerializedName("equipment")
     @Expose
     private List<EquipmentModel> equipment;
-    @SerializedName("activity_type")
-    @Expose
-    private ActivityTypeModel activityType;
 
 
     public ExerciseModel(String name, String description, int id, ActivityTypeModel activityType, double points, int duration,
@@ -80,16 +77,6 @@ public class ExerciseModel extends ActivityModel implements Serializable {
 
     public void setPoints(double points){
         this.points = points;
-    }
-
-    @Override
-    public ActivityTypeModel getActivityType() {
-        return super.getActivityType();
-    }
-
-    @Override
-    public void setActivityType(ActivityTypeModel activityType) {
-        this.activityType = activityType;
     }
 
     public String getMuscles(){

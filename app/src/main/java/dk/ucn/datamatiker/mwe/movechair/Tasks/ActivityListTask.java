@@ -1,6 +1,7 @@
 package dk.ucn.datamatiker.mwe.movechair.Tasks;
 
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -11,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
+import java.net.URLEncoder;
 import java.util.List;
 
 import cz.msebera.android.httpclient.HttpEntity;
@@ -28,6 +30,7 @@ import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 public class ActivityListTask extends AsyncTask<String, Integer, List<ActivityModel>> {
     private final String activityType;
 
+    //TODO move this interface out and make it generic
     public interface AsyncJsonResponse {
         void processFinish(List<ActivityModel> res);
     }
@@ -47,8 +50,8 @@ public class ActivityListTask extends AsyncTask<String, Integer, List<ActivityMo
         HttpClient client = HttpClients.custom().setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36").build();
 
         List<ActivityModel> result = null;
-        Log.d("activityType: ", activityType);
         String myUrl = "http://jvo-web.dk/index.php?controller=" + activityType + "&json";
+        myUrl = myUrl.replaceAll(" ", "%20");
         HttpUriRequest request = RequestBuilder.get()
                 .setUri(myUrl)
                 .setHeader(HttpHeaders.ACCEPT, "application/json")

@@ -20,9 +20,6 @@ public class WorkoutPlanModel extends ActivityModel implements Serializable {
     @SerializedName("workoutPlanDuration")
     @Expose
     private int workoutPlanDuration;
-    @SerializedName("activity_type")
-    @Expose
-    private ActivityTypeModel activityType;
 
     public WorkoutPlanModel(String name, String description, int id, ActivityTypeModel activityType, int restDays, int workoutPlanDuration, List<WorkoutModel> workouts) {
         super(name, description, id, activityType);
@@ -64,17 +61,6 @@ public class WorkoutPlanModel extends ActivityModel implements Serializable {
 
     public void setWorkouts(ArrayList<WorkoutModel> workouts) {
         this.workouts = workouts;
-    }
-
-
-    @Override
-    public ActivityTypeModel getActivityType() {
-        return super.getActivityType();
-    }
-
-    @Override
-    public void setActivityType(ActivityTypeModel activityType) {
-        this.activityType = activityType;
     }
 
 }

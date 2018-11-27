@@ -86,13 +86,13 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
                 String type = activities.get(0).getActivityType().getName();
 
                 switch (type) {
-                    case "ExerciseModel":
+                    case "Exercise":
                         fragment = new ExerciseFragment();
                         break;
-                    case "WorkoutModel":
+                    case "Workout":
                         fragment = new WorkoutFragment();
                         break;
-                    case "WorkoutPlanModel":
+                    case "Workout Plan":
                         fragment = new WorkoutPlanFragment();
                         break;
                     default:
@@ -124,21 +124,21 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
         // Set item views based on your views and data model
         switch(type){
-            case "ExerciseModel":
+            case "Exercise":
                 ExerciseModel exercise = (ExerciseModel) activity;
                 activityItemTitle.setText("Title: " + exercise.getName());
                 activityFieldOne.setText("Muscle(s): " + exercise.getMuscles());
                 activityFieldTwo.setText("Points: " + String.valueOf(exercise.getPoints()));
                 break;
 
-            case "WorkoutModel":
+            case "Workout":
                 WorkoutModel workout = (WorkoutModel) activity;
                 activityItemTitle.setText("Title: " + workout.getName());
                 activityFieldOne.setText("Difficulty: " + workout.getDifficulty().getName());
                 activityFieldTwo.setText("Points: " + String.valueOf(workout.getPoints()));
                 break;
 
-                case "WorkoutPlanModel":
+                case "Workout Plan":
                     WorkoutPlanModel workoutPlan = (WorkoutPlanModel) activity;
                     activityItemTitle.setText("Title: " + workoutPlan.getName());
                     activityFieldOne.setText("Weeks: " + String.valueOf(workoutPlan.getWorkoutPlanDuration()));
