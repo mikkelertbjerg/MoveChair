@@ -1,6 +1,7 @@
 package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
@@ -12,7 +13,27 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
+import com.google.android.exoplayer2.extractor.ExtractorsFactory;
+import com.google.android.exoplayer2.source.ConcatenatingMediaSource;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelection;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.BandwidthMeter;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
+
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.ActivityAdapter;
@@ -24,11 +45,15 @@ import dk.ucn.datamatiker.mwe.movechair.Tasks.ActivityListTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.ExerciseTask;
 import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExerciseViewModel;
+import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExoplayerViewModel;
 
 public class ExerciseFragment extends Fragment implements View.OnClickListener, ExerciseTask.AsyncJsonResponse {
 
     private ExerciseViewModel mExerciseViewModel;
+    private ExoplayerViewModel mExoplayerViewModel;
     private UserModel user;
+    private PlayerView playerView;
+    private SimpleExoPlayer player;
 
     //UI Elements
     VideoView exercise_video;
@@ -39,6 +64,7 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener, 
     TextView exercise_category;
     TextView exercise_equipment;
     TextView exercise_muscle;
+
 
 
     @Nullable
@@ -55,6 +81,7 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener, 
 
         //Get viewModel
         mExerciseViewModel = ViewModelProviders.of(this).get(ExerciseViewModel.class);
+        mExoplayerViewModel = ViewModelProviders.of(this).get(ExoplayerViewModel.class);
 
         //Get activity object from fragment arguments
         ExerciseModel activity = (ExerciseModel) getArguments().getSerializable("activity");
@@ -69,8 +96,11 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener, 
         Button startExerciseButton = (Button) view.findViewById(R.id.start_exercise_button);
         startExerciseButton.setOnClickListener(this);
 
+
         //Instantiate ui elements
+/*
         exercise_video = view.findViewById(R.id.exercise_video);
+*/
         exercise_title = view.findViewById(R.id.exercise_title);
         exercise_description = view.findViewById(R.id.exercise_description);
         exercise_points = view.findViewById(R.id.exercise_points);
@@ -78,11 +108,16 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener, 
         exercise_category = view.findViewById(R.id.exercise_category);
         exercise_equipment = view.findViewById(R.id.exercise_equipment);
         exercise_muscle = view.findViewById(R.id.exercise_muscles);
+        playerView = view.findViewById(R.id.player_view);
+
     }
 
     @Override
     public void onClick(View v) {
-        //TODO Start activityGo
+        {
+            tempSetupExoplayer();
+
+        }
     }
 
     //This method is the callback for our ActivityListTask
@@ -96,6 +131,31 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener, 
         exercise_category.setText("Category: " + res.getCategories());
         exercise_equipment.setText("Equipment: " + res.getEquipment());
         exercise_muscle.setText("Muscle(s): " + res.getMuscles());
+    }
+
+
+    //TODO This method should probably get passed one path and then handle that.
+    public void tempSetupExoplayer()
+    {
+        BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+        TrackSelection.Factory videoTrackSelectionFactory =
+                new AdaptiveTrackSelection.Factory(bandwidthMeter);
+        TrackSelector trackSelector =
+                new DefaultTrackSelector(videoTrackSelectionFactory);
+
+        //initialize the player with default configurations
+        player = ExoPlayerFactory.newSimpleInstance(this.getContext(), trackSelector);
+
+        //Assign simpleExoPlayerView
+        playerView.setPlayer(player);
+
+        ConcatenatingMediaSource videoSource = new ConcatenatingMediaSource();
+        videoSource.addMediaSources(mExoplayerViewModel.setupPlayer());
+        // Prepare the player with the source.
+        player.prepare(videoSource);
+        player.setPlayWhenReady(true);
+        player.getPlayWhenReady();
+
     }
 
 }

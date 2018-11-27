@@ -25,6 +25,10 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
+
+// USE THIS CLASS ONLY FOR REFERENCE ON HOW TO IMPLEMENT ActivityGO --> NEEDS TO BE DELETED
+
+
 public class ActivityGOTestActivity extends Activity {
 
     TrackSelector trackSelector = new DefaultTrackSelector();
