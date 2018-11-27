@@ -71,7 +71,7 @@
     <string name="activity_log_item_type">Activity: Type</string>
     <string name="activity_log_item_date">Date: </string>
 
-    <!-- Strings related to fragment_activity_log -->
+    <!-- Strings related to fragment_daily_log -->
     <string name="activity_log_header">Number of activities completed</string>
     <string name="activity_log_total">Total: #</string>
     <string name="activity_log_week">This week: #</string>

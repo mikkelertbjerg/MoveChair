@@ -1,5 +1,8 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,21 +12,32 @@ import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 
 public class WorkoutModel extends ActivityModel implements Serializable {
 
+    @SerializedName("exercises")
+    @Expose
     private List<ExerciseModel> exercises;
+    @SerializedName("workoutDuration")
+    @Expose
     private double workoutDuration;
+    @SerializedName("restDuration")
+    @Expose
     private double restDuration;
+    @SerializedName("difficulty")
+    @Expose
     private DifficultyModel difficulty;
+    @SerializedName("activity_type")
+    @Expose
+    private ActivityTypeModel activityType;
 
-    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityTypeModel, double workoutDuration, double restDuration, DifficultyModel difficulty, List<ExerciseModel> exercises) {
-        super(name, description, id, activityTypeModel);
+    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityType, double workoutDuration, double restDuration, DifficultyModel difficulty, List<ExerciseModel> exercises) {
+        super(name, description, id, activityType);
         this.workoutDuration = workoutDuration;
         this.restDuration = restDuration;
         this.difficulty = difficulty;
         this.exercises = exercises;
     }
 
-    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityTypeModel) {
-        super(name, description, id, activityTypeModel);
+    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityType) {
+        super(name, description, id, activityType);
         this.exercises = new ArrayList<ExerciseModel>() {
         };
     }
@@ -67,5 +81,15 @@ public class WorkoutModel extends ActivityModel implements Serializable {
 
         }
         return points;
+    }
+
+    @Override
+    public ActivityTypeModel getActivityType() {
+        return super.getActivityType();
+    }
+
+    @Override
+    public void setActivityType(ActivityTypeModel activityType) {
+        this.activityType = activityType;
     }
 }

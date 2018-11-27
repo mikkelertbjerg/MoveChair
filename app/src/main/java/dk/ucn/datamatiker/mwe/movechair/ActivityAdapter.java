@@ -83,7 +83,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
             public void onClick(View v) {
                 MainActivity mainActivity = (MainActivity) context;
                 Fragment fragment = null;
-                String type = activities.get(0).getClass().getSimpleName();
+                String type = activities.get(0).getActivityType().getName();
 
                 switch (type) {
                     case "ExerciseModel":
@@ -120,7 +120,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
         // Get the data model based on position
         ActivityModel activity = activities.get(position);
-        String type = activities.get(0).getClass().getSimpleName();
+        String type = activities.get(0).getActivityType().getName();
 
         // Set item views based on your views and data model
         switch(type){

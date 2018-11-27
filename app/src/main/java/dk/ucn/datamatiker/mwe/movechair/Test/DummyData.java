@@ -1,6 +1,10 @@
 package dk.ucn.datamatiker.mwe.movechair.Test;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -49,42 +53,49 @@ public class DummyData {
 
     public List<ActivityTypeModel> createActivityTypes(){
 
-        List<ActivityTypeModel> activityTypeModels = new ArrayList<>();
+        List<ActivityTypeModel> activityTypes = new ArrayList<>();
 
         ActivityTypeModel exercise = new ActivityTypeModel("Exercise", 1);
         ActivityTypeModel workout = new ActivityTypeModel("Workout", 2);
         ActivityTypeModel workoutPlan = new ActivityTypeModel("Workout Plan", 3);
 
-        activityTypeModels.add(exercise);
-        activityTypeModels.add(workout);
-        activityTypeModels.add(workoutPlan);
+        activityTypes.add(exercise);
+        activityTypes.add(workout);
+        activityTypes.add(workoutPlan);
 
-        return  activityTypeModels;
+        return  activityTypes;
     }
-    public List<ActivityModel> createExercises(int numActivities) {
-        List<ActivityTypeModel> activityTypeModels = createActivityTypes();
-        List<ActivityModel> exercises = new ArrayList<>();
 
-        /* DUMMY DATA - CATEGORY MODELS*/
+    public List<CategoryModel> createCategories(){
+        ArrayList<CategoryModel> categories = new ArrayList<>();
+
         CategoryModel hypertrophy = new CategoryModel("Hypertrophy");
         CategoryModel cardio = new CategoryModel("Cardio");
         CategoryModel strength = new CategoryModel("Strength");
-        ArrayList<CategoryModel> categories = new ArrayList<>();
+
         categories.add(hypertrophy);
         categories.add(cardio);
         categories.add(strength);
+
+        return categories;
+    }
+    public List<ActivityModel> createExercises(int numActivities) {
+        List<ActivityTypeModel> activityTypes = createActivityTypes();
+        List<CategoryModel> categories = createCategories();
+        List<ActivityModel> exercises = new ArrayList<>();
+
 
         createMuscleGroups(numActivities);
 
 
         for (int i = 0; i < numActivities; i++) {
-           exercises.add(new ExerciseModel("Exercise " + (i + 1), "Description " + (i + 1), i, activityTypeModels.get(0), 1, 90, null,
+           exercises.add(new ExerciseModel("Exercise " + (i + 1), "Description " + (i + 1), i, activityTypes.get(0), 1, 90, null,
                    categories, createMuscles(2), createEquipment(2)));
         }
         return exercises;
     }
     public List<ActivityModel> createWorkouts(int numActivities){
-        List<ActivityTypeModel> activityTypeModels = createActivityTypes();
+        List<ActivityTypeModel> activityTypes = createActivityTypes();
         List<ActivityModel> workouts = new ArrayList<>();
 
         /* DUMMY DATA - DIFFICULTY MODELS*/
@@ -93,16 +104,16 @@ public class DummyData {
         DifficultyModel advanced = new DifficultyModel("Advanced", 1.5);
 
         for(int i = 0; i < numActivities; i++){
-            workouts.add(new WorkoutModel("Workout " + (i+1), "Description " + (i+1), i, activityTypeModels.get(1), i*10, i*2, beginner, (List<ExerciseModel>)(List<?>)createExercises(2)));
+            workouts.add(new WorkoutModel("Workout " + (i+1), "Description " + (i+1), i, activityTypes.get(1), i*10, i*2, beginner, (List<ExerciseModel>)(List<?>)createExercises(2)));
         }
         return workouts;
     }
     public List<ActivityModel> createWorkoutPlans(int numActivities){
-        List<ActivityTypeModel> activityTypeModels = createActivityTypes();
+        List<ActivityTypeModel> activityTypes = createActivityTypes();
 
         List<ActivityModel> workoutPlans = new ArrayList<>();
         for(int i = 0; i < numActivities; i++){
-            workoutPlans.add(new WorkoutPlanModel("Workout Plan " + (i+1), "Description " + (i+1), i, activityTypeModels.get(2), i*10, i*2, (List<WorkoutModel>)(List<?>)createWorkouts(2)));
+            workoutPlans.add(new WorkoutPlanModel("Workout Plan " + (i+1), "Description " + (i+1), i, activityTypes.get(2), i*10, i*2, (List<WorkoutModel>)(List<?>)createWorkouts(2)));
         }
         return workoutPlans;
     }
@@ -114,8 +125,10 @@ public class DummyData {
         activities.addAll(createExercises(magicNumber));
         activities.addAll(createWorkouts(magicNumber));
         activities.addAll(createWorkoutPlans(magicNumber));
+
         for(int i = 0; i < numActivities; i++){
-            SessionLogModel sessionLog = new SessionLogModel(activities.get(i), new Date());
+            SessionLogModel sessionLog = new SessionLogModel(activities.get(i),
+                    new Date());
             sessionLogs.add(sessionLog);
         }
         return sessionLogs;
@@ -125,16 +138,26 @@ public class DummyData {
         List<DailyLogModel> dailyLogs = new ArrayList<>();
 
         for(int i = 0; i < numActivities; i++){
-            dailyLogs.add(new DailyLogModel(createSessionLogs(5), i + 500));
+            dailyLogs.add(new DailyLogModel(i * 250));
         }
         return dailyLogs;
     }
 
     public UserModel createUser(int numDailyLogs, int numSessionLogs){
         List<DailyLogModel> dailyLogs = createDailyLogs(numDailyLogs);
+
+
+
         for(int i = 0; i < numDailyLogs; i++){
             dailyLogs.get(i).setSessionLogs(createSessionLogs(numSessionLogs));
+            LocalDate localDate = LocalDate.now().minusDays(i);
+            Date date = new Date().from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            for(int j = 0; j < dailyLogs.get(i).getSessionLogs().size(); j++) {
+                dailyLogs.get(i).getSessionLogs().get(j).setDate(date);
+            }
         }
+
+
 
         GenderModel male = new GenderModel("1", "Male");
 

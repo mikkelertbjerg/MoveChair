@@ -185,8 +185,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         showProgress(true);
     }
 
-
     private boolean isEmailValid(String email) {
+
         //TODO: Replace this with your own logic
         return email.contains("@");
     }

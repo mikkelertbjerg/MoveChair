@@ -1,7 +1,6 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class ActivityModel implements Serializable {
 
