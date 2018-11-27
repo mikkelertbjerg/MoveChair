@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.util.List;
@@ -23,6 +24,8 @@ import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.AddWorkoutPlanTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.ExerciseTask;
 import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutPlanViewModel;
 
@@ -32,7 +35,7 @@ import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutPlanViewModel;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class WorkoutPlanFragment extends Fragment implements View.OnClickListener {
+public class WorkoutPlanFragment extends Fragment implements View.OnClickListener, AddWorkoutPlanTask.AsyncJsonResponse {
 
     //TODO DELETE THEESE/TESTING PURPOSE
     private WorkoutPlanModel workoutPlan;
@@ -131,10 +134,16 @@ public class WorkoutPlanFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        try {
-            mWorkoutPlanViewModel.addActivityToUser(user, workoutPlan);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        //Pass the id of the activity to the ViewModel which delegates to task
+        mWorkoutPlanViewModel.addWorkoutPlanToUser(this, workoutPlan.getId());
+    }
+
+    @Override
+    public void processFinish(String res) {
+        if(res == "true") {
+            Toast.makeText(getContext(), "Plan added", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
         }
     }
 

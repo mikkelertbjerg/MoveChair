@@ -1,28 +1,20 @@
 package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import dk.ucn.datamatiker.mwe.movechair.ActivityAdapter;
-import dk.ucn.datamatiker.mwe.movechair.LoginActivity;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.ActivityListTask;
-import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +22,6 @@ import java.util.List;
 import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ActivityListViewModel;
-import dk.ucn.datamatiker.mwe.movechair.ViewModels.LoginTask;
 
 public class ActivitiesListFragment extends Fragment implements View.OnClickListener, ActivityListTask.AsyncJsonResponse {
 
