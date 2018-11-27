@@ -1,5 +1,7 @@
 package dk.ucn.datamatiker.mwe.movechair;
 
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,6 +23,7 @@ import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
+import dk.ucn.datamatiker.mwe.movechair.ViewModels.ActivityListViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExerciseViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutPlanViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutViewModel;
@@ -98,7 +101,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
                     default:
                         break;
                 }
-                //Create bundle with activity ID
+
                 final int position = viewHolder.getAdapterPosition();
                 Bundle bundle = new Bundle();
                 ActivityModel activity = activities.get(position);
