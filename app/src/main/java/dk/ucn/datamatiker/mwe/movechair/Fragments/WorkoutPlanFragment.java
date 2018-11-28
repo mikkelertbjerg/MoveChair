@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.ActivityAdapter;
+import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
@@ -101,7 +102,7 @@ public class WorkoutPlanFragment extends Fragment implements View.OnClickListene
         //This makes you able to change toolbar title
 
         //TODO DELETE THIS DUMMY DATA
-        user = new DummyData().createUser(2, 5);
+        user = UserHelper.getUser();
 
         Button startWorkoutPlanButton = (Button) view.findViewById(R.id.start_workout_plan_button);
         startWorkoutPlanButton.setOnClickListener(this);
