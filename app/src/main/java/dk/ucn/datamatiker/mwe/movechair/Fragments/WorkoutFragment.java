@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.ActivityAdapter;
+import dk.ucn.datamatiker.mwe.movechair.ActivityGOTestActivity;
+import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
+import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
@@ -104,11 +107,20 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener, W
         } catch (ParseException e) {
             e.printStackTrace();
         }*/
+
+        //Initiates new ActivityGOFragment and parses the workoutModel
+        ActivityGOFragment fragment = new ActivityGOFragment();
+        Bundle bundleActivities = new Bundle();
+        bundleActivities.putSerializable("workout", workout);
+        fragment.setArguments(bundleActivities);
+        MainActivity mainActivity = (MainActivity) v.getContext();
+        mainActivity.switchFragment(fragment);
     }
 
     //This is the callback method from WorkoutViewmodel, which gets it from WorkoutTask
     @Override
     public void processFinish(WorkoutModel res) {
+        workout = res;
         workout_title.setText("Title: " + res.getName());
         workout_duration.setText("Duration: " + res.getWorkoutDuration());
         workout_description.setText("Description: " + res.getDescription());

@@ -26,6 +26,9 @@ import com.google.android.exoplayer2.util.Util;
 import java.util.ArrayList;
 import java.util.List;
 
+import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.MediaModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 
 public class ExoplayerViewModel extends AndroidViewModel
@@ -73,6 +76,27 @@ public class ExoplayerViewModel extends AndroidViewModel
         }
         return iteratedList;
 
+    }
+
+    public List<String> getExercisePaths(WorkoutModel w)
+    {
+
+        List<String> exercisePaths = new ArrayList<>();
+
+        for(ExerciseModel e: w.getExercises())
+        {
+            for (MediaModel m: e.getMedia()) {
+                if (m.getMediaType().getName().equals("Video")) {
+                    exercisePaths.add(m.getPath());
+                    //Adding default
+/*
+                    exercisePaths.add("https://zippy.gfycat.com/OffensiveGleamingBobcat.webm");
+*/
+                }
+
+            }
+        }
+        return exercisePaths;
     }
 
 
