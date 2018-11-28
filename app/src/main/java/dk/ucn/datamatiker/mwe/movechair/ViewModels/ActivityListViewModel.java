@@ -26,6 +26,6 @@ public class ActivityListViewModel extends AndroidViewModel {
         //Defines callback method for task and starts the task that gets all activities with type.
         this.callback = callback;
         ActivityListTask task = new ActivityListTask(callback, activityType);
-        task.execute(activityType);
+        task.execute();
     }
 }

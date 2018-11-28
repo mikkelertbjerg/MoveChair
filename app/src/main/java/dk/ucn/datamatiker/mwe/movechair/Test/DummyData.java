@@ -1,5 +1,6 @@
 package dk.ucn.datamatiker.mwe.movechair.Test;
 
+import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -127,7 +128,7 @@ public class DummyData {
         activities.addAll(createWorkoutPlans(magicNumber));
 
         for(int i = 0; i < numActivities; i++){
-            SessionLogModel sessionLog = new SessionLogModel(activities.get(i),
+            SessionLogModel sessionLog = new SessionLogModel(i+1, activities.get(i),
                     new Date());
             sessionLogs.add(sessionLog);
         }
@@ -143,7 +144,7 @@ public class DummyData {
         return dailyLogs;
     }
 
-    public UserModel createUser(int numDailyLogs, int numSessionLogs){
+    public UserModel createUser(int numDailyLogs, int numSessionLogs) throws ParseException {
         List<DailyLogModel> dailyLogs = createDailyLogs(numDailyLogs);
 
 
@@ -153,11 +154,9 @@ public class DummyData {
             LocalDate localDate = LocalDate.now().minusDays(i);
             Date date = new Date().from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
             for(int j = 0; j < dailyLogs.get(i).getSessionLogs().size(); j++) {
-                dailyLogs.get(i).getSessionLogs().get(j).setDate(date);
+                dailyLogs.get(i).getSessionLogs().get(j).setDate(date.toString());
             }
         }
-
-
 
         GenderModel male = new GenderModel("1", "Male");
 
