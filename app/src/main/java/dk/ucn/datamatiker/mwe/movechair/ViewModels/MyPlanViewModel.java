@@ -34,7 +34,8 @@ public class MyPlanViewModel extends AndroidViewModel {
     public ActivityModel getMyPlan(int userId) {
         //TODO get from DB instead
 
-        return new DummyData().createWorkoutPlans(10).get(userId);
+        //return new DummyData().createWorkoutPlans(10).get(userId);
+        return null;
     }
 
    /* private ActivityModel createDummyData() {

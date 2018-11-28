@@ -19,10 +19,12 @@ import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AddWorkoutPlanTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.ExerciseTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.ExercisesListTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.GetWorkoutPlanTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.WorkoutTask;
 import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 
 
-public class WorkoutPlanViewModel extends AndroidViewModel implements IFViewModel<ActivityModel> {
+public class WorkoutPlanViewModel extends AndroidViewModel  {
 
 
 
@@ -32,6 +34,7 @@ public class WorkoutPlanViewModel extends AndroidViewModel implements IFViewMode
 
 
     private AddWorkoutPlanTask.AsyncJsonResponse addWorkoutToUserCallback;
+    private GetWorkoutPlanTask.AsyncJsonResponse getWorkoutPlanCallback;
 
     public void addWorkoutPlanToUser(AddWorkoutPlanTask.AsyncJsonResponse callback, int workoutPlanId) {
         //Defines callback method for task and starts the task that gets all activities with type.
@@ -40,13 +43,11 @@ public class WorkoutPlanViewModel extends AndroidViewModel implements IFViewMode
         task.execute();
     }
 
-
-
-    //TODO Remove dummy data code ?
-    @Override
-    public ActivityModel getItem(int id) {
-        //TODO Method that retrieves an WorkoutPlanModel from DB
-        return new DummyData().createWorkoutPlans(10).get(id);
+    public void getItem(GetWorkoutPlanTask.AsyncJsonResponse callback, int workoutId) {
+        //Defines callback method for task and starts the task that gets all activities with type.
+        this.getWorkoutPlanCallback = callback;
+        GetWorkoutPlanTask task = new GetWorkoutPlanTask(callback, workoutId);
+        task.execute();
     }
 
     private boolean compareDates(Date psDate1, Date psDate2) throws ParseException {

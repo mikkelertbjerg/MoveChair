@@ -131,22 +131,22 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
                 ExerciseModel exercise = (ExerciseModel) activity;
                 activityItemTitle.setText("Title: " + exercise.getName());
                 activityFieldOne.setText("Muscle(s): " + exercise.getMuscles());
-                activityFieldTwo.setText("Points: " + String.valueOf(exercise.getPoints()));
+                activityFieldTwo.setText("Points: " + String.valueOf(activity.getPoints()));
                 break;
 
             case "Workout":
                 WorkoutModel workout = (WorkoutModel) activity;
                 activityItemTitle.setText("Title: " + workout.getName());
                 activityFieldOne.setText("Difficulty: " + workout.getDifficulty().getName());
-                activityFieldTwo.setText("Points: " + String.valueOf(workout.getPoints()));
+                activityFieldTwo.setText("Points: " + String.valueOf(activity.getPoints()));
                 break;
 
-                case "Workout Plan":
-                    WorkoutPlanModel workoutPlan = (WorkoutPlanModel) activity;
-                    activityItemTitle.setText("Title: " + workoutPlan.getName());
-                    activityFieldOne.setText("Weeks: " + String.valueOf(workoutPlan.getWorkoutPlanDuration()));
-                    activityFieldTwo.setText("Rest days: " + String.valueOf(workoutPlan.getRestDays()));
-                    break;
+            case "Workout Plan":
+                WorkoutPlanModel workoutPlan = (WorkoutPlanModel) activity;
+                activityItemTitle.setText("Title: " + workoutPlan.getName());
+                activityFieldOne.setText("Rest days: " + String.valueOf(workoutPlan.getRestDays()));
+                activityFieldTwo.setText("Points: " + String.valueOf(activity.getPoints()));
+                break;
 
         }
         //activityItemIcon.setImageIcon(activitiesListItem.getImg());

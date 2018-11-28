@@ -84,7 +84,7 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener, 
         mExoplayerViewModel = ViewModelProviders.of(this).get(ExoplayerViewModel.class);
 
         //Get activity object from fragment arguments
-        ExerciseModel activity = (ExerciseModel) getArguments().getSerializable("activity");
+        ActivityModel activity = (ActivityModel) getArguments().getSerializable("activity");
 
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(activity.getName());

@@ -28,9 +28,7 @@ import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 
-public class MainActivity extends AppCompatActivity implements WorkoutPlanFragment.OnListFragmentInteractionListener,
-        WorkoutFragment.OnListFragmentInteractionListener,
-        NavigationView.OnNavigationItemSelectedListener
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
 
     // This field holds the authenticated user
@@ -153,13 +151,4 @@ public class MainActivity extends AppCompatActivity implements WorkoutPlanFragme
         }
     }
 
-    @Override
-    public void onListFragmentInteraction(WorkoutModel item) {
-
-    }
-
-    @Override
-    public void onListFragmentInteraction(WorkoutPlanModel item) {
-
-    }
 }

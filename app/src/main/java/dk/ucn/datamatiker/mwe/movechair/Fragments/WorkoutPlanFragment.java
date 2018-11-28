@@ -27,106 +27,52 @@ import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AddWorkoutPlanTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.ExerciseTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.GetWorkoutPlanTask;
 import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutPlanViewModel;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
-public class WorkoutPlanFragment extends Fragment implements View.OnClickListener, AddWorkoutPlanTask.AsyncJsonResponse {
+public class WorkoutPlanFragment extends Fragment implements View.OnClickListener, AddWorkoutPlanTask.AsyncJsonResponse, GetWorkoutPlanTask.AsyncJsonResponse {
 
-    //TODO DELETE THEESE/TESTING PURPOSE
     private WorkoutPlanModel workoutPlan;
     private UserModel user;
-
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
     private WorkoutPlanViewModel mWorkoutPlanViewModel;
-
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public WorkoutPlanFragment() {
-    }
-
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static WorkoutPlanFragment newInstance(int columnCount) {
-        WorkoutPlanFragment fragment = new WorkoutPlanFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
-    }
+    private TextView workout_plan_title;
+    private TextView workout_plan_duration;
+    private TextView workout_plan_description;
+    private RecyclerView rvActivities;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_workout_plan_view, container, false);
-
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new ActivityAdapter(new DummyData().createWorkoutPlans(5)));
-        }
         return view;
     }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         //Get activity object from fragment arguments
-        WorkoutPlanModel activity = (WorkoutPlanModel) getArguments().getSerializable("activity");
+        ActivityModel activity = (ActivityModel) getArguments().getSerializable("activity");
         //This makes you able to change toolbar title
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(activity.getName());
 
-        //TODO DELETE THIS DUMMY DATA
         user = UserHelper.getUser();
 
         Button startWorkoutPlanButton = (Button) view.findViewById(R.id.start_workout_plan_button);
         startWorkoutPlanButton.setOnClickListener(this);
 
+        // instantiate the viewmodel from ViewModelProviders
         mWorkoutPlanViewModel = ViewModelProviders.of(this).get(WorkoutPlanViewModel.class);
 
-        workoutPlan = (WorkoutPlanModel) mWorkoutPlanViewModel.getItem(activity.getId());
+        // Call the async method in the viewmodel
+        mWorkoutPlanViewModel.getItem(this, activity.getId());
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(workoutPlan.getName());
+        workout_plan_title = view.findViewById(R.id.workout_plan_title);
+        workout_plan_duration = view.findViewById(R.id.workout_plan_duration);
+        workout_plan_description = view.findViewById(R.id.workout_plan_description);
 
-        TextView workout_plan_title = view.findViewById(R.id.workout_plan_title);
-        TextView workout_plan_duration = view.findViewById(R.id.workout_plan_duration);
-        TextView workout_plan_description = view.findViewById(R.id.workout_plan_description);
-
-        workout_plan_title.setText("Title: " + workoutPlan.getName());
-        workout_plan_duration.setText("Duration: " + workoutPlan.getWorkoutPlanDuration());
-        workout_plan_description.setText("Description: " + workoutPlan.getDescription());
-
-        RecyclerView rvActivities = view.findViewById(R.id.rv_workouts);
-        // Create adapter passing in the sample user data
-        //TODO dummy data
-        ActivityAdapter adapter = new ActivityAdapter((List<ActivityModel>)(List<?>) workoutPlan.getWorkouts());
-        // Attach the adapter to the recyclerview to populate items
-        rvActivities.setAdapter(adapter);
+        rvActivities = view.findViewById(R.id.rv_workouts);
+       
         // Set layout manager to position the items
         rvActivities.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -148,8 +94,16 @@ public class WorkoutPlanFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(WorkoutPlanModel item);
+    @Override
+    public void processFinish(WorkoutPlanModel res) {
+        this.workoutPlan = res;
+        workout_plan_title.setText("Title: " + this.workoutPlan.getName());
+        workout_plan_duration.setText("Duration: " + this.workoutPlan.getWorkoutPlanDuration());
+        workout_plan_description.setText("Description: " + this.workoutPlan.getDescription()); 
+        
+        // Create adapter passing in the sample user data
+        ActivityAdapter adapter = new ActivityAdapter((List<ActivityModel>)(List<?>) this.workoutPlan.getWorkouts());
+        // Attach the adapter to the recyclerview to populate items
+        rvActivities.setAdapter(adapter);
     }
 }

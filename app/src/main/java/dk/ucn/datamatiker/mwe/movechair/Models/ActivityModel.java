@@ -19,12 +19,17 @@ public class ActivityModel implements Serializable {
     @SerializedName("activity_type")
     @Expose
     private ActivityTypeModel activityType;
+    @SerializedName("points")
+    @Expose
+    private double points;
 
-    public ActivityModel(String name, String description, int id, ActivityTypeModel activityType){
+
+    public ActivityModel(String name, String description, int id, ActivityTypeModel activityType, double points){
         this.id = id;
         this.name = name;
         this.description = description;
         this.activityType = activityType;
+        this.points = points;
     }
 
     public ActivityModel () {
@@ -59,5 +64,13 @@ public class ActivityModel implements Serializable {
 
     public void setActivityType(ActivityTypeModel activityType) {
         this.activityType = activityType;
+    }
+
+    public double getPoints() {
+        return points;
+    }
+
+    public void setPoints(double points) {
+        this.points = points;
     }
 }

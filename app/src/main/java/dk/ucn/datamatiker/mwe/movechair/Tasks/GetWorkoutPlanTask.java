@@ -4,14 +4,12 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
-import java.util.List;
 
 import cz.msebera.android.httpclient.HttpEntity;
 import cz.msebera.android.httpclient.HttpHeaders;
@@ -20,30 +18,32 @@ import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.client.methods.HttpUriRequest;
 import cz.msebera.android.httpclient.client.methods.RequestBuilder;
 import cz.msebera.android.httpclient.impl.client.HttpClients;
-import dk.ucn.datamatiker.mwe.movechair.Models.DailyLogModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 
-public class DailyLogTask extends AsyncTask<String, Integer, List<DailyLogModel>> {
+public class GetWorkoutPlanTask extends AsyncTask<Integer, Integer, WorkoutPlanModel> {
+    private final int workoutPlanId;
 
-    private AsyncJson delegate;
-    private int user_id;
-
-    public interface AsyncJson {
-        void processFinished(List<DailyLogModel> dailyLogs);
+    public interface AsyncJsonResponse {
+        void processFinish(WorkoutPlanModel res);
     }
-
-    public DailyLogTask(AsyncJson delegate, int user_id) {
+    public GetWorkoutPlanTask(AsyncJsonResponse delegate, int workoutPlanId) {
         this.delegate = delegate;
-        this.user_id = user_id;
+        this.workoutPlanId = workoutPlanId;
     }
-
-
+    public AsyncJsonResponse delegate;
 
     @Override
-    protected List<DailyLogModel> doInBackground(String... strings) {
+    protected void onPostExecute(WorkoutPlanModel workoutPlan) {
+        delegate.processFinish(workoutPlan);
+    }
+
+    @Override
+    protected WorkoutPlanModel doInBackground(Integer... integers) {
         HttpClient client = HttpClients.custom().setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36").build();
 
-        List<DailyLogModel> result = null;
-        String myUrl = "http://jvo-web.dk/index.php?controller=dailylogs&action=selectByUserId&user_id=" + this.user_id;
+        WorkoutPlanModel result = null;
+        String myUrl = "http://jvo-web.dk/index.php?controller=workout plans&action=select&id=" + workoutPlanId;
+        myUrl = myUrl.replaceAll(" ", "%20");
         HttpUriRequest request = RequestBuilder.get()
                 .setUri(myUrl)
                 .setHeader(HttpHeaders.ACCEPT, "application/json")
@@ -59,9 +59,9 @@ public class DailyLogTask extends AsyncTask<String, Integer, List<DailyLogModel>
                 Reader reader = new InputStreamReader(content);
                 Gson gson = new Gson();
                 Type listType = null;
-                //List type
-                listType = new TypeToken<List<DailyLogModel>>() {}.getType();
-                result = gson.fromJson(reader, listType);
+
+                result = gson.fromJson(reader, WorkoutPlanModel.class);
+
                 content.close();
 
             } else {
@@ -74,10 +74,4 @@ public class DailyLogTask extends AsyncTask<String, Integer, List<DailyLogModel>
 
         return result;
     }
-
-    @Override
-    protected void onPostExecute(List<DailyLogModel> dailyLogs) {
-        this.delegate.processFinished(dailyLogs);
-    }
 }
-

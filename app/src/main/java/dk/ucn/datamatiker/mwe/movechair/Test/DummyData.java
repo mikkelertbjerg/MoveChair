@@ -26,7 +26,7 @@ import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 
 public class DummyData {
-
+/*
     public List<MuscleModel> createMuscles(int numActivities){
         List<MuscleModel> muscles = new ArrayList<MuscleModel>();
 
@@ -95,11 +95,11 @@ public class DummyData {
         }
         return exercises;
     }
-    public List<ActivityModel> createWorkouts(int numActivities){
+/*    public List<ActivityModel> createWorkouts(int numActivities){
         List<ActivityTypeModel> activityTypes = createActivityTypes();
         List<ActivityModel> workouts = new ArrayList<>();
 
-        /* DUMMY DATA - DIFFICULTY MODELS*/
+        *//* DUMMY DATA - DIFFICULTY MODELS*//*
         DifficultyModel beginner = new DifficultyModel("Beginner", 1);
         DifficultyModel intermediate = new DifficultyModel("Intermediate", 1.25);
         DifficultyModel advanced = new DifficultyModel("Advanced", 1.5);
@@ -118,7 +118,8 @@ public class DummyData {
         }
         return workoutPlans;
     }
-
+*/
+/*
     public List<SessionLogModel> createSessionLogs(int numActivities){
         List<SessionLogModel> sessionLogs = new ArrayList<>();
         List<ActivityModel> activities = new ArrayList<>();

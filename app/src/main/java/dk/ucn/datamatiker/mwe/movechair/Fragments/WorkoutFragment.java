@@ -40,11 +40,6 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener, W
     //UI Elements
     TextView workout_title;
     TextView workout_duration;
-    //TODO Do we need theese props? Not according to our domain
-    //TextView workout_category;
-    //TextView workout_difficulty;
-    //TextView workout_muscle_group;
-    //TextView workout_equipment;
     TextView workout_description;
     RecyclerView rvActivities;
 
@@ -65,7 +60,7 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener, W
         super.onViewCreated(view, savedInstanceState);
 
         //Get activity object from fragment arguments
-        WorkoutModel activity = (WorkoutModel) getArguments().getSerializable("activity");
+        ActivityModel activity = (ActivityModel) getArguments().getSerializable("activity");
 
         Button startWorkoutButton = (Button) view.findViewById(R.id.start_workout_button);
         startWorkoutButton.setOnClickListener(this);

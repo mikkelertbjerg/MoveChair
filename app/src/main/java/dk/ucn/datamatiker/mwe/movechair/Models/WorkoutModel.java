@@ -25,16 +25,16 @@ public class WorkoutModel extends ActivityModel implements Serializable {
     @Expose
     private DifficultyModel difficulty;
 
-    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityType, double workoutDuration, double restDuration, DifficultyModel difficulty, List<ExerciseModel> exercises) {
-        super(name, description, id, activityType);
+    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityType, double points, double workoutDuration, double restDuration, DifficultyModel difficulty, List<ExerciseModel> exercises) {
+        super(name, description, id, activityType, points);
         this.workoutDuration = workoutDuration;
         this.restDuration = restDuration;
         this.difficulty = difficulty;
         this.exercises = exercises;
     }
 
-    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityType) {
-        super(name, description, id, activityType);
+    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityType, double points) {
+        super(name, description, id, activityType, points);
         this.exercises = new ArrayList<ExerciseModel>() {
         };
     }
@@ -71,12 +71,12 @@ public class WorkoutModel extends ActivityModel implements Serializable {
         this.exercises = exercises;
     }
 
-    public double getPoints(){
+/*    public double getPoints(){
         double points = 0;
         for(int i = 0; i < exercises.size(); i++){
             points += exercises.get(i).getPoints() * difficulty.getMultiplier();
 
         }
         return points;
-    }
+    }*/
 }

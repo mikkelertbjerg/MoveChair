@@ -14,22 +14,22 @@ public class WorkoutPlanModel extends ActivityModel implements Serializable {
     @SerializedName("workouts")
     @Expose
     private List<WorkoutModel> workouts;
-    @SerializedName("restDays")
+    @SerializedName("rest_days")
     @Expose
     private int restDays;
     @SerializedName("workoutPlanDuration")
     @Expose
     private int workoutPlanDuration;
 
-    public WorkoutPlanModel(String name, String description, int id, ActivityTypeModel activityType, int restDays, int workoutPlanDuration, List<WorkoutModel> workouts) {
-        super(name, description, id, activityType);
+    public WorkoutPlanModel(String name, String description, int id, ActivityTypeModel activityType, double points, int restDays, int workoutPlanDuration, List<WorkoutModel> workouts) {
+        super(name, description, id, activityType, points);
         this.restDays = restDays;
         this.workoutPlanDuration = workoutPlanDuration;
         this.workouts = workouts;
     }
 
-    public WorkoutPlanModel(String name, String description, int id, ActivityTypeModel activityType, int restDays, int workoutPlanDuration) {
-        super(name, description, id, activityType);
+    public WorkoutPlanModel(String name, String description, int id, ActivityTypeModel activityType, double points, int restDays, int workoutPlanDuration) {
+        super(name, description, id, activityType, points);
 
         this.restDays = restDays;
         this.workoutPlanDuration = workoutPlanDuration;
@@ -63,4 +63,11 @@ public class WorkoutPlanModel extends ActivityModel implements Serializable {
         this.workouts = workouts;
     }
 
+ /*   public double getPoints(){
+        double points = 0;
+        for(int i = 0; i < workouts.size(); i++){
+            points += workouts.get(i).getPoints();
+        }
+        return points;
+    }*/
 }
