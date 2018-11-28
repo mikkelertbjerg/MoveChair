@@ -1,5 +1,6 @@
 package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,16 +12,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import dk.ucn.datamatiker.mwe.movechair.ActivityAdapter;
 import dk.ucn.datamatiker.mwe.movechair.DailyLogAdapter;
+import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
+import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.DailyLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.DailyLogTask;
 import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
+import dk.ucn.datamatiker.mwe.movechair.ViewModels.DailyLogViewModel;
+import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExoplayerViewModel;
 
 
-public class DailyLogFragment extends Fragment {
+public class DailyLogFragment extends Fragment implements DailyLogTask.AsyncJson {
 
-    UserModel user;
-    DailyLogAdapter dailyLogAdapter;
+    private UserModel user;
+    private DailyLogAdapter dailyLogAdapter;
+    private List<DailyLogModel> dailyLogs;
+    private DailyLogViewModel mDailyLogViewModel;
+    private RecyclerView rvDailyLogs;
+    private TextView dailyLogsTotal;
+    private TextView dailyLogsTotalStrides;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,29 +53,42 @@ public class DailyLogFragment extends Fragment {
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Activity Log");
 
-        user = new DummyData().createUser(10, 5);
+        // set the fragments current user from user helper class
+        user = UserHelper.getUser();
+        
+        // instantiate viewmodel and call its async method for returning daily logs
+        mDailyLogViewModel = ViewModelProviders.of(this).get(DailyLogViewModel.class);
+        
+        // this result will be handled via callbacks to the processFinish method of this class
+        mDailyLogViewModel.getDailyLogsByUserId(Integer.valueOf(user.getId()),this);
 
-        TextView dailyLogsTotal = view.findViewById(R.id.daily_log_total);
-        TextView dailyLogsTotalStrides = view.findViewById(R.id.daily_log_strides);
+        dailyLogsTotal = view.findViewById(R.id.daily_log_total);
+        dailyLogsTotalStrides = view.findViewById(R.id.daily_log_strides);
 
-        dailyLogsTotal.setText("Total logs: " + String.valueOf(user.getDailyLogs().size()));
+        rvDailyLogs = view.findViewById(R.id.rv_daily_log_items);
 
-        int strides = 0;
-        for(int i = 0; i < user.getDailyLogs().size(); i++){
-            strides += user.getDailyLogs().get(i).getStrides();
-        }
-        dailyLogsTotalStrides.setText("Total strides: " + String.valueOf(strides));
+        dailyLogs = new ArrayList<>();
 
-        RecyclerView rvDailyLogs = view.findViewById(R.id.rv_daily_log_items);
-
-
-        dailyLogAdapter = new DailyLogAdapter(user.getDailyLogs());
-
+        dailyLogAdapter = new DailyLogAdapter(dailyLogs);
         rvDailyLogs.setAdapter(dailyLogAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         linearLayoutManager.setStackFromEnd(true);
         rvDailyLogs.setLayoutManager(linearLayoutManager);
+    }
 
+    //This method is the callback for our ActivityListTask
+    @Override
+    public void processFinished(List<DailyLogModel> dailyLogs) {
+
+        dailyLogsTotal.setText("Total logs: " + String.valueOf(dailyLogs.size()));
+
+        int strides = 0;
+        for(int i = 0; i < dailyLogs.size(); i++){
+            strides += dailyLogs.get(i).getStrides();
+        }
+        dailyLogsTotalStrides.setText("Total strides: " + String.valueOf(strides));
+        dailyLogAdapter = new DailyLogAdapter(dailyLogs);
+        rvDailyLogs.setAdapter(dailyLogAdapter);
     }
 }

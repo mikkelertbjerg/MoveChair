@@ -4,14 +4,12 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
-import java.util.List;
 
 import cz.msebera.android.httpclient.HttpEntity;
 import cz.msebera.android.httpclient.HttpHeaders;
@@ -20,34 +18,31 @@ import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.client.methods.HttpUriRequest;
 import cz.msebera.android.httpclient.client.methods.RequestBuilder;
 import cz.msebera.android.httpclient.impl.client.HttpClients;
-import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 
-public class ActivityListTask extends AsyncTask<String, Integer, List<ActivityModel>> {
-    private final String activityType;
+public class GetWorkoutPlanTask extends AsyncTask<Integer, Integer, WorkoutPlanModel> {
+    private final int workoutPlanId;
 
     public interface AsyncJsonResponse {
-        void processFinish(List<ActivityModel> res);
+        void processFinish(WorkoutPlanModel res);
     }
-    public ActivityListTask(AsyncJsonResponse delegate, String activityType) {
+    public GetWorkoutPlanTask(AsyncJsonResponse delegate, int workoutPlanId) {
         this.delegate = delegate;
-        this.activityType = activityType;
+        this.workoutPlanId = workoutPlanId;
     }
     public AsyncJsonResponse delegate;
 
     @Override
-    protected void onPostExecute(List<ActivityModel> activities) {
-        delegate.processFinish(activities);
+    protected void onPostExecute(WorkoutPlanModel workoutPlan) {
+        delegate.processFinish(workoutPlan);
     }
 
     @Override
-    protected List<ActivityModel> doInBackground(String... strings) {
+    protected WorkoutPlanModel doInBackground(Integer... integers) {
         HttpClient client = HttpClients.custom().setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36").build();
 
-        List<ActivityModel> result = null;
-        String myUrl = "http://jvo-web.dk/index.php?controller=" + activityType + "&action=selectall";
+        WorkoutPlanModel result = null;
+        String myUrl = "http://jvo-web.dk/index.php?controller=workout plans&action=select&id=" + workoutPlanId;
         myUrl = myUrl.replaceAll(" ", "%20");
         HttpUriRequest request = RequestBuilder.get()
                 .setUri(myUrl)
@@ -64,25 +59,8 @@ public class ActivityListTask extends AsyncTask<String, Integer, List<ActivityMo
                 Reader reader = new InputStreamReader(content);
                 Gson gson = new Gson();
                 Type listType = null;
-                //List type
-                switch (activityType.toLowerCase()) {
-                    case "exercises":
-                        listType = new TypeToken<List<ExerciseModel>>() {
-                        }.getType();
-                        break;
 
-                    case "workouts":
-                        listType = new TypeToken<List<WorkoutModel>>() {
-                        }.getType();
-                        break;
-
-                    case "workout plans":
-                        listType = new TypeToken<List<WorkoutPlanModel>>() {
-                        }.getType();
-                        break;
-                }
-
-                result = gson.fromJson(reader, listType);
+                result = gson.fromJson(reader, WorkoutPlanModel.class);
 
                 content.close();
 
@@ -96,6 +74,4 @@ public class ActivityListTask extends AsyncTask<String, Integer, List<ActivityMo
 
         return result;
     }
-
-
 }

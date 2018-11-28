@@ -1,5 +1,7 @@
 package dk.ucn.datamatiker.mwe.movechair;
 
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,6 +23,7 @@ import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
+import dk.ucn.datamatiker.mwe.movechair.ViewModels.ActivityListViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExerciseViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutPlanViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutViewModel;
@@ -86,19 +89,19 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
                 String type = activities.get(0).getActivityType().getName();
 
                 switch (type) {
-                    case "ExerciseModel":
+                    case "Exercise":
                         fragment = new ExerciseFragment();
                         break;
-                    case "WorkoutModel":
+                    case "Workout":
                         fragment = new WorkoutFragment();
                         break;
-                    case "WorkoutPlanModel":
+                    case "Workout Plan":
                         fragment = new WorkoutPlanFragment();
                         break;
                     default:
                         break;
                 }
-                //Create bundle with activity ID
+
                 final int position = viewHolder.getAdapterPosition();
                 Bundle bundle = new Bundle();
                 ActivityModel activity = activities.get(position);
@@ -124,26 +127,26 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
         // Set item views based on your views and data model
         switch(type){
-            case "ExerciseModel":
+            case "Exercise":
                 ExerciseModel exercise = (ExerciseModel) activity;
                 activityItemTitle.setText("Title: " + exercise.getName());
                 activityFieldOne.setText("Muscle(s): " + exercise.getMuscles());
-                activityFieldTwo.setText("Points: " + String.valueOf(exercise.getPoints()));
+                activityFieldTwo.setText("Points: " + String.valueOf(activity.getPoints()));
                 break;
 
-            case "WorkoutModel":
+            case "Workout":
                 WorkoutModel workout = (WorkoutModel) activity;
                 activityItemTitle.setText("Title: " + workout.getName());
                 activityFieldOne.setText("Difficulty: " + workout.getDifficulty().getName());
-                activityFieldTwo.setText("Points: " + String.valueOf(workout.getPoints()));
+                activityFieldTwo.setText("Points: " + String.valueOf(activity.getPoints()));
                 break;
 
-                case "WorkoutPlanModel":
-                    WorkoutPlanModel workoutPlan = (WorkoutPlanModel) activity;
-                    activityItemTitle.setText("Title: " + workoutPlan.getName());
-                    activityFieldOne.setText("Weeks: " + String.valueOf(workoutPlan.getWorkoutPlanDuration()));
-                    activityFieldTwo.setText("Rest days: " + String.valueOf(workoutPlan.getRestDays()));
-                    break;
+            case "Workout Plan":
+                WorkoutPlanModel workoutPlan = (WorkoutPlanModel) activity;
+                activityItemTitle.setText("Title: " + workoutPlan.getName());
+                activityFieldOne.setText("Rest days: " + String.valueOf(workoutPlan.getRestDays()));
+                activityFieldTwo.setText("Points: " + String.valueOf(activity.getPoints()));
+                break;
 
         }
         //activityItemIcon.setImageIcon(activitiesListItem.getImg());

@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
@@ -15,32 +16,16 @@ import dk.ucn.datamatiker.mwe.movechair.Tasks.ActivityListTask;
 
 public class ActivityListViewModel extends AndroidViewModel {
 
-    private List<ExerciseModel> exercises;
-    private List<WorkoutModel> workouts;
-    private List<WorkoutPlanModel> workoutPlans;
-
     private ActivityListTask.AsyncJsonResponse callback;
 
     public ActivityListViewModel(@NonNull Application application) {
         super(application);
     }
 
-    private List<ExerciseModel> getExercises(String activityType, ActivityListTask.AsyncJsonResponse callback) {
-        //TODO Method that retrieves all ExerciseModels from DB
+    public void getActivities(String activityType, ActivityListTask.AsyncJsonResponse callback) {
+        //Defines callback method for task and starts the task that gets all activities with type.
         this.callback = callback;
         ActivityListTask task = new ActivityListTask(callback, activityType);
-        return null;
+        task.execute();
     }
-    private List<WorkoutModel> getWorkouts() {
-        //TODO Method that retrieves all WorkoutModels from DB
-        return null;
-    }
-    private List<WorkoutPlanModel> getWorkoutPlans() {
-        //TODO Method that retrieves all WorkoutModels from DB
-       return null;
-    }
-
-
-
-
 }

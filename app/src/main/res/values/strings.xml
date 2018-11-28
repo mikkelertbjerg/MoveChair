@@ -97,7 +97,7 @@
     <string name="workout_plan_category">Category: </string>
     <string name="workout_plan_muscle_group">Muscle group(s): </string>
     <string name="workout_plan_duration">Duration: </string>
-    <string name="action_start_workout_plan">Start Workout Plan</string>
+    <string name="action_add_workout_plan">Add to MyPlan</string>
 
     <!-- String related to activities menu -->
     <string name="action_exercises">Exercises</string>
@@ -122,6 +122,11 @@
 
     <!-- Dummy strings -->
     <string name="lorem_ipsum">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</string>
+
+    <string name="title_activity_goactiviy">ActivityGOActiviy</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_gotest">ActivityGOTestActivity</string>
 
 
 </resources>

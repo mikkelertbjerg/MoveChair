@@ -29,21 +29,24 @@ import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.ExerciseTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.ExercisesListTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.WorkoutTask;
 import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 
-public class WorkoutViewModel extends AndroidViewModel implements IFViewModel<ActivityModel> {
+public class WorkoutViewModel extends AndroidViewModel {
 
+    private WorkoutTask.AsyncJsonResponse getWorkoutCallback;
 
     public WorkoutViewModel(@NonNull Application application) {
         super(application);
     }
-    //TODO Implement ExerciseViewModel
 
-
-    @Override
-    public ActivityModel getItem(int id) {
-        //TODO Method that retrieves an ExerciseModel from DB
-        return new DummyData().createWorkouts(10).get(id);
+    public void getWorkout(WorkoutTask.AsyncJsonResponse callback, int workoutId) {
+        //Defines callback method for task and starts the task that gets all activities with type.
+        this.getWorkoutCallback = callback;
+        WorkoutTask task = new WorkoutTask(callback, workoutId);
+        task.execute();
     }
 
     private boolean compareDates(Date psDate1, Date psDate2) throws ParseException {
@@ -91,6 +94,7 @@ public class WorkoutViewModel extends AndroidViewModel implements IFViewModel<Ac
         }
 
     }
+
 
 }
 

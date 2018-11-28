@@ -1,19 +1,35 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class ActivityModel implements Serializable {
 
+    @SerializedName("id")
+    @Expose
     private int id;
+    @SerializedName("name")
+    @Expose
     private String name;
+    @SerializedName("description")
+    @Expose
     private String description;
-    private  ActivityTypeModel activityType;
+    @SerializedName("activity_type")
+    @Expose
+    private ActivityTypeModel activityType;
+    @SerializedName("points")
+    @Expose
+    private double points;
 
-    public ActivityModel(String name, String description, int id, ActivityTypeModel activityType){
+
+    public ActivityModel(String name, String description, int id, ActivityTypeModel activityType, double points){
         this.id = id;
         this.name = name;
         this.description = description;
         this.activityType = activityType;
+        this.points = points;
     }
 
     public ActivityModel () {
@@ -48,5 +64,13 @@ public class ActivityModel implements Serializable {
 
     public void setActivityType(ActivityTypeModel activityType) {
         this.activityType = activityType;
+    }
+
+    public double getPoints() {
+        return points;
+    }
+
+    public void setPoints(double points) {
+        this.points = points;
     }
 }

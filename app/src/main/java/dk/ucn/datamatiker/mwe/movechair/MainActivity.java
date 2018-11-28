@@ -9,16 +9,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import dk.ucn.datamatiker.mwe.movechair.Data.UserDAO;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.AchievementsFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.ActivitiesFragment;
-import dk.ucn.datamatiker.mwe.movechair.Fragments.ActivityLogFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.DailyLogFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.HighscoreFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.HomeFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.OptionsFragment;
@@ -26,29 +23,29 @@ import dk.ucn.datamatiker.mwe.movechair.Fragments.ProfileFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.MyPlanFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutPlanFragment;
+import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 
-public class MainActivity extends AppCompatActivity implements WorkoutPlanFragment.OnListFragmentInteractionListener,
-        WorkoutFragment.OnListFragmentInteractionListener,
-        NavigationView.OnNavigationItemSelectedListener
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
 
     // This field holds the authenticated user
-    public UserModel loggedInUser;
+    //public UserModel loggedInUser;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loggedInUser = (UserModel) getIntent().getSerializableExtra("user");
+
+        UserHelper.getUser();
+        //loggedInUser = (UserModel) getIntent().getSerializableExtra("user");
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Menu 1");
         setSupportActionBar(toolbar);
-
-        // Loads the logged in user from previous "login" activity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -59,13 +56,7 @@ public class MainActivity extends AppCompatActivity implements WorkoutPlanFragme
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if (loggedInUser != null) {
-            View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
-            TextView username = header.findViewById(R.id.header_username);
-            TextView email = header.findViewById(R.id.header_email);
-            username.setText(loggedInUser.getName());
-            email.setText(loggedInUser.getEmail());
-        }
+        View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
 
         //Adding default page fragment
         HomeFragment startFragment = new HomeFragment();
@@ -76,7 +67,12 @@ public class MainActivity extends AppCompatActivity implements WorkoutPlanFragme
 
         // Find header so we can access its views
         //Then fill them with the logged in users info
-
+        TextView username = header.findViewById(R.id.header_username);
+        TextView email = header.findViewById(R.id.header_email);
+        if (UserHelper.getUser() != null) {
+            username.setText(UserHelper.getUser().getName());
+            email.setText(UserHelper.getUser().getEmail());
+        }
     }
 
 
@@ -109,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements WorkoutPlanFragme
                 fragment = new HomeFragment();
                 break;
             case R.id.nav_activity_log:
-                fragment = new ActivityLogFragment();
+                fragment = new DailyLogFragment();
                 break;
             case R.id.nav_activities:
                 fragment = new ActivitiesFragment();
@@ -155,13 +151,4 @@ public class MainActivity extends AppCompatActivity implements WorkoutPlanFragme
         }
     }
 
-    @Override
-    public void onListFragmentInteraction(WorkoutModel item) {
-
-    }
-
-    @Override
-    public void onListFragmentInteraction(WorkoutPlanModel item) {
-
-    }
 }

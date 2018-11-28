@@ -20,35 +20,29 @@ import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.client.methods.HttpUriRequest;
 import cz.msebera.android.httpclient.client.methods.RequestBuilder;
 import cz.msebera.android.httpclient.impl.client.HttpClients;
-import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 
-public class ActivityListTask extends AsyncTask<String, Integer, List<ActivityModel>> {
-    private final String activityType;
+public class ExercisesListTask extends AsyncTask<String, Integer, List<ExerciseModel>> {
 
     public interface AsyncJsonResponse {
-        void processFinish(List<ActivityModel> res);
+        void processFinish(List<ExerciseModel> res);
     }
-    public ActivityListTask(AsyncJsonResponse delegate, String activityType) {
+    public ExercisesListTask(dk.ucn.datamatiker.mwe.movechair.Tasks.ExercisesListTask.AsyncJsonResponse delegate) {
         this.delegate = delegate;
-        this.activityType = activityType;
     }
-    public AsyncJsonResponse delegate;
+    public dk.ucn.datamatiker.mwe.movechair.Tasks.ExercisesListTask.AsyncJsonResponse delegate;
 
     @Override
-    protected void onPostExecute(List<ActivityModel> activities) {
-        delegate.processFinish(activities);
+    protected void onPostExecute(List<ExerciseModel> exercises) {
+        delegate.processFinish(exercises);
     }
 
     @Override
-    protected List<ActivityModel> doInBackground(String... strings) {
+    protected List<ExerciseModel> doInBackground(String... strings) {
         HttpClient client = HttpClients.custom().setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36").build();
 
-        List<ActivityModel> result = null;
-        String myUrl = "http://jvo-web.dk/index.php?controller=" + activityType + "&action=selectall";
-        myUrl = myUrl.replaceAll(" ", "%20");
+        List<ExerciseModel> result = null;
+        String myUrl = "http://jvo-web.dk/index.php?controller=exercises$action=selectall";
         HttpUriRequest request = RequestBuilder.get()
                 .setUri(myUrl)
                 .setHeader(HttpHeaders.ACCEPT, "application/json")
@@ -65,23 +59,7 @@ public class ActivityListTask extends AsyncTask<String, Integer, List<ActivityMo
                 Gson gson = new Gson();
                 Type listType = null;
                 //List type
-                switch (activityType.toLowerCase()) {
-                    case "exercises":
-                        listType = new TypeToken<List<ExerciseModel>>() {
-                        }.getType();
-                        break;
-
-                    case "workouts":
-                        listType = new TypeToken<List<WorkoutModel>>() {
-                        }.getType();
-                        break;
-
-                    case "workout plans":
-                        listType = new TypeToken<List<WorkoutPlanModel>>() {
-                        }.getType();
-                        break;
-                }
-
+                listType = new TypeToken<List<ExerciseModel>>() {}.getType();
                 result = gson.fromJson(reader, listType);
 
                 content.close();
@@ -96,6 +74,5 @@ public class ActivityListTask extends AsyncTask<String, Integer, List<ActivityMo
 
         return result;
     }
-
 
 }

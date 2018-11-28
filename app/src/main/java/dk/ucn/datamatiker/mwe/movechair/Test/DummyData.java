@@ -1,5 +1,6 @@
 package dk.ucn.datamatiker.mwe.movechair.Test;
 
+import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -25,7 +26,7 @@ import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 
 public class DummyData {
-
+/*
     public List<MuscleModel> createMuscles(int numActivities){
         List<MuscleModel> muscles = new ArrayList<MuscleModel>();
 
@@ -94,11 +95,11 @@ public class DummyData {
         }
         return exercises;
     }
-    public List<ActivityModel> createWorkouts(int numActivities){
+/*    public List<ActivityModel> createWorkouts(int numActivities){
         List<ActivityTypeModel> activityTypes = createActivityTypes();
         List<ActivityModel> workouts = new ArrayList<>();
 
-        /* DUMMY DATA - DIFFICULTY MODELS*/
+        *//* DUMMY DATA - DIFFICULTY MODELS*//*
         DifficultyModel beginner = new DifficultyModel("Beginner", 1);
         DifficultyModel intermediate = new DifficultyModel("Intermediate", 1.25);
         DifficultyModel advanced = new DifficultyModel("Advanced", 1.5);
@@ -117,7 +118,8 @@ public class DummyData {
         }
         return workoutPlans;
     }
-
+*/
+/*
     public List<SessionLogModel> createSessionLogs(int numActivities){
         List<SessionLogModel> sessionLogs = new ArrayList<>();
         List<ActivityModel> activities = new ArrayList<>();
@@ -127,7 +129,7 @@ public class DummyData {
         activities.addAll(createWorkoutPlans(magicNumber));
 
         for(int i = 0; i < numActivities; i++){
-            SessionLogModel sessionLog = new SessionLogModel(activities.get(i),
+            SessionLogModel sessionLog = new SessionLogModel(i+1, activities.get(i),
                     new Date());
             sessionLogs.add(sessionLog);
         }
@@ -143,7 +145,7 @@ public class DummyData {
         return dailyLogs;
     }
 
-    public UserModel createUser(int numDailyLogs, int numSessionLogs){
+    public UserModel createUser(int numDailyLogs, int numSessionLogs) throws ParseException {
         List<DailyLogModel> dailyLogs = createDailyLogs(numDailyLogs);
 
 
@@ -153,11 +155,9 @@ public class DummyData {
             LocalDate localDate = LocalDate.now().minusDays(i);
             Date date = new Date().from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
             for(int j = 0; j < dailyLogs.get(i).getSessionLogs().size(); j++) {
-                dailyLogs.get(i).getSessionLogs().get(j).setDate(date);
+                dailyLogs.get(i).getSessionLogs().get(j).setDate(date.toString());
             }
         }
-
-
 
         GenderModel male = new GenderModel("1", "Male");
 

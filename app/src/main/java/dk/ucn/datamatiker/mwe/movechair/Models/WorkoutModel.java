@@ -15,29 +15,26 @@ public class WorkoutModel extends ActivityModel implements Serializable {
     @SerializedName("exercises")
     @Expose
     private List<ExerciseModel> exercises;
-    @SerializedName("workoutDuration")
+    @SerializedName("workout_duration")
     @Expose
     private double workoutDuration;
-    @SerializedName("restDuration")
+    @SerializedName("rest_duration")
     @Expose
     private double restDuration;
     @SerializedName("difficulty")
     @Expose
     private DifficultyModel difficulty;
-    @SerializedName("activity_type")
-    @Expose
-    private ActivityTypeModel activityType;
 
-    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityType, double workoutDuration, double restDuration, DifficultyModel difficulty, List<ExerciseModel> exercises) {
-        super(name, description, id, activityType);
+    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityType, double points, double workoutDuration, double restDuration, DifficultyModel difficulty, List<ExerciseModel> exercises) {
+        super(name, description, id, activityType, points);
         this.workoutDuration = workoutDuration;
         this.restDuration = restDuration;
         this.difficulty = difficulty;
         this.exercises = exercises;
     }
 
-    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityType) {
-        super(name, description, id, activityType);
+    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityType, double points) {
+        super(name, description, id, activityType, points);
         this.exercises = new ArrayList<ExerciseModel>() {
         };
     }
@@ -74,22 +71,12 @@ public class WorkoutModel extends ActivityModel implements Serializable {
         this.exercises = exercises;
     }
 
-    public double getPoints(){
+/*    public double getPoints(){
         double points = 0;
         for(int i = 0; i < exercises.size(); i++){
             points += exercises.get(i).getPoints() * difficulty.getMultiplier();
 
         }
         return points;
-    }
-
-    @Override
-    public ActivityTypeModel getActivityType() {
-        return super.getActivityType();
-    }
-
-    @Override
-    public void setActivityType(ActivityTypeModel activityType) {
-        this.activityType = activityType;
-    }
+    }*/
 }

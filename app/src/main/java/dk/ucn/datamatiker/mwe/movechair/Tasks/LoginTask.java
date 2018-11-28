@@ -1,4 +1,4 @@
-package dk.ucn.datamatiker.mwe.movechair.ViewModels;
+package dk.ucn.datamatiker.mwe.movechair.Tasks;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -40,12 +40,10 @@ public class LoginTask extends AsyncTask<String, Integer, UserModel> {
 
     @Override
     protected UserModel doInBackground(String... strings) {
-        HttpClient client = HttpClients.custom()
-                .setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
-                .build();
+        HttpClient client = HttpClients.custom().setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36").build();
         UserModel result = null;
         HttpUriRequest request = RequestBuilder.get()
-                .setUri("http://jvo-web.dk/index.php?controller=login&email="+this.email+"&json")
+                .setUri("http://jvo-web.dk/index.php?controller=login&email=" + email)
                 .setHeader(HttpHeaders.ACCEPT, "application/json")
                 .build();
         //Perform the request and check the status code
@@ -59,8 +57,6 @@ public class LoginTask extends AsyncTask<String, Integer, UserModel> {
                 Reader reader = new InputStreamReader(content);
                 Gson gson = new Gson();
                 result = gson.fromJson(reader, UserModel.class);
-                String string = reader.toString();
-                String cont = content.toString();
                 content.close();
 
             } else {

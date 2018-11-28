@@ -9,7 +9,7 @@ public class MediaModel implements Serializable {
     @SerializedName("path")
     @Expose
     private String path;
-    @SerializedName("mediaType")
+    @SerializedName("media_type")
     @Expose
     private MediaTypeModel mediaType;
 
