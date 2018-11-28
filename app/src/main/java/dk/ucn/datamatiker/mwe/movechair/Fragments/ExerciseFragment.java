@@ -67,8 +67,6 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener, 
     TextView exercise_equipment;
     TextView exercise_muscle;
 
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

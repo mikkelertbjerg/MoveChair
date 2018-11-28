@@ -15,10 +15,10 @@ public class WorkoutModel extends ActivityModel implements Serializable {
     @SerializedName("exercises")
     @Expose
     private List<ExerciseModel> exercises;
-    @SerializedName("workoutDuration")
+    @SerializedName("workout_duration")
     @Expose
     private double workoutDuration;
-    @SerializedName("restDuration")
+    @SerializedName("rest_duration")
     @Expose
     private double restDuration;
     @SerializedName("difficulty")
