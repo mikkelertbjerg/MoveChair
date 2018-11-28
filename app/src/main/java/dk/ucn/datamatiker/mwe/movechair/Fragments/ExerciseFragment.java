@@ -39,6 +39,7 @@ import java.util.List;
 import dk.ucn.datamatiker.mwe.movechair.ActivityAdapter;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.MediaModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.ActivityListTask;
@@ -54,6 +55,7 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener, 
     private UserModel user;
     private PlayerView playerView;
     private SimpleExoPlayer player;
+    private ExerciseModel mExerciseModel;
 
     //UI Elements
     VideoView exercise_video;
@@ -115,7 +117,19 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         {
-            tempSetupExoplayer();
+            ArrayList<MediaModel> exerciseMedia = (ArrayList) mExerciseModel.getMedia();
+            List<String> exercisePaths = new ArrayList<>();
+            for (MediaModel m: exerciseMedia)
+            {
+                if(m.getMediaType().getName().equals("Video"))
+                {
+                    exercisePaths.add(m.getPath());
+                }
+
+
+            }
+            tempSetupExoplayer(exercisePaths);
+
 
         }
     }
@@ -131,11 +145,13 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener, 
         exercise_category.setText("Category: " + res.getCategories());
         exercise_equipment.setText("Equipment: " + res.getEquipment());
         exercise_muscle.setText("Muscle(s): " + res.getMuscles());
+
+        mExerciseModel = res;
     }
 
 
     //TODO This method should probably get passed one path and then handle that.
-    public void tempSetupExoplayer()
+    public void tempSetupExoplayer(List<String> s)
     {
         BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
         TrackSelection.Factory videoTrackSelectionFactory =
@@ -150,7 +166,7 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener, 
         playerView.setPlayer(player);
 
         ConcatenatingMediaSource videoSource = new ConcatenatingMediaSource();
-        videoSource.addMediaSources(mExoplayerViewModel.setupPlayer());
+        videoSource.addMediaSources(mExoplayerViewModel.mediasourceConversion(s));
         // Prepare the player with the source.
         player.prepare(videoSource);
         player.setPlayWhenReady(true);

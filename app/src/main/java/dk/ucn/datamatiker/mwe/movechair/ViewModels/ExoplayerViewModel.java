@@ -40,7 +40,7 @@ public class ExoplayerViewModel extends AndroidViewModel
         super(application);
     }
 
-    public List<MediaSource> setupPlayer()
+ /*   public List<MediaSource> setupPlayer(List<String> s)
     {
         String Gif1 = "https://giant.gfycat.com/UnpleasantAdorableBunny.webm";
         String Gif2 = "https://giant.gfycat.com/SnarlingGreedyGrouse.webm";
@@ -52,7 +52,7 @@ public class ExoplayerViewModel extends AndroidViewModel
         videoPathURLs.add(Gif3);
 
        return mediasourceConversion(videoPathURLs);
-    }
+    }*/
 
 
     //TODO Possibly make a method that only returns one mediasource object. Seems redundant to return a list only containing one object.
