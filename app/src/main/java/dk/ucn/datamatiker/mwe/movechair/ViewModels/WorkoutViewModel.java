@@ -41,6 +41,8 @@ public class WorkoutViewModel extends AndroidViewModel {
         }
     }
 
+
+    /*
     //TODO Change params to recive a user or userid
     public void addActivityToUser(UserModel user, ActivityModel activity) throws ParseException {
         SessionLogModel sessionLog = new SessionLogModel();
@@ -74,7 +76,7 @@ public class WorkoutViewModel extends AndroidViewModel {
             user.getDailyLogs().get(user.getDailyLogs().size()-1).getSessionLogs().add(sessionLog);
         }
 
-    }
+    } */
 
 
 }

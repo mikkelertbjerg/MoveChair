@@ -1,4 +1,4 @@
-package dk.ucn.datamatiker.mwe.movechair;
+package dk.ucn.datamatiker.mwe.movechair.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Models.AchievementModel;
+import dk.ucn.datamatiker.mwe.movechair.R;
 
 public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.ViewHolder> {
     Context context;

@@ -1,4 +1,6 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
+
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -9,19 +11,19 @@ public class UserModel implements Serializable {
 
     @SerializedName("id")
     @Expose
-    private String id;
+    private int id;
     @SerializedName("name")
     @Expose
     private String name;
     @SerializedName("age")
     @Expose
-    private String age;
+    private int age;
     @SerializedName("weight")
     @Expose
-    private String weight;
+    private double weight;
     @SerializedName("height")
     @Expose
-    private String height;
+    private double height;
     @SerializedName("email")
     @Expose
     private String email;
@@ -37,40 +39,28 @@ public class UserModel implements Serializable {
     @SerializedName("options")
     @Expose
     private OptionsModel options;
+
     @SerializedName("workoutplans")
     @Expose
     private List<WorkoutPlanModel> workoutPlans;
-    @SerializedName("strides")
-    @Expose
-    private List<StridesModel> strides;
-    @SerializedName("session_logs")
+
+    @SerializedName("sessionlogs")
     @Expose
     private List<SessionLogModel> sessionLogs;
 
-    public UserModel(String id, String name, String age, String weight, String height, String email, String hashedPassword, String salt, GenderModel gender, OptionsModel options, List<WorkoutPlanModel> workoutPlans, List<StridesModel> strides, List<SessionLogModel> sessionLogs) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.weight = weight;
-        this.height = height;
-        this.email = email;
-        this.hashedPassword = hashedPassword;
-        this.salt = salt;
-        this.gender = gender;
-        this.options = options;
+    public List<WorkoutPlanModel> getWorkoutPlans() {
+        return workoutPlans;
+    }
+
+    public void setWorkoutPlans(List<WorkoutPlanModel> workoutPlans) {
         this.workoutPlans = workoutPlans;
-        this.strides = strides;
-        this.sessionLogs = sessionLogs;
     }
 
-    public UserModel() {
-    }
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -82,27 +72,27 @@ public class UserModel implements Serializable {
         this.name = name;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
-    public String getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(String weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
-    public String getHeight() {
+    public double getHeight() {
         return height;
     }
 
-    public void setHeight(String height) {
+    public void setHeight(double height) {
         this.height = height;
     }
 
@@ -144,22 +134,6 @@ public class UserModel implements Serializable {
 
     public void setOptions(OptionsModel options) {
         this.options = options;
-    }
-
-    public List<WorkoutPlanModel> getWorkoutPlans() {
-        return workoutPlans;
-    }
-
-    public void setWorkoutPlans(List<WorkoutPlanModel> workoutPlans) {
-        this.workoutPlans = workoutPlans;
-    }
-
-    public List<StridesModel> getStrides() {
-        return strides;
-    }
-
-    public void setStrides(List<StridesModel> strides) {
-        this.strides = strides;
     }
 
     public List<SessionLogModel> getSessionLogs() {

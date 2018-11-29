@@ -1,4 +1,4 @@
-package dk.ucn.datamatiker.mwe.movechair;
+package dk.ucn.datamatiker.mwe.movechair.Adapters;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,6 +24,8 @@ import com.google.android.exoplayer2.upstream.DataSource;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import dk.ucn.datamatiker.mwe.movechair.R;
 
 
 // USE THIS CLASS ONLY FOR REFERENCE ON HOW TO IMPLEMENT ActivityGO --> NEEDS TO BE DELETED

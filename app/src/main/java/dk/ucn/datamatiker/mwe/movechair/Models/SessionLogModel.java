@@ -26,6 +26,10 @@ public class SessionLogModel implements Serializable{
         this.date = date;
     }
 
+    public SessionLogModel(ActivityModel activity) {
+        this.activity = activity;
+    }
+
     public SessionLogModel() {
     }
 

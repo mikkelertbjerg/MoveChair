@@ -1,12 +1,10 @@
 package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,19 +14,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.ParseException;
 import java.util.List;
 
-import dk.ucn.datamatiker.mwe.movechair.ActivityAdapter;
+import dk.ucn.datamatiker.mwe.movechair.Adapters.ActivityAdapter;
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AddWorkoutPlanTask;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.ExerciseTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.GetWorkoutPlanTask;
-import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutPlanViewModel;
 
 public class WorkoutPlanFragment extends Fragment implements View.OnClickListener, AddWorkoutPlanTask.AsyncJsonResponse, GetWorkoutPlanTask.AsyncJsonResponse {

@@ -20,17 +20,18 @@ import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.client.methods.HttpUriRequest;
 import cz.msebera.android.httpclient.client.methods.RequestBuilder;
 import cz.msebera.android.httpclient.impl.client.HttpClients;
+import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 
-public class DailyLogTask extends AsyncTask<String, Integer, List<DailyLogModel>> {
+public class SessionLogListTask extends AsyncTask<Integer, Integer, List<SessionLogModel>> {
 
     private AsyncJson delegate;
     private int user_id;
 
     public interface AsyncJson {
-        void processFinished(List<DailyLogModel> dailyLogs);
+        void processFinished(List<SessionLogModel> sessionLogs);
     }
 
-    public DailyLogTask(AsyncJson delegate, int user_id) {
+    public SessionLogListTask(AsyncJson delegate, int user_id) {
         this.delegate = delegate;
         this.user_id = user_id;
     }
@@ -38,11 +39,11 @@ public class DailyLogTask extends AsyncTask<String, Integer, List<DailyLogModel>
 
 
     @Override
-    protected List<DailyLogModel> doInBackground(String... strings) {
+    protected List<SessionLogModel> doInBackground(Integer... integers) {
         HttpClient client = HttpClients.custom().setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36").build();
 
-        List<DailyLogModel> result = null;
-        String myUrl = "http://jvo-web.dk/index.php?controller=dailylogs&action=selectByUserId&user_id=" + this.user_id;
+        List<SessionLogModel> result = null;
+        String myUrl = "http://jvo-web.dk/index.php?controller=sessionlogs&action=selectallsessionlogsfromuser&user_id=" + this.user_id;
         HttpUriRequest request = RequestBuilder.get()
                 .setUri(myUrl)
                 .setHeader(HttpHeaders.ACCEPT, "application/json")
@@ -59,7 +60,7 @@ public class DailyLogTask extends AsyncTask<String, Integer, List<DailyLogModel>
                 Gson gson = new Gson();
                 Type listType = null;
                 //List type
-                listType = new TypeToken<List<DailyLogModel>>() {}.getType();
+                listType = new TypeToken<List<SessionLogModel>>() {}.getType();
                 result = gson.fromJson(reader, listType);
                 content.close();
 
@@ -75,8 +76,8 @@ public class DailyLogTask extends AsyncTask<String, Integer, List<DailyLogModel>
     }
 
     @Override
-    protected void onPostExecute(List<DailyLogModel> dailyLogs) {
-        this.delegate.processFinished(dailyLogs);
+    protected void onPostExecute(List<SessionLogModel> sessionLogs) {
+        this.delegate.processFinished(sessionLogs);
     }
 }
 

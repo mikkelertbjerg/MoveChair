@@ -1,4 +1,4 @@
-package dk.ucn.datamatiker.mwe.movechair;
+package dk.ucn.datamatiker.mwe.movechair.Adapters;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,18 +15,14 @@ import android.widget.TextView;
 
 import dk.ucn.datamatiker.mwe.movechair.Fragments.AchievementsFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.ActivitiesFragment;
-import dk.ucn.datamatiker.mwe.movechair.Fragments.DailyLogFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.HighscoreFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.HomeFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.OptionsFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.ProfileFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.MyPlanFragment;
-import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutFragment;
-import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutPlanFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.SessionLogsFragment;
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
-import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
+import dk.ucn.datamatiker.mwe.movechair.R;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
@@ -105,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new HomeFragment();
                 break;
             case R.id.nav_activity_log:
-                fragment = new DailyLogFragment();
+                fragment = new SessionLogsFragment();
                 break;
             case R.id.nav_activities:
                 fragment = new ActivitiesFragment();

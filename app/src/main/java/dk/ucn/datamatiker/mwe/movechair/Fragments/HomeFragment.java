@@ -20,18 +20,15 @@ import android.widget.TextView;
 
 
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
 
-import dk.ucn.datamatiker.mwe.movechair.AchievementAdapter;
-import dk.ucn.datamatiker.mwe.movechair.MainActivity;
+import dk.ucn.datamatiker.mwe.movechair.Adapters.AchievementAdapter;
+import dk.ucn.datamatiker.mwe.movechair.Adapters.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Models.AchievementModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.AchievementTypeModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.HomeViewModel;
-import dk.ucn.datamatiker.mwe.movechair.ViewModels.MyPlanViewModel;
 
 //TODO For now StepCounter lives here in HomeFragment, let's find a better place later
 //TODO Maybe replace current implementation of next workout with a calenderView of some sort?

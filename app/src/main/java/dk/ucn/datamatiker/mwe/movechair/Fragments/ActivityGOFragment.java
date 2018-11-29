@@ -5,18 +5,14 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Chronometer;
-import android.widget.Toast;
 
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
@@ -28,8 +24,9 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 
 import java.util.List;
 
+import dk.ucn.datamatiker.mwe.movechair.Adapters.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
-import dk.ucn.datamatiker.mwe.movechair.MainActivity;
+import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExoplayerViewModel;
@@ -121,8 +118,13 @@ public class ActivityGOFragment extends Fragment {
             @Override
             public void onFinish() {
                 if (player.getCurrentWindowIndex() == durationList.size()-1) {
+                    SessionLogModel log = new SessionLogModel(workout);
+                    UserHelper.getUser().getSessionLogs().add(log);
 
-                    //TODO ifcheck that adds to the current daily log's session log if a daily log exists
+                    //TODO DB kald til
+                    //db.saveSessionLog(log,UserHelper.getUser().getId());
+
+
                     HomeFragment fragment = new HomeFragment();
                     MainActivity mainActivity = (MainActivity) getContext();
                     mainActivity.switchFragment(fragment);
