@@ -168,8 +168,8 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener, 
         // Prepare the player with the source.
         player.prepare(videoSource);
         player.setPlayWhenReady(true);
-        player.getPlayWhenReady();
-
+        //Starts the timer
+        // c.Start();
     }
 
 }

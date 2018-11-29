@@ -89,9 +89,7 @@ public class ExoplayerViewModel extends AndroidViewModel
                 if (m.getMediaType().getName().equals("Video")) {
                     exercisePaths.add(m.getPath());
                     //Adding default
-/*
                     exercisePaths.add("https://zippy.gfycat.com/OffensiveGleamingBobcat.webm");
-*/
                 }
 
             }
@@ -99,5 +97,18 @@ public class ExoplayerViewModel extends AndroidViewModel
         return exercisePaths;
     }
 
+    public List<Long> getExerciseDuration(WorkoutModel w) {
+        List<Long> exerciseDuration = new ArrayList<>();
+        for (ExerciseModel e : w.getExercises()) {
+            for (MediaModel m : e.getMedia()) {
+                if (m.getMediaType().getName().equals("Video")) {
+                    exerciseDuration.add(Double.valueOf(e.getDuration()).longValue());
+                    exerciseDuration.add(Double.valueOf(w.getRestDuration()).longValue());
+                }
+            }
+        }
+        return exerciseDuration;
+
+    }
 
 }
