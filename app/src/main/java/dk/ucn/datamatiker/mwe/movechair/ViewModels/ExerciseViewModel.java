@@ -2,7 +2,6 @@ package dk.ucn.datamatiker.mwe.movechair.ViewModels;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 
 import java.text.ParseException;
@@ -12,15 +11,10 @@ import java.util.Date;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.ActivityTypeModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.DailyLogModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.ActivityListTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.ExerciseTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.ExercisesListTask;
-import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 
 public class ExerciseViewModel extends AndroidViewModel {
 
@@ -45,9 +39,6 @@ public class ExerciseViewModel extends AndroidViewModel {
         ExerciseTask task = new ExerciseTask(callback, exerciseId);
         task.execute();
     }
-
-
-
 
 /*
     //TODO Remove or edit this deprecated code?

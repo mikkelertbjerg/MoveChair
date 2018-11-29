@@ -2,7 +2,6 @@ package dk.ucn.datamatiker.mwe.movechair.ViewModels;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 
 import java.text.ParseException;
@@ -11,17 +10,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.DailyLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AddWorkoutPlanTask;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.ExerciseTask;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.ExercisesListTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.GetWorkoutPlanTask;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.WorkoutTask;
-import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 
 
 public class WorkoutPlanViewModel extends AndroidViewModel  {

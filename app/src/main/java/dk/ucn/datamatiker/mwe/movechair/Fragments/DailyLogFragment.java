@@ -15,17 +15,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import dk.ucn.datamatiker.mwe.movechair.ActivityAdapter;
 import dk.ucn.datamatiker.mwe.movechair.DailyLogAdapter;
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
-import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.DailyLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.DailyLogTask;
-import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.DailyLogViewModel;
-import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExoplayerViewModel;
 
 
 public class DailyLogFragment extends Fragment implements DailyLogTask.AsyncJson {

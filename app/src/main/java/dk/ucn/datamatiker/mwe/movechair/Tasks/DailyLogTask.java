@@ -20,7 +20,6 @@ import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.client.methods.HttpUriRequest;
 import cz.msebera.android.httpclient.client.methods.RequestBuilder;
 import cz.msebera.android.httpclient.impl.client.HttpClients;
-import dk.ucn.datamatiker.mwe.movechair.Models.DailyLogModel;
 
 public class DailyLogTask extends AsyncTask<String, Integer, List<DailyLogModel>> {
 

@@ -13,11 +13,7 @@ import dk.ucn.datamatiker.mwe.movechair.Fragments.ExerciseFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutPlanFragment;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.DailyLogModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 
 public class SessionLogAdapter extends RecyclerView.Adapter<SessionLogAdapter.ViewHolder> {
 

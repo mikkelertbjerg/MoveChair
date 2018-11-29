@@ -11,7 +11,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Fragments.SessionLogFragment;
-import dk.ucn.datamatiker.mwe.movechair.Models.DailyLogModel;
 
 public class DailyLogAdapter extends RecyclerView.Adapter<DailyLogAdapter.ViewHolder> {
 
