@@ -23,6 +23,7 @@ import java.util.List;
 import dk.ucn.datamatiker.mwe.movechair.Adapters.SessionLogsAdapter;
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.SessionLogListTask;
@@ -34,6 +35,7 @@ public class SessionLogsFragment extends Fragment {
     private SessionLogsViewModel mViewModel;
     private List<SessionLogModel> sessionLogs;
     private RecyclerView rvSessionLogs;
+    private UserModel user = UserHelper.getUser();
 
     //UI elements
     private TextView sessionLogTotal;
@@ -52,10 +54,12 @@ public class SessionLogsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+
         mViewModel = ViewModelProviders.of(this).get(SessionLogsViewModel.class);
 
         //This makes you able to change toolbar title
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("prutskid");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(user.getName() + ": Sessions");
 
         rvSessionLogs = view.findViewById(R.id.rv_session_log_items);
 
@@ -79,7 +83,7 @@ public class SessionLogsFragment extends Fragment {
             public void processFinish(Object o) {
                 onGetSessionLogs((List<SessionLogModel>) o);
             }
-        }, SessionLogModel.class, UserHelper.getUser().getId());
+        }, SessionLogModel.class, user.getId());
 
     }
 
