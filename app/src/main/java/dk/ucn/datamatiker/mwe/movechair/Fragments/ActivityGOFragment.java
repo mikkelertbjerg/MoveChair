@@ -1,13 +1,16 @@
 package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -29,7 +32,9 @@ import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExoplayerViewModel;
+import dk.ucn.datamatiker.mwe.movechair.ViewModels.SessionLogsViewModel;
 
 public class ActivityGOFragment extends Fragment {
 
@@ -41,6 +46,7 @@ public class ActivityGOFragment extends Fragment {
     private List<String> s;
     private List<Long> durationList;
     static int nextExercise = 0;
+    private SessionLogsViewModel mSessionLogViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,6 +60,7 @@ public class ActivityGOFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         //Get viewModel
         mExoplayerViewModel = ViewModelProviders.of(this).get(ExoplayerViewModel.class);
+        mSessionLogViewModel = ViewModelProviders.of(this).get(SessionLogsViewModel.class);
 
         //Get views
         playerView = view.findViewById(R.id.player_view);
@@ -115,16 +122,18 @@ public class ActivityGOFragment extends Fragment {
 
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.P)
             @Override
             public void onFinish() {
                 if (player.getCurrentWindowIndex() == durationList.size()-1) {
-                    SessionLogModel log = new SessionLogModel(workout);
-                    UserHelper.getUser().getSessionLogs().add(log);
+                    mSessionLogViewModel.addSessionLog(new AsyncJsonTask.AsyncJsonResponse() {
+                        @Override
+                        public void processFinish(Object o) {
+                            Toast.makeText(getContext(),(String)o, Toast.LENGTH_LONG);
+                        }
+                    },String.class, workout.getId());
 
-                    //TODO DB kald til
-                    //db.saveSessionLog(log,UserHelper.getUser().getId());
-
-
+                    player.release();
                     HomeFragment fragment = new HomeFragment();
                     MainActivity mainActivity = (MainActivity) getContext();
                     mainActivity.switchFragment(fragment);
