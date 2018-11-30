@@ -13,9 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
@@ -39,6 +41,7 @@ import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExerciseViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExoplayerViewModel;
+import dk.ucn.datamatiker.mwe.movechair.ViewModels.SessionLogsViewModel;
 
 public class ExerciseFragment extends Fragment implements View.OnClickListener {
 
@@ -48,6 +51,7 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener {
     private PlayerView playerView;
     private SimpleExoPlayer player;
     private ExerciseModel mExerciseModel;
+    private SessionLogsViewModel mSessionLogViewModel;
 
     //UI Elements
     VideoView exercise_video;
@@ -75,6 +79,7 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener {
         //Get viewModel
         mExerciseViewModel = ViewModelProviders.of(this).get(ExerciseViewModel.class);
         mExoplayerViewModel = ViewModelProviders.of(this).get(ExoplayerViewModel.class);
+        mSessionLogViewModel = ViewModelProviders.of(this).get(SessionLogsViewModel.class);
 
         //Get activity object from fragment arguments
         ActivityModel activity = (ActivityModel) getArguments().getSerializable("activity");
@@ -168,6 +173,7 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener {
         videoSource.addMediaSources(mExoplayerViewModel.mediasourceConversion(s));
         // Prepare the player with the source.
         player.prepare(videoSource);
+        player.setRepeatMode(Player.REPEAT_MODE_ONE);
         player.setPlayWhenReady(true);
         //Starts the timer
         CountDownTimer c = new CountDownTimer(Double.valueOf(mExerciseModel.getDuration()).longValue() * 1000, 500) {
@@ -176,16 +182,20 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener {
 
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.P)
             @Override
             public void onFinish() {
-                SessionLogModel log = new SessionLogModel(mExerciseModel);
-                UserHelper.getUser().getSessionLogs().add(log);
+                player.release();
 
-                //TODO DB kald til
-                //db.saveSessionLog(log,UserHelper.getUser().getId());
+                mSessionLogViewModel.addSessionLog(new AsyncJsonTask.AsyncJsonResponse() {
+                    @Override
+                    public void processFinish(Object o) {
+                        Toast.makeText(getContext(),(String)o, Toast.LENGTH_LONG);
+                    }
+                },String.class, mExerciseModel.getId());
             }
-        };
-        // c.Start();
+        }.start();
+
     }
 
 }

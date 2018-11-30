@@ -26,17 +26,9 @@ import dk.ucn.datamatiker.mwe.movechair.R;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
-
-    // This field holds the authenticated user
-    //public UserModel loggedInUser;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        UserHelper.getUser();
-        //loggedInUser = (UserModel) getIntent().getSerializableExtra("user");
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
