@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -43,6 +44,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Hides certain menu items if there's no user
+        if(UserHelper.getUser() == null){
+            Menu nav_menu = navigationView.getMenu();
+            nav_menu.findItem(R.id.nav_my_plan).setVisible(false);
+            nav_menu.findItem(R.id.nav_activity_log).setVisible(false);
+            nav_menu.findItem(R.id.nav_profile).setVisible(false);
+        }
 
         View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
 
