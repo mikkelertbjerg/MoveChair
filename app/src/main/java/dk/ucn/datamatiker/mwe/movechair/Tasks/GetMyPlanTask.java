@@ -21,6 +21,7 @@ import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.client.methods.HttpUriRequest;
 import cz.msebera.android.httpclient.client.methods.RequestBuilder;
 import cz.msebera.android.httpclient.impl.client.HttpClients;
+import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 
 /**
@@ -64,8 +65,10 @@ public class GetMyPlanTask extends AsyncJsonTask<List<WorkoutPlanModel>> {
                 InputStream content = httpEntity.getContent();
                 Reader reader = new InputStreamReader(content);
                 Gson gson = new Gson();
-
-                result = gson.fromJson(reader, this.type);
+                Type listType = null;
+                //List type
+                listType = new TypeToken<List<WorkoutPlanModel>>() {}.getType();
+                result = gson.fromJson(reader, listType);
 
                 content.close();
 
