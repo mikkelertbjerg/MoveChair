@@ -116,7 +116,7 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener {
     public void onGetWorkout(WorkoutModel res) {
         workout = res;
         workout_title.setText("Title: " + res.getName());
-        workout_duration.setText("Duration: " + res.getWorkoutDuration());
+        workout_duration.setText("Duration: " + res.getDuration());
         workout_description.setText("Description: " + res.getDescription());
 
         ActivityAdapter adapter = new ActivityAdapter((List<ActivityModel>)(List<?>)res.getExercises());

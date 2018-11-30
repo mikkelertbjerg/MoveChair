@@ -105,7 +105,7 @@ public class WorkoutPlanFragment extends Fragment implements View.OnClickListene
 
         this.workoutPlan = res;
         workout_plan_title.setText("Title: " + this.workoutPlan.getName());
-        workout_plan_duration.setText("Duration: " + this.workoutPlan.getWorkoutPlanDuration());
+        workout_plan_duration.setText("Duration: " + this.workoutPlan.getDuration());
         workout_plan_description.setText("Description: " + this.workoutPlan.getDescription());
 
         // Create adapter passing in the sample user data

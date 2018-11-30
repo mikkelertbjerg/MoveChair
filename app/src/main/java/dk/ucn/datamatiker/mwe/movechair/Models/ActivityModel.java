@@ -22,14 +22,18 @@ public class ActivityModel implements Serializable {
     @SerializedName("points")
     @Expose
     private double points;
+    @SerializedName("duration")
+    @Expose
+    private double duration;
 
 
-    public ActivityModel(String name, String description, int id, ActivityTypeModel activityType, double points){
+    public ActivityModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration){
         this.id = id;
         this.name = name;
         this.description = description;
         this.activityType = activityType;
         this.points = points;
+        this.duration = duration;
     }
 
     public ActivityModel () {
@@ -72,5 +76,13 @@ public class ActivityModel implements Serializable {
 
     public void setPoints(double points) {
         this.points = points;
+    }
+
+    public double getDuration() {
+        return duration;
+    }
+
+    public void setDuration(double duration) {
+        this.duration = duration;
     }
 }

@@ -15,9 +15,6 @@ public class WorkoutModel extends ActivityModel implements Serializable {
     @SerializedName("exercises")
     @Expose
     private List<ExerciseModel> exercises;
-    @SerializedName("workout_duration")
-    @Expose
-    private double workoutDuration;
     @SerializedName("rest_duration")
     @Expose
     private double restDuration;
@@ -25,22 +22,18 @@ public class WorkoutModel extends ActivityModel implements Serializable {
     @Expose
     private DifficultyModel difficulty;
 
-    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityType, double points, double workoutDuration, double restDuration, DifficultyModel difficulty, List<ExerciseModel> exercises) {
-        super(name, description, id, activityType, points);
-        this.workoutDuration = workoutDuration;
+    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration, List<ExerciseModel> exercises, double restDuration, DifficultyModel difficulty) {
+        super(name, description, id, activityType, points, duration);
+        this.exercises = exercises;
         this.restDuration = restDuration;
         this.difficulty = difficulty;
-        this.exercises = exercises;
     }
 
-    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityType, double points) {
-        super(name, description, id, activityType, points);
-        this.exercises = new ArrayList<ExerciseModel>() {
-        };
+    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration) {
+        super(name, description, id, activityType, points, duration);
     }
 
-    public double getWorkoutDuration() {
-        return workoutDuration;
+    public WorkoutModel() {
     }
 
     public double getRestDuration() {
@@ -49,10 +42,6 @@ public class WorkoutModel extends ActivityModel implements Serializable {
 
     public void setRestDuration(double restDuration) {
         this.restDuration = restDuration;
-    }
-
-    public void setWorkoutDuration(double workoutDuration) {
-        this.workoutDuration = workoutDuration;
     }
 
     public DifficultyModel getDifficulty() {
@@ -70,13 +59,4 @@ public class WorkoutModel extends ActivityModel implements Serializable {
     public void setExercises(List<ExerciseModel> exercises) {
         this.exercises = exercises;
     }
-
-/*    public double getPoints(){
-        double points = 0;
-        for(int i = 0; i < exercises.size(); i++){
-            points += exercises.get(i).getPoints() * difficulty.getMultiplier();
-
-        }
-        return points;
-    }*/
 }

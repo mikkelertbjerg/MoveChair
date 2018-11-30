@@ -5,35 +5,37 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 
 public class WorkoutPlanModel extends ActivityModel implements Serializable {
 
-    @SerializedName("workouts")
-    @Expose
-    private List<WorkoutModel> workouts;
+
     @SerializedName("rest_days")
     @Expose
     private int restDays;
+    @SerializedName("start_date")
+    @Expose
+    private Date startDate;
     @SerializedName("workoutPlanDuration")
     @Expose
     private int workoutPlanDuration;
+    @SerializedName("workouts")
+    @Expose
+    private List<WorkoutModel> workouts;
 
-    public WorkoutPlanModel(String name, String description, int id, ActivityTypeModel activityType, double points, int restDays, int workoutPlanDuration, List<WorkoutModel> workouts) {
-        super(name, description, id, activityType, points);
+    public WorkoutPlanModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration, int restDays, Date startDate, int workoutPlanDuration, List<WorkoutModel> workouts) {
+        super(name, description, id, activityType, points, duration);
         this.restDays = restDays;
+        this.startDate = startDate;
         this.workoutPlanDuration = workoutPlanDuration;
         this.workouts = workouts;
     }
 
-    public WorkoutPlanModel(String name, String description, int id, ActivityTypeModel activityType, double points, int restDays, int workoutPlanDuration) {
-        super(name, description, id, activityType, points);
-
-        this.restDays = restDays;
-        this.workoutPlanDuration = workoutPlanDuration;
-        this.workouts = new ArrayList<WorkoutModel>();
+    public WorkoutPlanModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration) {
+        super(name, description, id, activityType, points, duration);
     }
 
     public WorkoutPlanModel() {
@@ -47,14 +49,6 @@ public class WorkoutPlanModel extends ActivityModel implements Serializable {
         this.restDays = restDays;
     }
 
-    public int getWorkoutPlanDuration() {
-        return workoutPlanDuration;
-    }
-
-    public void setWorkoutPlanDuration(int workoutPlanDuration) {
-        this.workoutPlanDuration = workoutPlanDuration;
-    }
-
     public List<WorkoutModel> getWorkouts() {
         return workouts;
     }
@@ -62,12 +56,4 @@ public class WorkoutPlanModel extends ActivityModel implements Serializable {
     public void setWorkouts(ArrayList<WorkoutModel> workouts) {
         this.workouts = workouts;
     }
-
- /*   public double getPoints(){
-        double points = 0;
-        for(int i = 0; i < workouts.size(); i++){
-            points += workouts.get(i).getPoints();
-        }
-        return points;
-    }*/
 }

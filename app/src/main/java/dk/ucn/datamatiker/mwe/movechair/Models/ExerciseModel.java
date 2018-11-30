@@ -8,13 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExerciseModel extends ActivityModel implements Serializable {
-/*
-    @SerializedName("points")
-    @Expose
-    private double points;*/
-    @SerializedName("duration")
-    @Expose
-    private double duration;
+
+
     @SerializedName("media")
     @Expose
     private List<MediaModel> media;
@@ -29,30 +24,20 @@ public class ExerciseModel extends ActivityModel implements Serializable {
     private List<EquipmentModel> equipment;
 
 
-    public ExerciseModel(String name, String description, int id, ActivityTypeModel activityType, double points, int duration,
-                         List<MediaModel> media,
-                         List<CategoryModel> categories,
-                         List<MuscleModel> muscles,
-                         List<EquipmentModel> equipment) {
-        super(name, description, id, activityType, points);
- /*       this.points = points;*/
-        this.duration = duration;
+    public ExerciseModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration, List<MediaModel> media, List<CategoryModel> categories, List<MuscleModel> muscles, List<EquipmentModel> equipment) {
+        super(name, description, id, activityType, points, duration);
         this.media = media;
         this.categories = categories;
         this.muscles = muscles;
         this.equipment = equipment;
     }
 
+    public ExerciseModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration) {
+        super(name, description, id, activityType, points, duration);
+    }
+
     public ExerciseModel() {
 
-    }
-
-    public double getDuration() {
-        return duration;
-    }
-
-    public void setDuration(double duration) {
-        this.duration = duration;
     }
 
     public List<MediaModel> getMedia() {
@@ -70,14 +55,6 @@ public class ExerciseModel extends ActivityModel implements Serializable {
     public void setEquipment(ArrayList<EquipmentModel> equipment) {
         this.equipment = equipment;
     }
-/*
-    public double getPoints() {
-        return points;
-    }
-
-    public void setPoints(double points) {
-        this.points = points;
-    }*/
 
     public String getMuscles(){
         String muscles = "";

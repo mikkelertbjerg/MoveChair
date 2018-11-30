@@ -91,7 +91,7 @@ public class MyPlanAdapter extends RecyclerView.Adapter<MyPlanAdapter.ViewHolder
         }
         workoutItemPoints.setText("Points: " + Double.toString(totalPoints));
 
-        workoutItemDuration.setText("Duration:" + ((WorkoutModel) workoutModel).getWorkoutDuration());
+        workoutItemDuration.setText("Duration:" + ((WorkoutModel) workoutModel).getDuration());
     }
 
     @Override
