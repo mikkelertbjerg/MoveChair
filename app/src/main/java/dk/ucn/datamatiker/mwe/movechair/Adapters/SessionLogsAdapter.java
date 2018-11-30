@@ -1,15 +1,23 @@
 package dk.ucn.datamatiker.mwe.movechair.Adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import dk.ucn.datamatiker.mwe.movechair.Fragments.ExerciseFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutPlanFragment;
+import dk.ucn.datamatiker.mwe.movechair.MainActivity;
+import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 
@@ -49,6 +57,39 @@ public class SessionLogsAdapter extends RecyclerView.Adapter<SessionLogsAdapter.
 
         // Return a new holder instance
         final SessionLogsAdapter.ViewHolder viewHolder = new SessionLogsAdapter.ViewHolder(activityListView);
+
+
+        //Create onClick
+        activityListView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) context;
+                Fragment fragment = null;
+                final int position = viewHolder.getAdapterPosition();
+                String type = sessionLogs.get(position).getActivity().getActivityType().getName();
+
+                switch (type) {
+                    case "Exercise":
+                        fragment = new ExerciseFragment();
+                        break;
+                    case "Workout":
+                        fragment = new WorkoutFragment();
+                        break;
+                    case "Workout Plan":
+                        fragment = new WorkoutPlanFragment();
+                        break;
+                    default:
+                        break;
+                }
+
+
+                Bundle bundle = new Bundle();
+                ActivityModel activity = sessionLogs.get(position).getActivity();
+                bundle.putSerializable("activity", activity);
+                fragment.setArguments(bundle);
+                mainActivity.switchFragment(fragment);
+            }
+        });
 
         return viewHolder;
     }
