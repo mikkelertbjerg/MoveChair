@@ -2,7 +2,6 @@ package dk.ucn.datamatiker.mwe.movechair.ViewModels;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 
 import java.text.ParseException;
@@ -12,15 +11,10 @@ import java.util.Date;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.ActivityTypeModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.DailyLogModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.ActivityListTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.ExerciseTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.ExercisesListTask;
-import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 
 public class ExerciseViewModel extends AndroidViewModel {
 
@@ -46,9 +40,6 @@ public class ExerciseViewModel extends AndroidViewModel {
         task.execute();
     }
 
-
-
-
 /*
     //TODO Remove or edit this deprecated code?
     @Override
@@ -68,7 +59,7 @@ public class ExerciseViewModel extends AndroidViewModel {
         }
     }
 
-    //TODO Change params to recive a user or userid
+   /* //TODO Change params to recive a user or userid
     public void addActivityToUser(UserModel user, ActivityModel activity) throws ParseException {
         SessionLogModel sessionLog = new SessionLogModel();
         sessionLog.setActivity(activity);
@@ -101,6 +92,6 @@ public class ExerciseViewModel extends AndroidViewModel {
             user.getDailyLogs().get(user.getDailyLogs().size()-1).getSessionLogs().add(sessionLog);
         }
 
-    }
+    }*/
 
 }

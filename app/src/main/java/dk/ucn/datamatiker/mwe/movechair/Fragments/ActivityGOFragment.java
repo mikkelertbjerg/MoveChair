@@ -5,18 +5,14 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Chronometer;
-import android.widget.Toast;
 
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
@@ -28,7 +24,9 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 
 import java.util.List;
 
-import dk.ucn.datamatiker.mwe.movechair.MainActivity;
+import dk.ucn.datamatiker.mwe.movechair.Adapters.MainActivity;
+import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
+import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExoplayerViewModel;
@@ -41,6 +39,7 @@ public class ActivityGOFragment extends Fragment {
     private SimpleExoPlayer player;
     private CountDownTimer c;
     private List<String> s;
+    private List<Long> durationList;
     static int nextExercise = 0;
 
     @Override
@@ -90,15 +89,15 @@ public class ActivityGOFragment extends Fragment {
         // Prepare the player with the source.
         player.prepare(videoSource);
 
+        //List used for the timer to work, combination of exercise duration and rest duration.
+        durationList = mExoplayerViewModel.getExerciseDuration(workout);
 
         //Set it to loop
         player.setRepeatMode(Player.REPEAT_MODE_ONE);
         player.setPlayWhenReady(true);
 
-        //TODO FOR TESTING PLZ DELETE LATER
-        workout.getExercises().get(0).setDuration(10);
-        workout.getExercises().get(1).setDuration(10);
-        testWorkoutTimerCombo(Double.valueOf(workout.getExercises().get(0).getDuration()).longValue(), 5000, 0);
+
+        testWorkoutTimerCombo(durationList.get(0), 5000, 0);
 
         c.start();
 
@@ -118,18 +117,23 @@ public class ActivityGOFragment extends Fragment {
 
             @Override
             public void onFinish() {
-                if (player.getCurrentWindowIndex() == workout.getExercises().size()-1) {
+                if (player.getCurrentWindowIndex() == durationList.size()-1) {
+                    SessionLogModel log = new SessionLogModel(workout);
+                    UserHelper.getUser().getSessionLogs().add(log);
 
-                  /*  Toast toast = Toast.makeText(getContext(), "Din workout er færdig!", Toast.LENGTH_LONG);
-                    toast.show();*/
+                    //TODO DB kald til
+                    //db.saveSessionLog(log,UserHelper.getUser().getId());
+
 
                     HomeFragment fragment = new HomeFragment();
                     MainActivity mainActivity = (MainActivity) getContext();
                     mainActivity.switchFragment(fragment);
 
+
                 } else {
                     player.seekTo(player.getCurrentWindowIndex() + 1, C.TIME_UNSET);
-                    testWorkoutTimerCombo(Double.valueOf(workout.getExercises().get(nextExercise).getDuration()).longValue(), 500, nextExercise++);
+
+                    testWorkoutTimerCombo(durationList.get(++nextExercise), 500, nextExercise);
                     c.start();
 
 

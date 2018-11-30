@@ -1,30 +1,5 @@
 package dk.ucn.datamatiker.mwe.movechair.Test;
 
-import java.text.ParseException;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.ActivityTypeModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.CategoryModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.DailyLogModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.DifficultyModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.EquipmentModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.GenderModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.MediaTypeModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.MuscleGroupModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.MuscleModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
-
 public class DummyData {
 /*
     public List<MuscleModel> createMuscles(int numActivities){

@@ -1,4 +1,4 @@
-package dk.ucn.datamatiker.mwe.movechair;
+package dk.ucn.datamatiker.mwe.movechair.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Models.FilterModel;
+import dk.ucn.datamatiker.mwe.movechair.R;
 
 public class FilterAdapter extends ArrayAdapter<FilterModel> {
 

@@ -1,4 +1,4 @@
-package dk.ucn.datamatiker.mwe.movechair;
+package dk.ucn.datamatiker.mwe.movechair.Adapters;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutFragment;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
-import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutViewModel;
+import dk.ucn.datamatiker.mwe.movechair.R;
 
 public class MyPlanAdapter extends RecyclerView.Adapter<MyPlanAdapter.ViewHolder> {
     Context context;

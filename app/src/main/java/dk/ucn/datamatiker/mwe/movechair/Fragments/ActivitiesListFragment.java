@@ -12,14 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import dk.ucn.datamatiker.mwe.movechair.ActivityAdapter;
+import dk.ucn.datamatiker.mwe.movechair.Adapters.ActivityAdapter;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.ActivityListTask;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import dk.ucn.datamatiker.mwe.movechair.MainActivity;
+import dk.ucn.datamatiker.mwe.movechair.Adapters.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ActivityListViewModel;
 

@@ -1,4 +1,4 @@
-package dk.ucn.datamatiker.mwe.movechair;
+package dk.ucn.datamatiker.mwe.movechair.Adapters;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -16,6 +16,7 @@ import android.widget.EditText;
 
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
+import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.LoginTask;
 
 public class LoginActivity extends AppCompatActivity  {

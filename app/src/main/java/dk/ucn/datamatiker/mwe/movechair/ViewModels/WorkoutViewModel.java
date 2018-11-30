@@ -2,18 +2,7 @@ package dk.ucn.datamatiker.mwe.movechair.ViewModels;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.ViewModel;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,18 +10,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import dk.ucn.datamatiker.mwe.movechair.ActivityAdapter;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.DailyLogModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
-import dk.ucn.datamatiker.mwe.movechair.R;
-import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.ExerciseTask;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.ExercisesListTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.WorkoutTask;
-import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
 
 public class WorkoutViewModel extends AndroidViewModel {
 
@@ -60,6 +41,8 @@ public class WorkoutViewModel extends AndroidViewModel {
         }
     }
 
+
+    /*
     //TODO Change params to recive a user or userid
     public void addActivityToUser(UserModel user, ActivityModel activity) throws ParseException {
         SessionLogModel sessionLog = new SessionLogModel();
@@ -93,7 +76,7 @@ public class WorkoutViewModel extends AndroidViewModel {
             user.getDailyLogs().get(user.getDailyLogs().size()-1).getSessionLogs().add(sessionLog);
         }
 
-    }
+    } */
 
 
 }

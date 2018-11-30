@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import dk.ucn.datamatiker.mwe.movechair.MainActivity;
+import dk.ucn.datamatiker.mwe.movechair.Adapters.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.R;
 
 public class ActivitiesFragment extends Fragment implements View.OnClickListener {

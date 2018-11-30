@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
-import dk.ucn.datamatiker.mwe.movechair.MyPlanAdapter;
+import dk.ucn.datamatiker.mwe.movechair.Adapters.MyPlanAdapter;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.MyPlanViewModel;
 
