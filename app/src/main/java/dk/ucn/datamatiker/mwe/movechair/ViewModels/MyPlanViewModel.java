@@ -2,41 +2,42 @@ package dk.ucn.datamatiker.mwe.movechair.ViewModels;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.ViewModel;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 
-import java.util.ArrayList;
+import java.lang.reflect.Type;
+import java.util.List;
 
-import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.CategoryModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.DifficultyModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.EquipmentModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.MediaModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.MediaTypeModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.MuscleGroupModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.MuscleModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
-import dk.ucn.datamatiker.mwe.movechair.Test.DummyData;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.GetMyPlanTask;
 
 public class MyPlanViewModel extends AndroidViewModel {
 
 
-
+    // Constructor parses the application context
     public MyPlanViewModel(@NonNull Application application) {
         super(application);
     }
-    // TODO: Implement the ViewModel
 
+    // Callbacks
+    private AsyncJsonTask.AsyncJsonResponse getMyplanCallback;
 
-
-    public ActivityModel getMyPlan(int userId) {
-        //TODO get from DB instead
-
-        //return new DummyData().createWorkoutPlans(10).get(userId);
-        return null;
+    /**
+     * Returns the user's current workout plans through the provided callback.
+     * @param userId
+     * @return void
+     */
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    public void getMyPlan(AsyncJsonTask.AsyncJsonResponse callback, Type type, int userId) {
+        this.getMyplanCallback = callback;
+        AsyncJsonTask<List<WorkoutPlanModel>> task = new GetMyPlanTask(callback, type, userId);
+        task.execute();
     }
+
+
+
 
    /* private ActivityModel createDummyData() {
         WorkoutPlanModel wp = new WorkoutPlanModel();

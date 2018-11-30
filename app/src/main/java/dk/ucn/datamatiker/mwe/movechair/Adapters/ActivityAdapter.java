@@ -15,6 +15,7 @@ import java.util.List;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.ExerciseFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutPlanFragment;
+import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
@@ -145,15 +146,9 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         //activityItemIcon.setImageIcon(activitiesListItem.getImg());
     }
 
-    //Unused method for filtering
-    public void updateData(List<ExerciseModel> activities){
-            this.activities.clear();
-            this.activities.addAll(activities);
-            notifyDataSetChanged();
-    }
-
     @Override
     public int getItemCount() {
-        return activities.size();
+        return this.activities.size();
     }
+
 }

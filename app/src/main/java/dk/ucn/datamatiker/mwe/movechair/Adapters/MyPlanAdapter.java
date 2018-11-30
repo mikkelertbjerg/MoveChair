@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Fragments.WorkoutFragment;
+import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;

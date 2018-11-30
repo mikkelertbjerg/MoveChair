@@ -1,9 +1,11 @@
 package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,9 +14,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import dk.ucn.datamatiker.mwe.movechair.Adapters.ActivityAdapter;
+import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
+import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 import dk.ucn.datamatiker.mwe.movechair.Adapters.MyPlanAdapter;
 import dk.ucn.datamatiker.mwe.movechair.R;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.MyPlanViewModel;
 
 public class MyPlanFragment extends Fragment {
@@ -32,26 +45,48 @@ public class MyPlanFragment extends Fragment {
         return inflater.inflate(R.layout.my_plan_fragment, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Instantiate the views and the view models
         mMyPlanViewModel = ViewModelProviders.of(this).get(MyPlanViewModel.class);
+        rvWorkouts = view.findViewById(R.id.my_plan_recyclerview);
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("My Plan");
-        // TODO: Use the ViewModel (VALUE IS HARDCODED TO 1)
-        WorkoutPlanModel wp = (WorkoutPlanModel)mMyPlanViewModel.getMyPlan(1);
+        // Null check on the current user
+        if (UserHelper.getUser() != null) {
+            UserModel user = UserHelper.getUser();
 
-        //Fill out dummy data
-        // Create adapter passing in the sample user data
-        MyPlanAdapter adapter = new MyPlanAdapter(wp.getWorkouts());
-        // Attach the adapter to the recyclerview to populate items
-        rvWorkouts = getActivity().findViewById(R.id.my_plan_recyclerview);
-        rvWorkouts.setAdapter(adapter);
-        // Set layout manager to position the items
+            // Sets the toolbar title if the user exists
+            ((AppCompatActivity) getActivity()).getSupportActionBar()
+                    .setTitle( "Plan of " + user.getName() );
+
+            // Try running the AsyncTask which fetches the users My Plan
+            if (Integer.valueOf(user.getId()) > 0)
+            mMyPlanViewModel.getMyPlan(new AsyncJsonTask.AsyncJsonResponse() {
+
+                @Override
+                public void processFinish(Object o) {
+                    onGetMyPlan((List<WorkoutPlanModel>) o);
+                }
+
+            }, WorkoutPlanModel.class, user.getId());
+        }
+
+        // Setup the recyclerviews LayoutManager
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvWorkouts.setLayoutManager(linearLayoutManager);
     }
 
+
+    public void onGetMyPlan(List<WorkoutPlanModel> o) {
+        List<WorkoutModel> temp = new ArrayList<>();
+        for (int i = 0; i < o.size(); i++) {
+            temp.addAll(o.get(i).getWorkouts());
+        }
+        ActivityAdapter mAdapter = new ActivityAdapter((List<ActivityModel>)(List<?>) temp);
+        rvWorkouts.setAdapter(mAdapter);
+    }
 }

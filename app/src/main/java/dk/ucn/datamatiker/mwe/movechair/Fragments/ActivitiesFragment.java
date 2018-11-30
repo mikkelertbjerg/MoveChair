@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import dk.ucn.datamatiker.mwe.movechair.Adapters.MainActivity;
+import dk.ucn.datamatiker.mwe.movechair.MainActivity;
+import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 
 public class ActivitiesFragment extends Fragment implements View.OnClickListener {
@@ -51,21 +54,21 @@ public class ActivitiesFragment extends Fragment implements View.OnClickListener
         switch (v.getId()) {
             case R.id.exercises_button:
                 buttonText = (String) exercisesButton.getText();
-                bundle.putString("buttonText", buttonText);
+                bundle.putSerializable("type", ExerciseModel.class);
                 fragment = new ActivitiesListFragment();
                 fragment.setArguments(bundle);
                 break;
 
             case R.id.workouts_button:
                 buttonText = (String) workoutsButton.getText();
-                bundle.putString("buttonText", buttonText);
+                bundle.putSerializable("type", WorkoutModel.class);
                 fragment = new ActivitiesListFragment();
                 fragment.setArguments(bundle);
                 break;
 
             case R.id.workout_plans_button:
                 buttonText = (String) workoutPlansButton.getText();
-                bundle.putString("buttonText", buttonText);
+                bundle.putSerializable("type", WorkoutPlanModel.class);
                 fragment = new ActivitiesListFragment();
                 fragment.setArguments(bundle);
                 break;

@@ -42,12 +42,5 @@ public class UserDAO implements DAOIF<UserModel> {
         return null;
     }
 
-    @SuppressWarnings("deprecation")
 
-
-
-    private UserModel retrieveJson(UserModel result) {
-        return result;
-
-    }
 }

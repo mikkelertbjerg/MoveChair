@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,7 @@ import android.widget.EditText;
 import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
-import dk.ucn.datamatiker.mwe.movechair.ViewModels.LoginTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.LoginTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.LoginViewModel;
 
 public class LoginFragment extends Fragment {
@@ -65,6 +66,7 @@ public class LoginFragment extends Fragment {
         this.vPreviewBtn = view.findViewById(R.id.preview_app_button);
 
         this.vSignInBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.P)
             @Override
             public void onClick(View v) {
                 attemptLogin();
@@ -97,6 +99,7 @@ public class LoginFragment extends Fragment {
     private void attemptRegister() {
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     private void attemptLogin() {
 
         // Read email value from TextView
@@ -110,14 +113,14 @@ public class LoginFragment extends Fragment {
         new LoginTask(new LoginTask.AsyncJsonResponse(){
 
             @Override
-            public void processFinish(UserModel res) {
+            public void processFinish(Object res) {
                 Intent i = new Intent(getActivity(), MainActivity.class);
-                i.putExtra("user", res);
+                i.putExtra("user", (UserModel) res);
                 getActivity().finish(); //Kill the current activity
                 startActivity(i);
             }
 
-        }, email).execute();
+        }, UserModel.class, email).execute();
 
         showProgress(true);
 

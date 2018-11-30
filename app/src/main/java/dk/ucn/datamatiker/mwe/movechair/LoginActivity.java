@@ -1,9 +1,10 @@
-package dk.ucn.datamatiker.mwe.movechair.Adapters;
+package dk.ucn.datamatiker.mwe.movechair;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Build;
@@ -16,7 +17,6 @@ import android.widget.EditText;
 
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
-import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.LoginTask;
 
 public class LoginActivity extends AppCompatActivity  {
@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity  {
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.P)
             @Override
             public void onClick(View view) {
                 attemptLogin();
@@ -59,6 +60,7 @@ public class LoginActivity extends AppCompatActivity  {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     private void attemptLogin() {
 
         // Store values at the time of the login attempt.
@@ -70,14 +72,14 @@ public class LoginActivity extends AppCompatActivity  {
         new LoginTask(new LoginTask.AsyncJsonResponse(){
 
             @Override
-            public void processFinish(UserModel res) {
+            public void processFinish(Object res) {
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                UserHelper.setUser(res);
+                UserHelper.setUser((UserModel) res);
                 finish(); //Kill the current activity
                 startActivity(i);
             }
 
-        }, email).execute();
+        }, UserModel.class, email).execute();
 
         showProgress(true);
     }

@@ -1,6 +1,8 @@
 package dk.ucn.datamatiker.mwe.movechair.Tasks;
 
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -22,28 +24,25 @@ import cz.msebera.android.httpclient.client.methods.RequestBuilder;
 import cz.msebera.android.httpclient.impl.client.HttpClients;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 
-public class SessionLogListTask extends AsyncTask<Integer, Integer, List<SessionLogModel>> {
+public class SessionLogListTask extends AsyncJsonTask<List<SessionLogModel>> {
 
-    private AsyncJson delegate;
+    private AsyncJsonResponse delegate;
     private int user_id;
 
-    public interface AsyncJson {
-        void processFinished(List<SessionLogModel> sessionLogs);
+
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    public SessionLogListTask(AsyncJsonResponse delegate, Type type, int id) {
+        super(delegate, type);
+        this.user_id = id;
+        this.controller = type.getTypeName().substring(type.getTypeName().lastIndexOf(".")+1);
     }
-
-    public SessionLogListTask(AsyncJson delegate, int user_id) {
-        this.delegate = delegate;
-        this.user_id = user_id;
-    }
-
-
 
     @Override
-    protected List<SessionLogModel> doInBackground(Integer... integers) {
+    protected List<SessionLogModel> doInBackground(Object[] object) {
         HttpClient client = HttpClients.custom().setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36").build();
 
         List<SessionLogModel> result = null;
-        String myUrl = "http://jvo-web.dk/index.php?controller=sessionlogs&action=selectallsessionlogsfromuser&user_id=" + this.user_id;
+        String myUrl = "http://jvo-web.dk/index.php?controller="+ this.controller.replace("Model", "") + "s" +"&action=selectallsessionlogsfromuser&user_id=" + this.user_id;
         HttpUriRequest request = RequestBuilder.get()
                 .setUri(myUrl)
                 .setHeader(HttpHeaders.ACCEPT, "application/json")
@@ -73,11 +72,6 @@ public class SessionLogListTask extends AsyncTask<Integer, Integer, List<Session
         }
 
         return result;
-    }
-
-    @Override
-    protected void onPostExecute(List<SessionLogModel> sessionLogs) {
-        this.delegate.processFinished(sessionLogs);
     }
 }
 

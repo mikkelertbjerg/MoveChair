@@ -1,8 +1,10 @@
 package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,11 +24,10 @@ import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.AddWorkoutPlanTask;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.GetWorkoutPlanTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutPlanViewModel;
 
-public class WorkoutPlanFragment extends Fragment implements View.OnClickListener, AddWorkoutPlanTask.AsyncJsonResponse, GetWorkoutPlanTask.AsyncJsonResponse {
+public class WorkoutPlanFragment extends Fragment implements View.OnClickListener {
 
     private WorkoutPlanModel workoutPlan;
     private UserModel user;
@@ -42,6 +43,7 @@ public class WorkoutPlanFragment extends Fragment implements View.OnClickListene
         View view = inflater.inflate(R.layout.fragment_workout_plan_view, container, false);
         return view;
     }
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -60,7 +62,12 @@ public class WorkoutPlanFragment extends Fragment implements View.OnClickListene
         mWorkoutPlanViewModel = ViewModelProviders.of(this).get(WorkoutPlanViewModel.class);
 
         // Call the async method in the viewmodel
-        mWorkoutPlanViewModel.getItem(this, activity.getId());
+        mWorkoutPlanViewModel.getItem(new AsyncJsonTask.AsyncJsonResponse() {
+            @Override
+            public void processFinish(Object res) {
+                loadedUsersWorkoutPlans((WorkoutPlanModel) res);
+            }
+        }, WorkoutPlanModel.class, activity.getId());
 
         workout_plan_title = view.findViewById(R.id.workout_plan_title);
         workout_plan_duration = view.findViewById(R.id.workout_plan_duration);
@@ -74,14 +81,19 @@ public class WorkoutPlanFragment extends Fragment implements View.OnClickListene
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public void onClick(View v) {
         //Pass the id of the activity to the ViewModel which delegates to task
-        mWorkoutPlanViewModel.addWorkoutPlanToUser(this, workoutPlan.getId());
+        mWorkoutPlanViewModel.addWorkoutPlanToUser(new AsyncJsonTask.AsyncJsonResponse() {
+            @Override
+            public void processFinish(Object o) {
+                addedWorkoutPlanToUser((String) o);
+            }
+        }, WorkoutPlanModel.class, workoutPlan.getId());
     }
 
-    @Override
-    public void processFinish(String res) {
+    public void addedWorkoutPlanToUser(String res) {
         if(res == "true") {
             Toast.makeText(getContext(), "Plan added", Toast.LENGTH_SHORT).show();
         } else {
@@ -89,16 +101,17 @@ public class WorkoutPlanFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    @Override
-    public void processFinish(WorkoutPlanModel res) {
+    public void loadedUsersWorkoutPlans(WorkoutPlanModel res) {
+
         this.workoutPlan = res;
         workout_plan_title.setText("Title: " + this.workoutPlan.getName());
         workout_plan_duration.setText("Duration: " + this.workoutPlan.getWorkoutPlanDuration());
-        workout_plan_description.setText("Description: " + this.workoutPlan.getDescription()); 
-        
+        workout_plan_description.setText("Description: " + this.workoutPlan.getDescription());
+
         // Create adapter passing in the sample user data
         ActivityAdapter adapter = new ActivityAdapter((List<ActivityModel>)(List<?>) this.workoutPlan.getWorkouts());
         // Attach the adapter to the recyclerview to populate items
         rvActivities.setAdapter(adapter);
     }
+
 }

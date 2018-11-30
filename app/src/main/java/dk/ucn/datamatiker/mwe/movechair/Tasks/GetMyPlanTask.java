@@ -1,6 +1,7 @@
 package dk.ucn.datamatiker.mwe.movechair.Tasks;
 
-import android.os.AsyncTask;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -20,29 +21,35 @@ import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.client.methods.HttpUriRequest;
 import cz.msebera.android.httpclient.client.methods.RequestBuilder;
 import cz.msebera.android.httpclient.impl.client.HttpClients;
-import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 
-public class ExercisesListTask extends AsyncTask<String, Integer, List<ExerciseModel>> {
+/**
+ * AsyncTask that queries the backend for a users current workout plans.
+ */
+public class GetMyPlanTask extends AsyncJsonTask<List<WorkoutPlanModel>> {
 
-    public interface AsyncJsonResponse {
-        void processFinish(List<ExerciseModel> res);
+    private final int userId;
+
+    /**
+     * Constructor parses delegate to super.
+     * And sets the current users id.
+     * @param delegate
+     * @param userId
+     */
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    public GetMyPlanTask(AsyncJsonResponse delegate, Type type, int userId) {
+        super(delegate, type);
+        this.userId = userId;
+        this.controller = type.getTypeName().substring(type.getTypeName().lastIndexOf(".")+1);
     }
-    public ExercisesListTask(dk.ucn.datamatiker.mwe.movechair.Tasks.ExercisesListTask.AsyncJsonResponse delegate) {
-        this.delegate = delegate;
-    }
-    public dk.ucn.datamatiker.mwe.movechair.Tasks.ExercisesListTask.AsyncJsonResponse delegate;
 
     @Override
-    protected void onPostExecute(List<ExerciseModel> exercises) {
-        delegate.processFinish(exercises);
-    }
-
-    @Override
-    protected List<ExerciseModel> doInBackground(String... strings) {
+    protected List<WorkoutPlanModel> doInBackground(Object[] objects) {
         HttpClient client = HttpClients.custom().setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36").build();
 
-        List<ExerciseModel> result = null;
-        String myUrl = "http://jvo-web.dk/index.php?controller=exercises$action=selectall";
+        List<WorkoutPlanModel> result = null;
+        String myUrl = "http://jvo-web.dk/index.php?controller=" + this.controller.replace("Model", "") + "s" + "&action=my plan&user_id=" + userId;
+        myUrl = myUrl.replaceAll(" ", "%20");
         HttpUriRequest request = RequestBuilder.get()
                 .setUri(myUrl)
                 .setHeader(HttpHeaders.ACCEPT, "application/json")
@@ -57,10 +64,8 @@ public class ExercisesListTask extends AsyncTask<String, Integer, List<ExerciseM
                 InputStream content = httpEntity.getContent();
                 Reader reader = new InputStreamReader(content);
                 Gson gson = new Gson();
-                Type listType = null;
-                //List type
-                listType = new TypeToken<List<ExerciseModel>>() {}.getType();
-                result = gson.fromJson(reader, listType);
+
+                result = gson.fromJson(reader, this.type);
 
                 content.close();
 
@@ -74,5 +79,4 @@ public class ExercisesListTask extends AsyncTask<String, Integer, List<ExerciseM
 
         return result;
     }
-
 }

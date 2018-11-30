@@ -2,8 +2,11 @@ package dk.ucn.datamatiker.mwe.movechair.ViewModels;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 
+import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,20 +16,23 @@ import java.util.List;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.WorkoutTask;
+import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.ActivityTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 
 public class WorkoutViewModel extends AndroidViewModel {
 
-    private WorkoutTask.AsyncJsonResponse getWorkoutCallback;
+    private AsyncJsonTask.AsyncJsonResponse getWorkoutCallback;
 
     public WorkoutViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public void getWorkout(WorkoutTask.AsyncJsonResponse callback, int workoutId) {
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    public void getWorkout(AsyncJsonTask.AsyncJsonResponse callback, Type type, int workoutId) {
         //Defines callback method for task and starts the task that gets all activities with type.
         this.getWorkoutCallback = callback;
-        WorkoutTask task = new WorkoutTask(callback, workoutId);
+        AsyncJsonTask<ActivityModel> task = new ActivityTask(callback, type, workoutId);
         task.execute();
     }
 

@@ -24,7 +24,7 @@ import com.jjoe64.graphview.GraphView;
 import java.util.ArrayList;
 
 import dk.ucn.datamatiker.mwe.movechair.Adapters.AchievementAdapter;
-import dk.ucn.datamatiker.mwe.movechair.Adapters.MainActivity;
+import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Models.AchievementModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.AchievementTypeModel;
 import dk.ucn.datamatiker.mwe.movechair.R;

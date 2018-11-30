@@ -1,8 +1,10 @@
 package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,16 +16,17 @@ import android.widget.Button;
 
 import dk.ucn.datamatiker.mwe.movechair.Adapters.ActivityAdapter;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.ActivityListTask;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import dk.ucn.datamatiker.mwe.movechair.Adapters.MainActivity;
+import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.R;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ActivityListViewModel;
 
-public class ActivitiesListFragment extends Fragment implements View.OnClickListener, ActivityListTask.AsyncJsonResponse {
+public class ActivitiesListFragment extends Fragment implements View.OnClickListener {
 
     List<ActivityModel> activities;
     ActivityListViewModel mActivityListViewModel;
@@ -38,6 +41,7 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
         return inflater.inflate(R.layout.fragment_activities_list, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -57,9 +61,16 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
         Button filterButton = (Button) view.findViewById(R.id.set_filters_button);
         filterButton.setOnClickListener(this);
 
-        //Get the activityType from the button text and start an async call to viewmodel with the type given
-        String activityType = getArguments().getString("buttonText");
-        mActivityListViewModel.getActivities(activityType,this);
+        //Get the Activity Type from the bundle and start an async call to viewmodel with the type given
+        Type type = (Type) getArguments().getSerializable("type");
+        mActivityListViewModel.getActivities(new AsyncJsonTask.AsyncJsonResponse() {
+
+            @Override
+            public void processFinish(Object o) {
+                onGetActivities(o);
+            }
+
+        }, type);
 
         // Set layout manager to position the items
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -79,9 +90,9 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
     }
 
     //This method is the callback for our ActivityListTask
-    @Override
-    public void processFinish(List<ActivityModel> res) {
-        activityAdapter = new ActivityAdapter(res);
+    public void onGetActivities(Object o) {
+        List<ActivityModel> temp = (List<ActivityModel>) o;
+        activityAdapter = new ActivityAdapter(temp);
         rvActivities.setAdapter(activityAdapter);
     }
 }

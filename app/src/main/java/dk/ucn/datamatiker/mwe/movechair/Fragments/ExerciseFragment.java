@@ -1,8 +1,10 @@
 package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -34,11 +36,11 @@ import dk.ucn.datamatiker.mwe.movechair.Models.MediaModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.ExerciseTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExerciseViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExoplayerViewModel;
 
-public class ExerciseFragment extends Fragment implements View.OnClickListener, ExerciseTask.AsyncJsonResponse {
+public class ExerciseFragment extends Fragment implements View.OnClickListener {
 
     private ExerciseViewModel mExerciseViewModel;
     private ExoplayerViewModel mExoplayerViewModel;
@@ -65,6 +67,7 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener, 
         return inflater.inflate(R.layout.fragment_exercise_view, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -80,7 +83,14 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener, 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(activity.getName());
 
         //Pass the id of the activity to the ViewModel which delegates to task
-        mExerciseViewModel.getExercise(this,activity.getId());
+        mExerciseViewModel.getExercise(new AsyncJsonTask.AsyncJsonResponse() {
+
+            @Override
+            public void processFinish(Object o) {
+                onGetExercise((ExerciseModel) o);
+            }
+
+        }, ExerciseModel.class, activity.getId());
 
         //Find button and set onClick
         Button startExerciseButton = (Button) view.findViewById(R.id.start_exercise_button);
@@ -123,18 +133,19 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener, 
     }
 
     //This method is the callback for our ActivityListTask
-    @Override
-    public void processFinish(ExerciseModel res) {
+    public void onGetExercise(ExerciseModel res) {
         //TODO exercise_video
-        exercise_title.setText("Title: " + res.getName());
-        exercise_description.setText("Description: " + res.getDescription());
-        exercise_points.setText("Points: " + Double.toString(res.getPoints()));
-        exercise_duration.setText("Duration: " + Double.toString(res.getDuration()));
-        exercise_category.setText("Category: " + res.getCategories());
-        exercise_equipment.setText("Equipment: " + res.getEquipment());
-        exercise_muscle.setText("Muscle(s): " + res.getMuscles());
+        if (res != null) {
+            exercise_title.setText("Title: " + res.getName());
+            exercise_description.setText("Description: " + res.getDescription());
+            exercise_points.setText("Points: " + Double.toString(res.getPoints()));
+            exercise_duration.setText("Duration: " + Double.toString(res.getDuration()));
+            exercise_category.setText("Category: " + res.getCategories());
+            exercise_equipment.setText("Equipment: " + res.getEquipment());
+            exercise_muscle.setText("Muscle(s): " + res.getMuscles());
 
-        mExerciseModel = res;
+            mExerciseModel = res;
+        }
     }
 
 

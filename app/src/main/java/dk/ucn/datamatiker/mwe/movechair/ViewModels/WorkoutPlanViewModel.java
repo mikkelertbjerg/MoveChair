@@ -2,8 +2,12 @@ package dk.ucn.datamatiker.mwe.movechair.ViewModels;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 
+import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,33 +16,36 @@ import java.util.List;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.ActivityTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AddWorkoutPlanTask;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.GetWorkoutPlanTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 
 
 public class WorkoutPlanViewModel extends AndroidViewModel  {
 
-
-
+    // Constructor parses the application context
     public WorkoutPlanViewModel(@NonNull Application application) {
         super(application);
     }
 
+    // Callbacks
+    private AsyncJsonTask.AsyncJsonResponse addWorkoutToUserCallback;
+    private AsyncJsonTask.AsyncJsonResponse getWorkoutPlanCallback;
 
-    private AddWorkoutPlanTask.AsyncJsonResponse addWorkoutToUserCallback;
-    private GetWorkoutPlanTask.AsyncJsonResponse getWorkoutPlanCallback;
-
-    public void addWorkoutPlanToUser(AddWorkoutPlanTask.AsyncJsonResponse callback, int workoutPlanId) {
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    public void addWorkoutPlanToUser(AddWorkoutPlanTask.AsyncJsonResponse callback, Type type, int workoutPlanId) {
         //Defines callback method for task and starts the task that gets all activities with type.
         this.addWorkoutToUserCallback = callback;
-        AddWorkoutPlanTask task = new AddWorkoutPlanTask(callback,workoutPlanId);
+        AddWorkoutPlanTask task = new AddWorkoutPlanTask(callback, type, workoutPlanId);
         task.execute();
     }
 
-    public void getItem(GetWorkoutPlanTask.AsyncJsonResponse callback, int workoutId) {
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    public void getItem(AsyncJsonTask.AsyncJsonResponse callback, Type type, int workoutId) {
         //Defines callback method for task and starts the task that gets all activities with type.
         this.getWorkoutPlanCallback = callback;
-        GetWorkoutPlanTask task = new GetWorkoutPlanTask(callback, workoutId);
+        AsyncJsonTask<ActivityModel> task = new ActivityTask(callback, type, workoutId);
         task.execute();
     }
 

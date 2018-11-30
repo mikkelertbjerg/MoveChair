@@ -24,7 +24,7 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 
 import java.util.List;
 
-import dk.ucn.datamatiker.mwe.movechair.Adapters.MainActivity;
+import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;

@@ -1,8 +1,10 @@
 package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,14 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Adapters.ActivityAdapter;
-import dk.ucn.datamatiker.mwe.movechair.Adapters.MainActivity;
+import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.WorkoutTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutViewModel;
 
-public class WorkoutFragment extends Fragment implements View.OnClickListener, WorkoutTask.AsyncJsonResponse {
+public class WorkoutFragment extends Fragment implements View.OnClickListener {
 
     //TODO DELETE THEESE/TESTING PURPOSE
     private WorkoutModel workout;
@@ -48,6 +50,7 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener, W
         return view;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -60,7 +63,13 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener, W
         mWorkoutViewModel = ViewModelProviders.of(this).get(WorkoutViewModel.class);
 
         //Call getWorkoutmethod on ViewModel that starts the async task which retrives data from DB
-        mWorkoutViewModel.getWorkout(this,activity.getId());
+        mWorkoutViewModel.getWorkout(new AsyncJsonTask.AsyncJsonResponse() {
+
+            @Override
+            public void processFinish(Object o) {
+                onGetWorkout((WorkoutModel) o);
+            }
+        }, WorkoutModel.class, activity.getId());
 
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(activity.getName());
@@ -104,9 +113,7 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener, W
         mainActivity.switchFragment(fragment);
     }
 
-    //This is the callback method from WorkoutViewmodel, which gets it from WorkoutTask
-    @Override
-    public void processFinish(WorkoutModel res) {
+    public void onGetWorkout(WorkoutModel res) {
         workout = res;
         workout_title.setText("Title: " + res.getName());
         workout_duration.setText("Duration: " + res.getWorkoutDuration());
@@ -114,10 +121,5 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener, W
 
         ActivityAdapter adapter = new ActivityAdapter((List<ActivityModel>)(List<?>)res.getExercises());
         rvActivities.setAdapter(adapter);
-    }
-
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(WorkoutModel item);
     }
 }

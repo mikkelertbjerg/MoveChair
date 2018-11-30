@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
-import dk.ucn.datamatiker.mwe.movechair.Adapters.LoginActivity;
+import dk.ucn.datamatiker.mwe.movechair.LoginActivity;
 import dk.ucn.datamatiker.mwe.movechair.R;
 
 public class OptionsFragment extends Fragment implements View.OnClickListener {

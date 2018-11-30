@@ -2,8 +2,11 @@ package dk.ucn.datamatiker.mwe.movechair.ViewModels;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 
+import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,40 +16,35 @@ import java.util.List;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.ExerciseTask;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.ExercisesListTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.ActivityListTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.ActivityTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 
 public class ExerciseViewModel extends AndroidViewModel {
 
-    private ExercisesListTask.AsyncJsonResponse getAllExercisesCallback;
-    private ExerciseTask.AsyncJsonResponse getExerciseCallback;
+    private AsyncJsonTask.AsyncJsonResponse getAllExercisesCallback;
+    private AsyncJsonTask.AsyncJsonResponse getExerciseCallback;
 
     public ExerciseViewModel(@NonNull Application application) {
         super(application);
     }
-    //TODO Implement ExerciseViewModel
 
-    public void getExercises(ExercisesListTask.AsyncJsonResponse callback) {
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    public void getExercises (AsyncJsonTask.AsyncJsonResponse callback, Type type) {
         //Defines callback method for task and starts the task that gets all activities with type.
         this.getAllExercisesCallback = callback;
-        ExercisesListTask task = new ExercisesListTask(callback);
+        AsyncJsonTask<List<ActivityModel>> task = new ActivityListTask(callback, type);
         task.execute();
     }
 
-    public void getExercise(ExerciseTask.AsyncJsonResponse callback, int exerciseId) {
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    public void getExercise (AsyncJsonTask.AsyncJsonResponse callback, Type type, int activityId) {
         //Defines callback method for task and starts the task that gets all activities with type.
         this.getExerciseCallback = callback;
-        ExerciseTask task = new ExerciseTask(callback, exerciseId);
+        AsyncJsonTask<ActivityModel> task = new ActivityTask(callback, type, activityId);
         task.execute();
     }
 
-/*
-    //TODO Remove or edit this deprecated code?
-    @Override
-    public ActivityModel getItem(int id) {
-        //TODO Method that retrieves an ExerciseModel from DB
-        return new DummyData().createExercises(10).get(id);
-    }*/
 
     private boolean compareDates(Date psDate1, Date psDate2) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat ("dd/MM/yyyy");

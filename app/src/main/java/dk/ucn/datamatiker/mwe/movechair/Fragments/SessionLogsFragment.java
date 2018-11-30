@@ -1,10 +1,12 @@
 package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Build;
 import android.os.Bundle;
 import android.se.omapi.Session;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,11 +24,12 @@ import dk.ucn.datamatiker.mwe.movechair.Adapters.SessionLogsAdapter;
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.SessionLogListTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ActivityListViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.SessionLogsViewModel;
 
-public class SessionLogsFragment extends Fragment implements SessionLogListTask.AsyncJson {
+public class SessionLogsFragment extends Fragment {
 
     private SessionLogsViewModel mViewModel;
     private List<SessionLogModel> sessionLogs;
@@ -45,6 +48,7 @@ public class SessionLogsFragment extends Fragment implements SessionLogListTask.
         return inflater.inflate(R.layout.fragment_session_logs, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -70,12 +74,16 @@ public class SessionLogsFragment extends Fragment implements SessionLogListTask.
         rvSessionLogs.setLayoutManager(linearLayoutManager);
 
         //Call getWorkoutmethod on ViewModel that starts the async task which retrives data from DB
-        mViewModel.getSessionLogs(this,UserHelper.getUser().getId());
+        mViewModel.getSessionLogs(new AsyncJsonTask.AsyncJsonResponse() {
+            @Override
+            public void processFinish(Object o) {
+                onGetSessionLogs((List<SessionLogModel>) o);
+            }
+        }, SessionLogModel.class, UserHelper.getUser().getId());
 
     }
 
-    @Override
-    public void processFinished(List<SessionLogModel> sessionLogs) {
+    public void onGetSessionLogs(List<SessionLogModel> sessionLogs) {
         if(sessionLogs != null) {
             this.sessionLogs = sessionLogs;
 
