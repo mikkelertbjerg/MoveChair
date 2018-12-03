@@ -19,8 +19,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\mwe1\Desktop\MoveChair Icons\icons8-schedule-52.png" />
-                                      <entry key="outputName" value="ic_workout_plan" />
+                                      <entry key="imageAsset" value="C:\Users\mwe1\Desktop\MoveChair Icons\001-dumbbell.png" />
+                                      <entry key="outputName" value="ic_exercise" />
                                     </map>
                                   </option>
                                 </PersistentState>
