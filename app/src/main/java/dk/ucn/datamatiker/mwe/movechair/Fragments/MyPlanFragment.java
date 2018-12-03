@@ -13,10 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.google.gson.reflect.TypeToken;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Adapters.ActivityAdapter;
@@ -24,8 +20,6 @@ import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
-import dk.ucn.datamatiker.mwe.movechair.Adapters.MyPlanAdapter;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.MyPlanViewModel;
@@ -35,9 +29,6 @@ public class MyPlanFragment extends Fragment {
     private MyPlanViewModel mMyPlanViewModel;
     private RecyclerView rvWorkouts;
 
-/*    public static MyPlanFragment newInstance() {
-        return new MyPlanFragment();
-    }*/
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -68,10 +59,10 @@ public class MyPlanFragment extends Fragment {
 
                 @Override
                 public void processFinish(Object o) {
-                    onGetMyPlan((List<WorkoutPlanModel>) o);
+                    onGetMyPlan((List<WorkoutModel>) o);
                 }
 
-            }, WorkoutPlanModel.class, user.getId());
+            }, WorkoutModel.class, user.getId());
         }
 
         // Setup the recyclerviews LayoutManager
@@ -81,12 +72,8 @@ public class MyPlanFragment extends Fragment {
     }
 
 
-    public void onGetMyPlan(List<WorkoutPlanModel> o) {
-        List<WorkoutModel> temp = new ArrayList<>();
-        for (int i = 0; i < o.size(); i++) {
-            temp.addAll(o.get(i).getWorkouts());
-        }
-        ActivityAdapter mAdapter = new ActivityAdapter((List<ActivityModel>)(List<?>) temp);
+    public void onGetMyPlan(List<WorkoutModel> o) {
+        ActivityAdapter mAdapter = new ActivityAdapter((List<ActivityModel>)(List<?>) o);
         rvWorkouts.setAdapter(mAdapter);
     }
 }

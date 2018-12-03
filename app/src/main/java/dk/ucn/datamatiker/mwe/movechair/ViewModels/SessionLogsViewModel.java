@@ -1,7 +1,10 @@
 package dk.ucn.datamatiker.mwe.movechair.ViewModels;
 
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.ViewModel;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 
 import java.lang.reflect.Type;
@@ -10,8 +13,12 @@ import dk.ucn.datamatiker.mwe.movechair.Tasks.AddSessionLogTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.SessionLogListTask;
 
-public class SessionLogsViewModel extends ViewModel {
+public class SessionLogsViewModel extends AndroidViewModel {
     private AsyncJsonTask.AsyncJsonResponse callback;
+
+    public SessionLogsViewModel(@NonNull Application application) {
+        super(application);
+    }
 
 
     @RequiresApi(api = Build.VERSION_CODES.P)

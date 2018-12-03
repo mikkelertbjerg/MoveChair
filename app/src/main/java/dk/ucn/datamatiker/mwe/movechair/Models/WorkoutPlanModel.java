@@ -16,21 +16,13 @@ public class WorkoutPlanModel extends ActivityModel implements Serializable {
     @SerializedName("rest_days")
     @Expose
     private int restDays;
-    @SerializedName("start_date")
-    @Expose
-    private Date startDate;
-    @SerializedName("workoutPlanDuration")
-    @Expose
-    private int workoutPlanDuration;
     @SerializedName("workouts")
     @Expose
     private List<WorkoutModel> workouts;
 
-    public WorkoutPlanModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration, int restDays, Date startDate, int workoutPlanDuration, List<WorkoutModel> workouts) {
+    public WorkoutPlanModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration, int restDays, List<WorkoutModel> workouts) {
         super(name, description, id, activityType, points, duration);
         this.restDays = restDays;
-        this.startDate = startDate;
-        this.workoutPlanDuration = workoutPlanDuration;
         this.workouts = workouts;
     }
 
@@ -54,6 +46,10 @@ public class WorkoutPlanModel extends ActivityModel implements Serializable {
     }
 
     public void setWorkouts(ArrayList<WorkoutModel> workouts) {
+        this.workouts = workouts;
+    }
+
+    public void setWorkouts(List<WorkoutModel> workouts) {
         this.workouts = workouts;
     }
 }

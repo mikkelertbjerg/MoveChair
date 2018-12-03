@@ -90,7 +90,7 @@ public class WorkoutPlanFragment extends Fragment implements View.OnClickListene
             public void processFinish(Object o) {
                 addedWorkoutPlanToUser((String) o);
             }
-        }, WorkoutPlanModel.class, workoutPlan.getId());
+        }, String.class, workoutPlan.getId());
     }
 
     public void addedWorkoutPlanToUser(String res) {

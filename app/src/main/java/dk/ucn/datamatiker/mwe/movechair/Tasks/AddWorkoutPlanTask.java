@@ -30,7 +30,6 @@ public class AddWorkoutPlanTask extends AsyncJsonTask<String> {
     public AddWorkoutPlanTask(AsyncJsonResponse delegate, Type type, int workoutPlanId) {
         super(delegate, type);
         this.workoutPlanId = workoutPlanId;
-        this.controller = type.getTypeName().substring(type.getTypeName().lastIndexOf(".")+1);
     }
 
     @Override
@@ -38,7 +37,7 @@ public class AddWorkoutPlanTask extends AsyncJsonTask<String> {
         HttpClient client = HttpClients.custom().setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36").build();
 
         String result = null;
-        String myUrl = "http://jvo-web.dk/index.php?controller=" + this.controller.replace("Model", "") + "s" + "&action=addworkoutplantouser&id=" + workoutPlanId + "&user_id=" + UserHelper.getUser().getId();
+        String myUrl = "http://jvo-web.dk/index.php?controller=workout plans" + "&action=addworkoutplantouser&id=" + workoutPlanId + "&user_id=" + UserHelper.getUser().getId();
         myUrl = myUrl.replaceAll(" ", "%20");
         HttpUriRequest request = RequestBuilder.get()
                 .setUri(myUrl)

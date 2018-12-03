@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
@@ -16,9 +17,9 @@ import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 
 public class ActivitiesFragment extends Fragment implements View.OnClickListener {
-    Button exercisesButton;
-    Button workoutsButton;
-    Button workoutPlansButton;
+    ImageView exerciseIcon;
+    ImageView workoutIcon;
+    ImageView workoutPlanIcon;
 
     @Nullable
     @Override
@@ -35,39 +36,35 @@ public class ActivitiesFragment extends Fragment implements View.OnClickListener
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Activities");
 
-        workoutsButton = view.findViewById(R.id.workouts_button);
-        exercisesButton = view.findViewById(R.id.exercises_button);
-        workoutPlansButton = view.findViewById(R.id.workout_plans_button);
+        exerciseIcon = view.findViewById(R.id.exercise_icon);
+        workoutIcon = view.findViewById(R.id.workout_icon);
+        workoutPlanIcon = view.findViewById(R.id.workout_plan_icon);
 
-        exercisesButton.setOnClickListener(this);
-        workoutsButton.setOnClickListener(this);
-        workoutPlansButton.setOnClickListener(this);
+        exerciseIcon.setOnClickListener(this);
+        workoutIcon.setOnClickListener(this);
+        workoutPlanIcon.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         //creating fragment object
         Fragment fragment = null;
-        String buttonText;
         Bundle bundle = new Bundle();
 
         switch (v.getId()) {
-            case R.id.exercises_button:
-                buttonText = (String) exercisesButton.getText();
+            case R.id.exercise_icon:
                 bundle.putSerializable("type", ExerciseModel.class);
                 fragment = new ActivitiesListFragment();
                 fragment.setArguments(bundle);
                 break;
 
-            case R.id.workouts_button:
-                buttonText = (String) workoutsButton.getText();
+            case R.id.workout_icon:
                 bundle.putSerializable("type", WorkoutModel.class);
                 fragment = new ActivitiesListFragment();
                 fragment.setArguments(bundle);
                 break;
 
-            case R.id.workout_plans_button:
-                buttonText = (String) workoutPlansButton.getText();
+            case R.id.workout_plan_icon:
                 bundle.putSerializable("type", WorkoutPlanModel.class);
                 fragment = new ActivitiesListFragment();
                 fragment.setArguments(bundle);

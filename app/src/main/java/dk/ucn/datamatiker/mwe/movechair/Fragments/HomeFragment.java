@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.jjoe64.graphview.GraphView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Adapters.AchievementAdapter;
@@ -33,9 +34,12 @@ import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Models.AchievementModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.AchievementTypeModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.HomeViewModel;
+import dk.ucn.datamatiker.mwe.movechair.ViewModels.MyPlanViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.SessionLogsViewModel;
 
 //TODO For now StepCounter lives here in HomeFragment, let's find a better place later
@@ -51,6 +55,9 @@ public class HomeFragment extends Fragment implements SensorEventListener {
 
     //UI Elements
     TextView total_points;
+    TextView workout_title;
+    TextView workout_duration;
+    TextView workout_points;
 
     @Nullable
     @Override
@@ -76,16 +83,15 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         //Create and display strides graph
         createStridesGraph();
 
-        //Dummy data for upcoming workout
-        //TODO change to values from DB
-        TextView workout_title = getActivity().findViewById(R.id.activity_title);
-        TextView workout_duration = getActivity().findViewById(R.id.activity_field_one);
-        TextView workout_points = getActivity().findViewById(R.id.activity_field_two);
+        workout_title = getActivity().findViewById(R.id.activity_title);
+        workout_duration = getActivity().findViewById(R.id.activity_field_one);
+        workout_points = getActivity().findViewById(R.id.activity_field_two);
 
         getActivity().findViewById(R.id.activity_divider).setAlpha(0);
-        workout_title.setText("Title: Lord");
-        workout_duration.setText("Duration: 5");
-        workout_points.setText("Points: 10.0");
+        //Starting data for upcoming workout
+        workout_title.setText("Login to");
+        workout_duration.setText("use this");
+        workout_points.setText("feature");
 
         //Starting data for points
         total_points = getActivity().findViewById(R.id.total_points);
@@ -129,8 +135,8 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         });
 
 
-        //Instantiate a sessionLogsViewModel to retrive a users logs
-        SessionLogsViewModel mSessionLogsViewModel = new SessionLogsViewModel();
+        //Instantiate a sessionLogsViewModel to retrieve a users logs
+        SessionLogsViewModel mSessionLogsViewModel = ViewModelProviders.of(this).get(SessionLogsViewModel.class);
 
         if(UserHelper.getUser() != null) {
             mSessionLogsViewModel.getSessionLogs(new AsyncJsonTask.AsyncJsonResponse() {
@@ -139,6 +145,27 @@ public class HomeFragment extends Fragment implements SensorEventListener {
                     getPointsFromLogs((List<SessionLogModel>) o);
                 }
             }, SessionLogModel.class, UserHelper.getUser().getId());
+        }
+
+
+        //Instantiate a myPlanViewModel to retrieve a users WorkoutPlans
+        HomeViewModel homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+
+        if(UserHelper.getUser() != null) {
+            homeViewModel.getNextWorkout(new AsyncJsonTask.AsyncJsonResponse() {
+                @Override
+                public void processFinish(Object o) {
+                    onGetNextWorkout((WorkoutModel) o);
+                }
+            }, WorkoutModel.class, UserHelper.getUser().getId());
+        }
+    }
+
+    private void onGetNextWorkout(WorkoutModel workout) {
+        if(workout != null) {
+            workout_title.setText("Title: " + workout.getName());
+            workout_duration.setText("Duration: " + workout.getDuration());
+            workout_points.setText("Points: " + workout.getPoints());
         }
     }
 
