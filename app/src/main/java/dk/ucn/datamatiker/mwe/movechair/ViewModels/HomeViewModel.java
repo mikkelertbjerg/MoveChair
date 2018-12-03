@@ -3,10 +3,19 @@ package dk.ucn.datamatiker.mwe.movechair.ViewModels;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.ViewModel;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+
+import java.util.List;
+
+import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
+import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 
 public class HomeViewModel extends AndroidViewModel {
 
@@ -14,11 +23,6 @@ public class HomeViewModel extends AndroidViewModel {
     public HomeViewModel(@NonNull Application application) {
         super(application);
     }
-
-/*    public User getUser(int id)
-    {
-        return null;
-    }*/
 
     public LineGraphSeries<DataPoint> getStrides() {
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
@@ -32,6 +36,4 @@ public class HomeViewModel extends AndroidViewModel {
         });
         return series;
     }
-
-
 }

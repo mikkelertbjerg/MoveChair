@@ -6,8 +6,10 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,19 +18,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
 import com.jjoe64.graphview.GraphView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Adapters.AchievementAdapter;
+import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Models.AchievementModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.AchievementTypeModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.HomeViewModel;
+import dk.ucn.datamatiker.mwe.movechair.ViewModels.SessionLogsViewModel;
 
 //TODO For now StepCounter lives here in HomeFragment, let's find a better place later
 //TODO Maybe replace current implementation of next workout with a calenderView of some sort?
@@ -41,6 +49,9 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     boolean running = false;
     private RecyclerView recyclerViewAchievements;
 
+    //UI Elements
+    TextView total_points;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,6 +61,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -75,10 +87,14 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         workout_duration.setText("Duration: 5");
         workout_points.setText("Points: 10.0");
 
-        //Dummy data for points
-        //TODO Implement total points retrieved from DB
-        TextView total_points = getActivity().findViewById(R.id.total_points);
-        total_points.setText("2853");
+        //Starting data for points
+        total_points = getActivity().findViewById(R.id.total_points);
+        total_points.setText("Login to track points");
+        if(UserHelper.getUser() == null) {
+            ImageView points_icon = getActivity().findViewById(R.id.points_icon);
+            points_icon.setVisibility(View.GONE);
+        }
+
 
         //Create achievement dummy data
         //TODO replace dummy data
@@ -112,6 +128,29 @@ public class HomeFragment extends Fragment implements SensorEventListener {
             }
         });
 
+
+        //Instantiate a sessionLogsViewModel to retrive a users logs
+        SessionLogsViewModel mSessionLogsViewModel = new SessionLogsViewModel();
+
+        if(UserHelper.getUser() != null) {
+            mSessionLogsViewModel.getSessionLogs(new AsyncJsonTask.AsyncJsonResponse() {
+                @Override
+                public void processFinish(Object o) {
+                    getPointsFromLogs((List<SessionLogModel>) o);
+                }
+            }, SessionLogModel.class, UserHelper.getUser().getId());
+        }
+    }
+
+    private void getPointsFromLogs(List<SessionLogModel> logs) {
+        UserHelper.getUser().setSessionLogs(logs);
+        double points = 0;
+        if(logs != null) {
+            for (SessionLogModel sessionLog : logs) {
+                points += sessionLog.getActivity().getPoints();
+            }
+        }
+        total_points.setText(String.valueOf(points));
     }
 
     @Override
