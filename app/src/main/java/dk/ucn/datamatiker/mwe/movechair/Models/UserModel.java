@@ -48,6 +48,10 @@ public class UserModel implements Serializable {
     @Expose
     private List<SessionLogModel> sessionLogs;
 
+    @SerializedName("strides")
+    @Expose
+    private List<StridesModel> strides;
+
     public List<WorkoutPlanModel> getWorkoutPlans() {
         return workoutPlans;
     }
@@ -142,6 +146,14 @@ public class UserModel implements Serializable {
 
     public void setSessionLogs(List<SessionLogModel> sessionLogs) {
         this.sessionLogs = sessionLogs;
+    }
+
+    public List<StridesModel> getStrides() {
+        return strides;
+    }
+
+    public void setStrides(List<StridesModel> strides) {
+        this.strides = strides;
     }
 }
 

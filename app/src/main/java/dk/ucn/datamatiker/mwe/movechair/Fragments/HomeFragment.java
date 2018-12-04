@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,6 +35,7 @@ import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Models.AchievementModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.AchievementTypeModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.StridesModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
@@ -79,9 +81,6 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         //TODO Move to separate class
         //Instantiate sensormanager
         sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
-
-        //Create and display strides graph
-        createStridesGraph();
 
         workout_title = getActivity().findViewById(R.id.activity_title);
         workout_duration = getActivity().findViewById(R.id.activity_field_one);
@@ -158,6 +157,37 @@ public class HomeFragment extends Fragment implements SensorEventListener {
                     onGetNextWorkout((WorkoutModel) o);
                 }
             }, WorkoutModel.class, UserHelper.getUser().getId());
+
+            homeViewModel.getAllStridesFromUser(new AsyncJsonTask.AsyncJsonResponse() {
+                @Override
+                public void processFinish(Object o) {
+                    onGetAllStridesFromUser((List<StridesModel>) o);
+                }
+            }, StridesModel.class, UserHelper.getUser().getId());
+        }
+    }
+
+    private void onGetAllStridesFromUser(List<StridesModel> strides) {
+        GraphView graph = getActivity().findViewById(R.id.graph_strides);
+        if(!strides.isEmpty()) {
+
+
+            graph.addSeries(mHomeViewModel.getStrides(strides));
+
+            // set date label formatter
+            graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
+            graph.getGridLabelRenderer().setNumHorizontalLabels(7);
+            graph.getGridLabelRenderer().setTextSize(30);
+
+            // set manual x bounds to have nice steps
+            graph.getViewport().setMinX(strides.get(0).getDate().getTime());
+            graph.getViewport().setMaxX(strides.get(strides.size() - 1).getDate().getTime());
+            graph.getViewport().setXAxisBoundsManual(true);
+        } else {
+            graph.setVisibility(View.INVISIBLE);
+            TextView strides_title = getActivity().findViewById(R.id.strides_title);
+            strides_title.setText("No roads conquered yet!");
+            strides_title.setTextSize(25);
         }
     }
 
@@ -196,15 +226,6 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     public void onPause() {
         super.onPause();
         running = false;
-    }
-
-    private void createStridesGraph() {
-        //TODO Implement getting data points from step counter
-        //TODO Retrieve strides from DB from viewModel
-
-        GraphView graph = getActivity().findViewById(R.id.graph_strides);
-
-        graph.addSeries(mHomeViewModel.getStrides());
     }
 
     @Override

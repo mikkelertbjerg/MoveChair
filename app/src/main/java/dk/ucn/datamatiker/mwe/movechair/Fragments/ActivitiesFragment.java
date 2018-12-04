@@ -17,9 +17,9 @@ import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 
 public class ActivitiesFragment extends Fragment implements View.OnClickListener {
-    ImageView exerciseIcon;
-    ImageView workoutIcon;
-    ImageView workoutPlanIcon;
+    Button exerciseButton;
+    Button workoutButton;
+    Button workoutPlanButton;
 
     @Nullable
     @Override
@@ -36,13 +36,13 @@ public class ActivitiesFragment extends Fragment implements View.OnClickListener
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Activities");
 
-        exerciseIcon = view.findViewById(R.id.exercise_icon);
-        workoutIcon = view.findViewById(R.id.workout_icon);
-        workoutPlanIcon = view.findViewById(R.id.workout_plan_icon);
+        exerciseButton = view.findViewById(R.id.exercise_button);
+        workoutButton = view.findViewById(R.id.workout_button);
+        workoutPlanButton = view.findViewById(R.id.workout_plan_button);
 
-        exerciseIcon.setOnClickListener(this);
-        workoutIcon.setOnClickListener(this);
-        workoutPlanIcon.setOnClickListener(this);
+        exerciseButton.setOnClickListener(this);
+        workoutButton.setOnClickListener(this);
+        workoutPlanButton.setOnClickListener(this);
     }
 
     @Override
@@ -52,19 +52,19 @@ public class ActivitiesFragment extends Fragment implements View.OnClickListener
         Bundle bundle = new Bundle();
 
         switch (v.getId()) {
-            case R.id.exercise_icon:
+            case R.id.exercise_button:
                 bundle.putSerializable("type", ExerciseModel.class);
                 fragment = new ActivitiesListFragment();
                 fragment.setArguments(bundle);
                 break;
 
-            case R.id.workout_icon:
+            case R.id.workout_button:
                 bundle.putSerializable("type", WorkoutModel.class);
                 fragment = new ActivitiesListFragment();
                 fragment.setArguments(bundle);
                 break;
 
-            case R.id.workout_plan_icon:
+            case R.id.workout_plan_button:
                 bundle.putSerializable("type", WorkoutPlanModel.class);
                 fragment = new ActivitiesListFragment();
                 fragment.setArguments(bundle);

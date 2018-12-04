@@ -4,6 +4,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class StridesModel implements Serializable {
@@ -47,7 +49,12 @@ public class StridesModel implements Serializable {
         return date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(String date) throws ParseException {
+        this.date = new SimpleDateFormat("dd/MM/yy").parse(date);
+    }
+
+    public String getDateFormat(String format) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat (format);
+        return dateFormat.format(this.date);
     }
 }

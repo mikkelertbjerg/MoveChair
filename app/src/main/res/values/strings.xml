@@ -39,6 +39,8 @@
     <string name="strides">Strides</string>
     <string name="upcoming_workout">Upcoming Workout</string>
     <string name="my_plan_btn">See My Plan</string>
+    <string name="points_title">Total Points</string>
+    <string name="achievements_title">Achievements</string>
 
     <!-- Strings related to activity log -->
 

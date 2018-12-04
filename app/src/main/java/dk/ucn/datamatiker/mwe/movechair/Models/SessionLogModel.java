@@ -59,6 +59,6 @@ public class SessionLogModel implements Serializable{
     }
 
     public void setDate(String date) throws ParseException {
-        this.date = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        this.date = new SimpleDateFormat("dd/MM/yyyy").parse(date);
     }
 }
