@@ -26,7 +26,6 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Adapters.AchievementAdapter;
@@ -37,11 +36,9 @@ import dk.ucn.datamatiker.mwe.movechair.Models.AchievementTypeModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.StridesModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.HomeViewModel;
-import dk.ucn.datamatiker.mwe.movechair.ViewModels.MyPlanViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.SessionLogsViewModel;
 
 //TODO For now StepCounter lives here in HomeFragment, let's find a better place later
@@ -61,6 +58,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     TextView workout_duration;
     TextView workout_points;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -75,6 +73,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //This makes you able to change toolbar title
+
         mHomeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
 
@@ -191,8 +190,20 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         }
     }
 
-    private void onGetNextWorkout(WorkoutModel workout) {
+    private void onGetNextWorkout(final WorkoutModel workout) {
         if(workout != null) {
+            View v = getActivity().findViewById(R.id.include);
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("activity", workout);
+                    WorkoutFragment workoutFragment = new WorkoutFragment();
+                    workoutFragment.setArguments(bundle);
+                    MainActivity mainActivity = (MainActivity) v.getContext();
+                    mainActivity.switchFragment(workoutFragment);
+                }
+            });
             workout_title.setText("Title: " + workout.getName());
             workout_duration.setText("Duration: " + workout.getDuration());
             workout_points.setText("Points: " + workout.getPoints());

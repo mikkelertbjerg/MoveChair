@@ -35,6 +35,11 @@
         completions."
     </string>
 
+    <!-- Strings related to register -->
+    <string name="hint_email">mail@mail.com</string>
+    <string name="hint_password">min. password requirements</string>
+    <string name="register_title">New User</string>
+
     <!-- Strings related to home -->
     <string name="strides">Strides</string>
     <string name="upcoming_workout">Upcoming Workout</string>
@@ -47,6 +52,19 @@
     <!-- String related to search view -->
     <string name="search_hint">Muscle, Equipment, Exercise...</string>
     <string name="action_search">Title</string>
+
+    <!-- Strings related to get started-->
+    <string name="get_started_title">Review Your Info</string>
+    <string name="radio_button_male">Male</string>
+    <string name="radio_button_female">Female</string>
+    <string name="input_age">Birthday</string>
+    <string name="input_height">Height</string>
+    <string name="hint_height">Type your height</string>
+    <string name="input_weight">Weight</string>'
+    <string name="hint_weight">Type your weight</string>
+    <string name="action_skip">Skip</string>
+    <string name="action_get_started">Get Started</string>
+
 
     <!-- Strings related to activities -->
     <string name="activity_title">Title: </string>

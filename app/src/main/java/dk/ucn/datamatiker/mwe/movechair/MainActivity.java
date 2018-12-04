@@ -23,7 +23,6 @@ import dk.ucn.datamatiker.mwe.movechair.Fragments.ProfileFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.MyPlanFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.SessionLogsFragment;
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
-import dk.ucn.datamatiker.mwe.movechair.R;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
