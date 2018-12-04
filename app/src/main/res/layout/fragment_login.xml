@@ -63,27 +63,20 @@
                 android:layout_height="wrap_content"
                 android:text="@string/action_sign_in" />
 
+            <Button
+                android:id="@+id/register_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/action_register" />
+
+            <Button
+                android:id="@+id/preview_app_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/action_preview_app" />
+
         </LinearLayout>
     </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/register_or_preview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/register_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/action_register" />
-
-        <Button
-            android:id="@+id/preview_app_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/action_preview_app" />
-    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/login_progress"
