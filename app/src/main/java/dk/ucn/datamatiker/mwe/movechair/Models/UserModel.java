@@ -5,6 +5,10 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Period;
+import java.util.Date;
 import java.util.List;
 
 public class UserModel implements Serializable {
@@ -15,9 +19,9 @@ public class UserModel implements Serializable {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("age")
+    @SerializedName("birth_date")
     @Expose
-    private int age;
+    private Date birthDate;
     @SerializedName("weight")
     @Expose
     private double weight;
@@ -76,12 +80,21 @@ public class UserModel implements Serializable {
         this.name = name;
     }
 
-    public int getAge() {
+    public int getAge(){
+        Date currentDate = new Date();
+        DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        int bd = Integer.parseInt(formatter.format(this.birthDate));
+        int cd = Integer.parseInt(formatter.format(currentDate));
+        int age = (cd - bd) / 10000;
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     public double getWeight() {

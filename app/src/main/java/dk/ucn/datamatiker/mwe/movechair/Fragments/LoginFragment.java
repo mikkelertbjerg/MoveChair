@@ -3,6 +3,7 @@ package dk.ucn.datamatiker.mwe.movechair.Fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,14 +16,17 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.LoginActivity;
 import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.LoginTask;
-
+import dk.ucn.datamatiker.mwe.movechair.ViewModels.UserViewModel;
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class LoginFragment extends Fragment {
 
     // UI references.
@@ -30,6 +34,7 @@ public class LoginFragment extends Fragment {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private UserViewModel mUserViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +46,8 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) getActivity().findViewById(R.id.email);
@@ -68,6 +75,7 @@ public class LoginFragment extends Fragment {
 
         Button registerButton = (Button) getActivity().findViewById(R.id.register_button);
         registerButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 RegisterFragment loginFragment = new RegisterFragment();
@@ -90,22 +98,25 @@ public class LoginFragment extends Fragment {
 
         // Creates the LoginTask and binds a listener in its interface.
         // This will delegate from AsyncTasks "onPostExecute()" method to trigger this overriden "processFinish(UserModel res)" method.
-        new LoginTask(new LoginTask.AsyncJsonResponse(){
-
+        mUserViewModel.login(new AsyncJsonTask.AsyncJsonResponse() {
             @Override
-            public void processFinish(Object res) {
-                Intent i = new Intent(getContext(), MainActivity.class);
-                UserHelper.setUser((UserModel) res);
-                getActivity().finish(); //Kill the current activity
-                startActivity(i);
+            public void processFinish(Object o) {
+                if(o != null) {
+                    UserHelper.setUser((UserModel) o);
+                    Intent i = new Intent(getContext(), MainActivity.class);
+                    getActivity().finish(); //Kill the current activity
+                    startActivity(i);
+                }
+                else{
+                    Toast.makeText(getContext(), "Wrong username or password", Toast.LENGTH_SHORT).show();
+                    showProgress(false);
+                }
             }
-
-        }, UserModel.class, email).execute();
+        }, UserModel.class, email, password);
 
         showProgress(true);
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in

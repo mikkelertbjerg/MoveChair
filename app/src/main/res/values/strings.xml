@@ -36,8 +36,6 @@
     </string>
 
     <!-- Strings related to register -->
-    <string name="hint_email">mail@mail.com</string>
-    <string name="hint_password">min. password requirements</string>
     <string name="register_title">New User</string>
 
     <!-- Strings related to home -->

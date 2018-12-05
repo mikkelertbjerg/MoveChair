@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.jjoe64.graphview.GraphView;
@@ -98,7 +99,6 @@ public class HomeFragment extends Fragment implements SensorEventListener {
             ImageView points_icon = getActivity().findViewById(R.id.points_icon);
             points_icon.setVisibility(View.GONE);
         }
-
 
         //Create achievement dummy data
         //TODO replace dummy data

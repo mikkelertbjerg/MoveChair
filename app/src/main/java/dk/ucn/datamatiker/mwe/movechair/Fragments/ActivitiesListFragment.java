@@ -26,7 +26,7 @@ import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ActivityListViewModel;
 
-public class ActivitiesListFragment extends Fragment implements View.OnClickListener {
+public class ActivitiesListFragment extends Fragment {
 
     List<ActivityModel> activities;
     ActivityListViewModel mActivityListViewModel;
@@ -58,8 +58,8 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
         activityAdapter = new ActivityAdapter(activities);
         rvActivities.setAdapter(activityAdapter);
 
-        Button filterButton = (Button) view.findViewById(R.id.set_filters_button);
-        filterButton.setOnClickListener(this);
+        //Button filterButton = (Button) view.findViewById(R.id.set_filters_button);
+        //filterButton.setOnClickListener(this);
 
         //Get the Activity Type from the bundle and start an async call to viewmodel with the type given
         Type type = (Type) getArguments().getSerializable("type");
@@ -79,15 +79,15 @@ public class ActivitiesListFragment extends Fragment implements View.OnClickList
         rvActivities.setLayoutManager(linearLayoutManager);
     }
 
-    @Override
+/*    @Override
     public void onClick(View v) {
         FilterFragment filterFragment = new FilterFragment();
-        /*Bundle bundleActivities = new Bundle();
+        *//*Bundle bundleActivities = new Bundle();
         bundleActivities.putSerializable("Activities", activities);
-        filterFragment.setArguments(bundleActivities);*/
+        filterFragment.setArguments(bundleActivities);*//*
         MainActivity mainActivity = (MainActivity) v.getContext();
         mainActivity.switchFragment(filterFragment);
-    }
+    }*/
 
     //This method is the callback for our ActivityListTask
     public void onGetActivities(Object o) {
