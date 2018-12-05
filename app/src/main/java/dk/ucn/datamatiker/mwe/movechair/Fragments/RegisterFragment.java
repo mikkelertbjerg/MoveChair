@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
+import dk.ucn.datamatiker.mwe.movechair.LoginActivity;
 import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
@@ -85,9 +86,9 @@ public class RegisterFragment extends Fragment {
                 public void processFinish(Object o) {
                     UserHelper.setUser((UserModel) o);
                     Toast.makeText(getContext(), "Logged in as " + ((UserModel) o).getEmail(), Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(getContext(), MainActivity.class);
-                    getActivity().finish(); //Kill the current activity
-                    startActivity(i);
+                    GetStartedFragment getStartedFragment = new GetStartedFragment();
+                    LoginActivity loginActivity = (LoginActivity)getActivity();
+                    loginActivity.switchFragment(getStartedFragment);
                 }
             }, UserModel.class, o.getEmail(), o.getHashedPassword());
 

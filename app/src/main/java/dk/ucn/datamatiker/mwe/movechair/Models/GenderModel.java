@@ -20,6 +20,10 @@ public class GenderModel implements Serializable {
         this.name = name;
     }
 
+    public GenderModel(String id) {
+        this.id = id;
+    }
+
     public GenderModel() {
     }
 

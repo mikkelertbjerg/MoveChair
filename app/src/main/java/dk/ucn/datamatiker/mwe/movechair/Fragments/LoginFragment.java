@@ -2,7 +2,6 @@ package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Build;
@@ -24,7 +23,6 @@ import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.LoginTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.UserViewModel;
 @RequiresApi(api = Build.VERSION_CODES.P)
 public class LoginFragment extends Fragment {
