@@ -47,6 +47,8 @@ public class ActivityGOFragment extends Fragment {
     private List<Long> durationList;
     static int nextExercise = 0;
     private SessionLogsViewModel mSessionLogViewModel;
+    private boolean paused;
+    private Long remaining;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -103,29 +105,55 @@ public class ActivityGOFragment extends Fragment {
         player.setRepeatMode(Player.REPEAT_MODE_ONE);
         player.setPlayWhenReady(true);
 
+        player.addListener(new Player.DefaultEventListener() {
+            @Override
+            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+                if (playWhenReady == true && playbackState == Player.STATE_READY) {
+                    c.cancel();
+                    if (remaining != 0) {
+                        Toast.makeText(getContext(), "Video Cancelled", Toast.LENGTH_SHORT).show();
+                        paused = false;
+                        player.seekTo(player.getCurrentWindowIndex(), remaining);
+                        testWorkoutTimerCombo(remaining, 100, nextExercise);
+                        c.start();
+                    }
+                }
+                else if (playWhenReady == false && playbackState == Player.STATE_READY) {
+                    paused = true;
+                    c.cancel();
+                }
+            }
+        });
 
-        testWorkoutTimerCombo(durationList.get(0), 5000, 0);
+        testWorkoutTimerCombo(durationList.get(0) * 1000, 100, 0);
 
         c.start();
 
 
     }
 
-    public String testWorkoutTimerCombo(long duration, long interval, int next)
+    public String testWorkoutTimerCombo(final long duration, long interval, int next)
     {
-
-        c = new CountDownTimer(duration * 1000, interval) {
+        remaining = duration;
+        c = new CountDownTimer(duration, interval) {
 
 
             @Override
             public void onTick(long millisUntilFinished) {
-
+                if(!paused) {
+                    remaining = millisUntilFinished;
+                    Toast.makeText(getContext(), (millisUntilFinished/1000)+"/"+remaining, Toast.LENGTH_SHORT).show();
+                }
             }
 
             @RequiresApi(api = Build.VERSION_CODES.P)
             @Override
             public void onFinish() {
-                if (player.getCurrentWindowIndex() == durationList.size()-1) {
+                if (paused) {
+                    //player.seekTo(index, (durationList.get(nextExercise).longValue() - remaining));
+                    Toast.makeText(getContext(), "Video Cancelled", Toast.LENGTH_SHORT).show();
+                }
+                else if (player.getCurrentWindowIndex() == durationList.size()-1) {
                     mSessionLogViewModel.addSessionLog(new AsyncJsonTask.AsyncJsonResponse() {
                         @Override
                         public void processFinish(Object o) {
@@ -139,14 +167,12 @@ public class ActivityGOFragment extends Fragment {
                     mainActivity.switchFragment(fragment);
 
 
-                } else {
+                } else if(player.getCurrentWindowIndex() < durationList.size() - 1) {
                     player.seekTo(player.getCurrentWindowIndex() + 1, C.TIME_UNSET);
-
-                    testWorkoutTimerCombo(durationList.get(++nextExercise), 500, nextExercise);
+                    testWorkoutTimerCombo(durationList.get(++nextExercise) * 1000, 100, nextExercise);
                     c.start();
-
-
-                } /*else if (currentTimeline.getWindow(currentWindowIndex, currentWindow, false).isDynamic) {
+                }
+                /*else if (currentTimeline.getWindow(currentWindowIndex, currentWindow, false).isDynamic) {
                player.seekTo(currentWindowIndex, C.TIME_UNSET);
            }*/
 
@@ -156,7 +182,7 @@ public class ActivityGOFragment extends Fragment {
 /*
         KeyEvent.KEYCODE_MEDIA_NEXT
 */
-     return "pindis";
+        return "pindis";
     }
 
 }
