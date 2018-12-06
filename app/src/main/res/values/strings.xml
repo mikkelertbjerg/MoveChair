@@ -12,6 +12,7 @@
     <string name="achievements">Achievements</string>
     <string name="activities">Activities</string>
     <string name="activity_log">Activity Log</string>
+    <string name="get_started">Get Started</string>
     <string name="home">Home</string>
     <string name="highscore">Highscore</string>
     <string name="my_plan">My Plan</string>
@@ -57,9 +58,7 @@
     <string name="radio_button_female">Female</string>
     <string name="input_age">Birthday</string>
     <string name="input_height">Height</string>
-    <string name="hint_height">Type your height</string>
-    <string name="input_weight">Weight</string>'
-    <string name="hint_weight">Type your weight</string>
+    <string name="input_weight">Weight</string>
     <string name="action_skip">Skip</string>
     <string name="action_get_started">Get Started</string>
 

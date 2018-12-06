@@ -66,6 +66,9 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getContext(), MainActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("key", "preview");
+                i.putExtras(bundle);
                 getActivity().finish(); //Kill the current activity
                 startActivity(i);
             }
@@ -102,6 +105,9 @@ public class LoginFragment extends Fragment {
                 if(o != null) {
                     UserHelper.setUser((UserModel) o);
                     Intent i = new Intent(getContext(), MainActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("key", "login");
+                    i.putExtras(bundle);
                     getActivity().finish(); //Kill the current activity
                     startActivity(i);
                 }

@@ -1,6 +1,9 @@
 package dk.ucn.datamatiker.mwe.movechair;
 
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
@@ -12,10 +15,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import dk.ucn.datamatiker.mwe.movechair.Fragments.AchievementsFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.ActivitiesFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.GetStartedFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.HighscoreFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.HomeFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.OptionsFragment;
@@ -24,6 +29,7 @@ import dk.ucn.datamatiker.mwe.movechair.Fragments.MyPlanFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.SessionLogsFragment;
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
     @Override
@@ -32,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Menu 1");
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -44,22 +49,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //Hides certain menu items if there's no user
-        if(UserHelper.getUser() == null){
-            Menu nav_menu = navigationView.getMenu();
-            nav_menu.findItem(R.id.nav_my_plan).setVisible(false);
-            nav_menu.findItem(R.id.nav_activity_log).setVisible(false);
-            nav_menu.findItem(R.id.nav_profile).setVisible(false);
-        }
-
         View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
 
         //Adding default page fragment
-        HomeFragment startFragment = new HomeFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.content_frame, startFragment, startFragment.getClass().toString())
-                .commit();
+        //Checking which fragment user is comming from
+        if(getIntent().getExtras().getString("key").equals("getStarted")){
+            GetStartedFragment getStartedFragment = new GetStartedFragment();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.content_frame, getStartedFragment, getStartedFragment.getClass().toString())
+                    .commit();
+        }
+        else if(getIntent().getExtras().getString("key").equals("login") || getIntent().getExtras().getString("key").equals("preview")) {
+            HomeFragment startFragment = new HomeFragment();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.content_frame, startFragment, startFragment.getClass().toString())
+                    .commit();
+        }
 
         // Find header so we can access its views
         //Then fill them with the logged in users info
@@ -108,6 +115,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_profile:
                 fragment = new ProfileFragment();
+                break;
+            case R.id.nav_get_started:
+                fragment = new GetStartedFragment();
                 break;
             case R.id.nav_achievements:
                 fragment = new AchievementsFragment();

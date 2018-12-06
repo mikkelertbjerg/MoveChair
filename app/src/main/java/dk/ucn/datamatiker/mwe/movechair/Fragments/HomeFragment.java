@@ -17,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -73,10 +74,18 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //Hides the keyboard if it's shown
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+        View focusedView = getActivity().getCurrentFocus();
+        if(focusedView != null){
+            inputMethodManager.hideSoftInputFromWindow(focusedView.getWindowToken(), 0);
+        }
+
         //This makes you able to change toolbar title
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
 
         mHomeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
 
         //TODO Move to separate class
         //Instantiate sensormanager

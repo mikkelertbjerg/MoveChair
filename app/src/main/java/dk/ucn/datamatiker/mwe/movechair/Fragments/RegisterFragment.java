@@ -1,6 +1,7 @@
 package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -51,6 +53,10 @@ public class RegisterFragment extends Fragment {
         emailView = view.findViewById(R.id.email);
         passwordView = view.findViewById(R.id.password);
 
+        //Shows the keyboard
+        InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.showSoftInput(emailView, InputMethodManager.SHOW_IMPLICIT);
+
         Button registerButton = (Button) view.findViewById(R.id.action_register);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,9 +92,12 @@ public class RegisterFragment extends Fragment {
                 public void processFinish(Object o) {
                     UserHelper.setUser((UserModel) o);
                     Toast.makeText(getContext(), "Logged in as " + ((UserModel) o).getEmail(), Toast.LENGTH_SHORT).show();
-                    GetStartedFragment getStartedFragment = new GetStartedFragment();
-                    LoginActivity loginActivity = (LoginActivity)getActivity();
-                    loginActivity.switchFragment(getStartedFragment);
+                    Intent i = new Intent(getContext(), MainActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("key", "getStarted");
+                    i.putExtras(bundle);
+                    getActivity().finish(); //Kill the current activity
+                    startActivity(i);
                 }
             }, UserModel.class, o.getEmail(), o.getHashedPassword());
 
