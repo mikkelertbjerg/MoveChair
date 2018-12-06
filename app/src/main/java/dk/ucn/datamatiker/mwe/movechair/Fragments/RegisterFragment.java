@@ -36,7 +36,7 @@ public class RegisterFragment extends Fragment {
     private EditText passwordView;
     private UserViewModel mUserViewModel;
     private View mProgressView;
-    private View mRegisterView;
+    private View mRegisterFormView;
 
     @Nullable
     @Override
@@ -76,7 +76,7 @@ public class RegisterFragment extends Fragment {
 
 
         mProgressView = getActivity().findViewById(R.id.register_progress);
-        mRegisterView = getActivity().findViewById(R.id.register_layout);
+        mRegisterFormView = getActivity().findViewById(R.id.register_form);
     }
 
     private void createNewUser() {
@@ -119,12 +119,12 @@ public class RegisterFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            mRegisterView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mRegisterView.animate().setDuration(shortAnimTime).alpha(
+            mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mRegisterFormView.animate().setDuration(shortAnimTime).alpha(
                     show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    mRegisterView.setVisibility(show ? View.GONE : View.VISIBLE);
+                    mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
                 }
             });
 
@@ -140,7 +140,7 @@ public class RegisterFragment extends Fragment {
             // The ViewPropertyAnimator APIs are not available, so simply show
             // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mRegisterView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
 }

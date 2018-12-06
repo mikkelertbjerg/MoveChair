@@ -89,6 +89,12 @@ public class UserModel implements Serializable {
         return age;
     }
 
+    public boolean isUserStarted(){
+        return this.height > 0 &&
+                this.weight > 0 &&
+                this.birthDate.getTime() > 0;
+    }
+
     public Date getBirthDate() {
         return birthDate;
     }

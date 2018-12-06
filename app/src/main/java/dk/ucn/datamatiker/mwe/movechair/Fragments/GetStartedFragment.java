@@ -104,48 +104,8 @@ public class GetStartedFragment extends Fragment {
         getStartedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean check = true;
-                int uGender_id = 0;
-                String uBirthDate = "";
-                double uWeight = 0;
-                double uHeight = 0;
-                if(gender_male.isChecked()){
-                    uGender_id = 2;
-                }
-                else if(gender_female.isChecked()){
-                    uGender_id = 1;
-                }
-                else{
-                    check = false;
-                }
-                if(!birth_date.getText().equals("")){
-                    uBirthDate = birth_date.getText().toString();
-                }
-                else{
-                    check = false;
-                }
-                if(Double.valueOf(weight.getText().toString()).doubleValue()  > 0){
-                    uWeight = Double.valueOf(weight.getText().toString()).doubleValue();
-                }
-                else{
-                    check = false;
-                }
-                if(Double.valueOf(height.getText().toString()).doubleValue() > 0){
-                    uHeight = (Double.valueOf(height.getText().toString()).doubleValue());
-                }
-                else{
-                    check = false;
-                }
 
-                if(check){
-                    mUserViewModel.getStarted(new AsyncJsonTask.AsyncJsonResponse() {
-                        @Override
-                        public void processFinish(Object o) {
-
-                        }
-                    }, UserModel.class, UserHelper.getUser().getId(), uGender_id, uBirthDate, uWeight, uHeight);
-                }
-
+                onGetStarted();
                 //Switch to appropriate exercise/workout/workoutplan
                 //Currently sat to home
                 HomeFragment homeFragment = new HomeFragment();
@@ -155,14 +115,68 @@ public class GetStartedFragment extends Fragment {
         });
 
         Button skipButton = (Button) view.findViewById(R.id.skip_button);
-        skipButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HomeFragment homeFragment = new HomeFragment();
-                MainActivity mainActivity = (MainActivity)getActivity();
-                mainActivity.switchFragment(homeFragment);
-            }
-        });
+
+        UserModel test = UserHelper.getUser();
+        if(!UserHelper.getUser().isUserStarted()) {
+
+            skipButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    HomeFragment homeFragment = new HomeFragment();
+                    MainActivity mainActivity = (MainActivity)getActivity();
+                    mainActivity.switchFragment(homeFragment);
+                }
+            });
+        }
+        else{
+            skipButton.setVisibility(View.GONE);
+        }
+
+
+    }
+
+    private void onGetStarted(){
+        boolean check = true;
+        int uGender_id = 0;
+        String uBirthDate = "";
+        double uWeight = 0;
+        double uHeight = 0;
+        if(gender_male.isChecked()){
+            uGender_id = 2;
+        }
+        else if(gender_female.isChecked()){
+            uGender_id = 1;
+        }
+        else{
+            check = false;
+        }
+        if(!birth_date.getText().equals("")){
+            uBirthDate = birth_date.getText().toString();
+        }
+        else{
+            check = false;
+        }
+        if(Double.valueOf(weight.getText().toString()).doubleValue()  > 0){
+            uWeight = Double.valueOf(weight.getText().toString()).doubleValue();
+        }
+        else{
+            check = false;
+        }
+        if(Double.valueOf(height.getText().toString()).doubleValue() > 0){
+            uHeight = (Double.valueOf(height.getText().toString()).doubleValue());
+        }
+        else{
+            check = false;
+        }
+
+        if(check){
+            mUserViewModel.getStarted(new AsyncJsonTask.AsyncJsonResponse() {
+                @Override
+                public void processFinish(Object o) {
+
+                }
+            }, UserModel.class, UserHelper.getUser().getId(), uGender_id, uBirthDate, uWeight, uHeight);
+        }
     }
 
     private void onGetUserByEmail(UserModel o) {
@@ -175,11 +189,8 @@ public class GetStartedFragment extends Fragment {
         }
 
         if(o.getBirthDate().getTime() > 0) {
-
             DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-
             birth_date.setText(formatter.format(o.getBirthDate()));
-
         }
 
         if(o.getWeight() > 0) {
