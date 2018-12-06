@@ -59,7 +59,7 @@ public class GetStartedFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //This makes you able to change toolbar title
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Get Started");
 
 
         mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);

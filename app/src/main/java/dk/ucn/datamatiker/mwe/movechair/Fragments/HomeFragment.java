@@ -44,9 +44,8 @@ import dk.ucn.datamatiker.mwe.movechair.ViewModels.HomeViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.SessionLogsViewModel;
 
 //TODO For now StepCounter lives here in HomeFragment, let's find a better place later
-//TODO Maybe replace current implementation of next workout with a calenderView of some sort?
-//TODO Change Upcoming Workout to select data from DB, the users chosen workoutplans next workout
 
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class HomeFragment extends Fragment implements SensorEventListener {
 
     SensorManager sensorManager;
@@ -130,8 +129,8 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         recyclerViewAchievements.setLayoutManager(linearLayoutManager);
 
         //OnClick switches to MyPlan view
-        Button my_plan_btn = getActivity().findViewById(R.id.my_plan_btn);
-        my_plan_btn.setOnClickListener(new View.OnClickListener() {
+        Button my_plan_button = getActivity().findViewById(R.id.my_plan_btn);
+        my_plan_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MyPlanFragment myPlanFragment = new MyPlanFragment();

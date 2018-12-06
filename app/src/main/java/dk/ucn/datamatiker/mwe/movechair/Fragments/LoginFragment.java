@@ -24,6 +24,7 @@ import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.UserViewModel;
+
 @RequiresApi(api = Build.VERSION_CODES.P)
 public class LoginFragment extends Fragment {
 
@@ -90,9 +91,8 @@ public class LoginFragment extends Fragment {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.P)
-    private void attemptLogin() {
 
+    private void attemptLogin() {
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
@@ -117,7 +117,6 @@ public class LoginFragment extends Fragment {
                 }
             }
         }, UserModel.class, email, password);
-
         showProgress(true);
     }
 

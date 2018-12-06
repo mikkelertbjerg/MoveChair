@@ -1,5 +1,7 @@
 package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -33,6 +35,8 @@ public class RegisterFragment extends Fragment {
     private EditText emailView;
     private EditText passwordView;
     private UserViewModel mUserViewModel;
+    private View mProgressView;
+    private View mRegisterView;
 
     @Nullable
     @Override
@@ -61,18 +65,21 @@ public class RegisterFragment extends Fragment {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(emailView.getText().toString().trim().length() > 0 &&
-                        passwordView.getText().toString().trim().length() > 0){
+                if (emailView.getText().toString().trim().length() > 0 &&
+                        passwordView.getText().toString().trim().length() > 0) {
                     createNewUser();
-                }
-                else{
+                } else {
                     Toast.makeText(getContext(), "Invalid email or password", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+
+        mProgressView = getActivity().findViewById(R.id.register_progress);
+        mRegisterView = getActivity().findViewById(R.id.register_layout);
     }
 
-    private void createNewUser(){
+    private void createNewUser() {
         String email = emailView.getText().toString();
         String password = passwordView.getText().toString();
         mUserViewModel.create(new AsyncJsonTask.AsyncJsonResponse() {
@@ -81,11 +88,12 @@ public class RegisterFragment extends Fragment {
                 login((UserModel) o);
                 Toast.makeText(getContext(), ((UserModel) o).getEmail() + " Created", Toast.LENGTH_SHORT).show();
             }
-        },UserModel.class, email, password);
+        }, UserModel.class, email, password);
+        showProgress(true); //TODO add another layout so progress can be shown.
     }
 
-    private void login(UserModel o){
-        if(o != null){
+    private void login(UserModel o) {
+        if (o != null) {
 
             mUserViewModel.login(new AsyncJsonTask.AsyncJsonResponse() {
                 @Override
@@ -101,6 +109,38 @@ public class RegisterFragment extends Fragment {
                 }
             }, UserModel.class, o.getEmail(), o.getHashedPassword());
 
+        }
+    }
+
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            mRegisterView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mRegisterView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mRegisterView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mRegisterView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
 }
