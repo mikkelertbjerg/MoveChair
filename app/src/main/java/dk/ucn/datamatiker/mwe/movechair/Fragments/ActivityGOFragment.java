@@ -109,12 +109,12 @@ public class ActivityGOFragment extends Fragment {
             @Override
             public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
                 if (playWhenReady == true && playbackState == Player.STATE_READY) {
-                    c.cancel();
-                    if (remaining != 0) {
+
+                    if (remaining > 0) {
+                        c.cancel();
                         Toast.makeText(getContext(), "Video Cancelled", Toast.LENGTH_SHORT).show();
                         paused = false;
-                        player.seekTo(player.getCurrentWindowIndex(), remaining);
-                        testWorkoutTimerCombo(remaining, 100, nextExercise);
+                        testWorkoutTimerCombo(remaining, 1000, nextExercise);
                         c.start();
                     }
                 }
@@ -125,7 +125,7 @@ public class ActivityGOFragment extends Fragment {
             }
         });
 
-        testWorkoutTimerCombo(durationList.get(0) * 1000, 100, 0);
+        testWorkoutTimerCombo(durationList.get(0) * 1000, 1000, 0);
 
         c.start();
 
@@ -142,7 +142,7 @@ public class ActivityGOFragment extends Fragment {
             public void onTick(long millisUntilFinished) {
                 if(!paused) {
                     remaining = millisUntilFinished;
-                    Toast.makeText(getContext(), (millisUntilFinished/1000)+"/"+remaining, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), millisUntilFinished/1000 + "", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -150,8 +150,7 @@ public class ActivityGOFragment extends Fragment {
             @Override
             public void onFinish() {
                 if (paused) {
-                    //player.seekTo(index, (durationList.get(nextExercise).longValue() - remaining));
-                    Toast.makeText(getContext(), "Video Cancelled", Toast.LENGTH_SHORT).show();
+                    // Nothing should happen
                 }
                 else if (player.getCurrentWindowIndex() == durationList.size()-1) {
                     mSessionLogViewModel.addSessionLog(new AsyncJsonTask.AsyncJsonResponse() {
@@ -169,19 +168,13 @@ public class ActivityGOFragment extends Fragment {
 
                 } else if(player.getCurrentWindowIndex() < durationList.size() - 1) {
                     player.seekTo(player.getCurrentWindowIndex() + 1, C.TIME_UNSET);
-                    testWorkoutTimerCombo(durationList.get(++nextExercise) * 1000, 100, nextExercise);
+                    testWorkoutTimerCombo(durationList.get(++nextExercise) * 1000, 1000, nextExercise);
                     c.start();
                 }
-                /*else if (currentTimeline.getWindow(currentWindowIndex, currentWindow, false).isDynamic) {
-               player.seekTo(currentWindowIndex, C.TIME_UNSET);
-           }*/
 
             }
         };
 
-/*
-        KeyEvent.KEYCODE_MEDIA_NEXT
-*/
         return "pindis";
     }
 
