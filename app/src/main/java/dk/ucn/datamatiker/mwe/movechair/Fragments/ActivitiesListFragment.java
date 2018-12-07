@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import dk.ucn.datamatiker.mwe.movechair.Adapters.ActivityAdapter;
+import dk.ucn.datamatiker.mwe.movechair.Helpers.ProgressHelper;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 
 import java.lang.reflect.Type;
@@ -32,6 +33,9 @@ public class ActivitiesListFragment extends Fragment {
     ActivityListViewModel mActivityListViewModel;
     ActivityAdapter activityAdapter;
     RecyclerView rvActivities;
+    ProgressHelper progressHelper;
+    View mActivitiesView;
+    View mProgressView;
 
     @Nullable
     @Override
@@ -49,6 +53,10 @@ public class ActivitiesListFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getArguments().getString("buttonText"));
 
         mActivityListViewModel = ViewModelProviders.of(this).get(ActivityListViewModel.class);
+
+        progressHelper = new ProgressHelper();
+        mActivitiesView = view.findViewById(R.id.rv_activities);
+        mProgressView = view.findViewById(R.id.progress);
 
         rvActivities = view.findViewById(R.id.rv_activities);
 
@@ -68,6 +76,7 @@ public class ActivitiesListFragment extends Fragment {
             @Override
             public void processFinish(Object o) {
                 onGetActivities(o);
+                progressHelper.showProgress(false, mActivitiesView, mProgressView, getContext());
             }
 
         }, type);

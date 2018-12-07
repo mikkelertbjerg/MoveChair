@@ -1,8 +1,11 @@
 package dk.ucn.datamatiker.mwe.movechair.Tasks;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
+import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 
@@ -20,15 +23,20 @@ import cz.msebera.android.httpclient.client.methods.HttpUriRequest;
 import cz.msebera.android.httpclient.client.methods.RequestBuilder;
 import cz.msebera.android.httpclient.impl.client.HttpClients;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
+@RequiresApi(api = Build.VERSION_CODES.P)
 
 public class GetNextWorkoutTask extends AsyncJsonTask<WorkoutModel> {
     private int userId;
 
-    @RequiresApi(api = Build.VERSION_CODES.P)
     public GetNextWorkoutTask(AsyncJsonResponse delegate, Type type, int userId) {
         super(delegate, type);
         this.userId = userId;
         this.controller = type.getTypeName().substring(type.getTypeName().lastIndexOf(".")+1);
+    }
+
+    @Override
+    protected void onProgressUpdate(Object[] values) {
+        super.onProgressUpdate(values);
     }
 
     @Override
@@ -63,7 +71,6 @@ public class GetNextWorkoutTask extends AsyncJsonTask<WorkoutModel> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return result;
     }
 }

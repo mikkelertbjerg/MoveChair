@@ -28,6 +28,7 @@ import dk.ucn.datamatiker.mwe.movechair.Tasks.GetMyPlanTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.GetNextWorkoutTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.GetSridesListTask;
 
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class HomeViewModel extends AndroidViewModel {
     private AsyncJsonTask.AsyncJsonResponse callback;
 
@@ -46,15 +47,12 @@ public class HomeViewModel extends AndroidViewModel {
         return series;
     }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.P)
     public void getNextWorkout(AsyncJsonTask.AsyncJsonResponse callback, Type type, int userId) {
         this.callback = callback;
         AsyncJsonTask<WorkoutModel> task = new GetNextWorkoutTask(callback, type, userId);
         task.execute();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.P)
     public void getAllStridesFromUser(AsyncJsonTask.AsyncJsonResponse callback, Type type, int userId) {
         this.callback = callback;
         AsyncJsonTask<List<StridesModel>> task = new GetSridesListTask(callback, type, userId);

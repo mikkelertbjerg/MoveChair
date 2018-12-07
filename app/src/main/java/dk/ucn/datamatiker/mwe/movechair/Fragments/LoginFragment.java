@@ -1,7 +1,5 @@
 package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Build;
@@ -17,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import dk.ucn.datamatiker.mwe.movechair.Helpers.ProgressHelper;
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.LoginActivity;
 import dk.ucn.datamatiker.mwe.movechair.MainActivity;
@@ -27,6 +26,8 @@ import dk.ucn.datamatiker.mwe.movechair.ViewModels.UserViewModel;
 
 @RequiresApi(api = Build.VERSION_CODES.P)
 public class LoginFragment extends Fragment {
+
+    ProgressHelper progressHelper;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -45,6 +46,8 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        progressHelper = new ProgressHelper();
 
         mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
@@ -87,7 +90,8 @@ public class LoginFragment extends Fragment {
         });
 
         mLoginFormView = getActivity().findViewById(R.id.login_form);
-        mProgressView = getActivity().findViewById(R.id.login_progress);
+        mProgressView = getActivity().findViewById(R.id.progress);
+        progressHelper.showProgress(false, mLoginFormView, mProgressView, getContext());
 
     }
 
@@ -110,45 +114,13 @@ public class LoginFragment extends Fragment {
                     i.putExtras(bundle);
                     getActivity().finish(); //Kill the current activity
                     startActivity(i);
+                    progressHelper.showProgress(true, mLoginFormView, mProgressView, getContext());
                 }
                 else{
                     Toast.makeText(getContext(), "Wrong username or password", Toast.LENGTH_SHORT).show();
-                    showProgress(false);
                 }
             }
         }, UserModel.class, email, password);
-        showProgress(true);
-    }
 
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
     }
 }

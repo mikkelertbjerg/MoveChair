@@ -1,12 +1,14 @@
 package dk.ucn.datamatiker.mwe.movechair;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.LoginFragment;
-
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class LoginActivity extends AppCompatActivity  {
 
     @Override

@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import dk.ucn.datamatiker.mwe.movechair.Helpers.ProgressHelper;
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.LoginActivity;
 import dk.ucn.datamatiker.mwe.movechair.MainActivity;
@@ -37,6 +38,7 @@ public class RegisterFragment extends Fragment {
     private UserViewModel mUserViewModel;
     private View mProgressView;
     private View mRegisterFormView;
+    private ProgressHelper progressHelper;
 
     @Nullable
     @Override
@@ -53,9 +55,14 @@ public class RegisterFragment extends Fragment {
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Register");
         mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        progressHelper = new ProgressHelper();
 
         emailView = view.findViewById(R.id.email);
         passwordView = view.findViewById(R.id.password);
+        mProgressView = getActivity().findViewById(R.id.progress);
+        mRegisterFormView = getActivity().findViewById(R.id.register_form);
+
+        progressHelper.showProgress(false, mRegisterFormView, mProgressView, getContext());
 
         //Shows the keyboard
         InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -73,10 +80,6 @@ public class RegisterFragment extends Fragment {
                 }
             }
         });
-
-
-        mProgressView = getActivity().findViewById(R.id.register_progress);
-        mRegisterFormView = getActivity().findViewById(R.id.register_form);
     }
 
     private void createNewUser() {
@@ -89,12 +92,11 @@ public class RegisterFragment extends Fragment {
                 Toast.makeText(getContext(), ((UserModel) o).getEmail() + " Created", Toast.LENGTH_SHORT).show();
             }
         }, UserModel.class, email, password);
-        showProgress(true); //TODO add another layout so progress can be shown.
+        progressHelper.showProgress(true, mRegisterFormView, mProgressView, getContext());
     }
 
     private void login(UserModel o) {
         if (o != null) {
-
             mUserViewModel.login(new AsyncJsonTask.AsyncJsonResponse() {
                 @Override
                 public void processFinish(Object o) {
@@ -109,38 +111,6 @@ public class RegisterFragment extends Fragment {
                 }
             }, UserModel.class, o.getEmail(), o.getHashedPassword());
 
-        }
-    }
-
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mRegisterFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
 }

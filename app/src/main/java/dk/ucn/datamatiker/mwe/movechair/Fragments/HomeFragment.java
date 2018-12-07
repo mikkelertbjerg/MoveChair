@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Adapters.AchievementAdapter;
+import dk.ucn.datamatiker.mwe.movechair.Helpers.ProgressHelper;
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Models.AchievementModel;
@@ -50,14 +51,21 @@ public class HomeFragment extends Fragment implements SensorEventListener {
 
     SensorManager sensorManager;
     HomeViewModel mHomeViewModel;
+    SessionLogsViewModel mSessionLogsViewModel;
     boolean running = false;
     private RecyclerView recyclerViewAchievements;
 
+    private ProgressHelper progressHelper;
+
     //UI Elements
-    TextView total_points;
-    TextView workout_title;
-    TextView workout_duration;
-    TextView workout_points;
+    private TextView total_points;
+    private TextView workout_title;
+    private TextView workout_duration;
+    private TextView workout_points;
+
+    private View mUpcommingWorkoutView;
+    private View mProgressView;
+
 
 
     @Nullable
@@ -74,6 +82,8 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        progressHelper = new ProgressHelper();
+
         //Hides the keyboard if it's shown
         InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
         View focusedView = getActivity().getCurrentFocus();
@@ -84,7 +94,16 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Home");
 
+        //Set the view models
+        mSessionLogsViewModel = ViewModelProviders.of(this).get(SessionLogsViewModel.class);
         mHomeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+
+        //Views...
+        mUpcommingWorkoutView = view.findViewById(R.id.upcomming_workout_layout);
+        mProgressView = view.findViewById(R.id.progress);
+
+        //Progressbar
+        progressHelper.showProgress(true, mUpcommingWorkoutView, mProgressView, this.getContext());
 
         //TODO Move to separate class
         //Instantiate sensormanager
@@ -140,10 +159,38 @@ public class HomeFragment extends Fragment implements SensorEventListener {
             }
         });
 
+        getNextWorkout();
+        getStrides();
+        getPoints();
+    }
 
-        //Instantiate a sessionLogsViewModel to retrieve a users logs
-        SessionLogsViewModel mSessionLogsViewModel = ViewModelProviders.of(this).get(SessionLogsViewModel.class);
+    //Get users upcomming workout
+    private void getNextWorkout(){
+        if(UserHelper.getUser() != null){
+            mHomeViewModel.getNextWorkout(new AsyncJsonTask.AsyncJsonResponse() {
+                @Override
+                public void processFinish(Object o) {
+                    onGetNextWorkout((WorkoutModel) o);
+                    progressHelper.showProgress(false, mUpcommingWorkoutView, mProgressView, getContext());
+                }
+            }, WorkoutModel.class, UserHelper.getUser().getId());
+        }
+    }
 
+    //Get all strides from the user
+    private void getStrides(){
+        if(UserHelper.getUser() != null){
+            mHomeViewModel.getAllStridesFromUser(new AsyncJsonTask.AsyncJsonResponse() {
+                @Override
+                public void processFinish(Object o) {
+                    onGetAllStridesFromUser((List<StridesModel>) o);
+                }
+            }, StridesModel.class, UserHelper.getUser().getId());
+        }
+    }
+
+    //Loads the users points
+    private void getPoints(){
         if(UserHelper.getUser() != null) {
             mSessionLogsViewModel.getSessionLogs(new AsyncJsonTask.AsyncJsonResponse() {
                 @Override
@@ -151,26 +198,6 @@ public class HomeFragment extends Fragment implements SensorEventListener {
                     getPointsFromLogs((List<SessionLogModel>) o);
                 }
             }, SessionLogModel.class, UserHelper.getUser().getId());
-        }
-
-
-        //Instantiate a myPlanViewModel to retrieve a users WorkoutPlans
-        HomeViewModel homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
-
-        if(UserHelper.getUser() != null) {
-            homeViewModel.getNextWorkout(new AsyncJsonTask.AsyncJsonResponse() {
-                @Override
-                public void processFinish(Object o) {
-                    onGetNextWorkout((WorkoutModel) o);
-                }
-            }, WorkoutModel.class, UserHelper.getUser().getId());
-
-            homeViewModel.getAllStridesFromUser(new AsyncJsonTask.AsyncJsonResponse() {
-                @Override
-                public void processFinish(Object o) {
-                    onGetAllStridesFromUser((List<StridesModel>) o);
-                }
-            }, StridesModel.class, UserHelper.getUser().getId());
         }
     }
 

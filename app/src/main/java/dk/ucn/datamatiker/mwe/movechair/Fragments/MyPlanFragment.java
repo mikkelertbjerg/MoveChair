@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Adapters.ActivityAdapter;
+import dk.ucn.datamatiker.mwe.movechair.Helpers.ProgressHelper;
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
@@ -28,6 +29,10 @@ public class MyPlanFragment extends Fragment {
 
     private MyPlanViewModel mMyPlanViewModel;
     private RecyclerView rvWorkouts;
+    private ProgressHelper progressHelper;
+    private View mMyPlanView;
+    private View mProgressView;
+
 
 
     @Override
@@ -45,6 +50,10 @@ public class MyPlanFragment extends Fragment {
         mMyPlanViewModel = ViewModelProviders.of(this).get(MyPlanViewModel.class);
         rvWorkouts = view.findViewById(R.id.my_plan_recyclerview);
 
+        mMyPlanView = view.findViewById(R.id.my_plan_recyclerview);
+        mProgressView = view.findViewById(R.id.progress);
+        progressHelper = new ProgressHelper();
+
         // Null check on the current user
         if (UserHelper.getUser() != null) {
             UserModel user = UserHelper.getUser();
@@ -60,6 +69,7 @@ public class MyPlanFragment extends Fragment {
                 @Override
                 public void processFinish(Object o) {
                     onGetMyPlan((List<WorkoutModel>) o);
+                    progressHelper.showProgress(false, mMyPlanView, mProgressView, getContext());
                 }
 
             }, WorkoutModel.class, user.getId());

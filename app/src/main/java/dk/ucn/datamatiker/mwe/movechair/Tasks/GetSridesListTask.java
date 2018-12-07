@@ -24,6 +24,7 @@ import cz.msebera.android.httpclient.impl.client.HttpClients;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.StridesModel;
 
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class GetSridesListTask extends AsyncJsonTask<List<StridesModel>> {
 
 
@@ -31,7 +32,6 @@ public class GetSridesListTask extends AsyncJsonTask<List<StridesModel>> {
     private int user_id;
 
 
-    @RequiresApi(api = Build.VERSION_CODES.P)
     public GetSridesListTask(AsyncJsonResponse delegate, Type type, int id) {
         super(delegate, type);
         this.user_id = id;
@@ -71,7 +71,6 @@ public class GetSridesListTask extends AsyncJsonTask<List<StridesModel>> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return result;
     }
 }

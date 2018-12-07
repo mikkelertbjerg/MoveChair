@@ -116,7 +116,6 @@ public class GetStartedFragment extends Fragment {
 
         Button skipButton = (Button) view.findViewById(R.id.skip_button);
 
-        UserModel test = UserHelper.getUser();
         if(!UserHelper.getUser().isUserStarted()) {
 
             skipButton.setOnClickListener(new View.OnClickListener() {

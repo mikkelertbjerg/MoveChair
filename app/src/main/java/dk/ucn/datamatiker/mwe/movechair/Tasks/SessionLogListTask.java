@@ -23,19 +23,18 @@ import cz.msebera.android.httpclient.client.methods.HttpUriRequest;
 import cz.msebera.android.httpclient.client.methods.RequestBuilder;
 import cz.msebera.android.httpclient.impl.client.HttpClients;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
-
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class SessionLogListTask extends AsyncJsonTask<List<SessionLogModel>> {
 
     private AsyncJsonResponse delegate;
     private int user_id;
 
-
-    @RequiresApi(api = Build.VERSION_CODES.P)
     public SessionLogListTask(AsyncJsonResponse delegate, Type type, int id) {
         super(delegate, type);
         this.user_id = id;
         this.controller = type.getTypeName().substring(type.getTypeName().lastIndexOf(".")+1);
     }
+
 
     @Override
     protected List<SessionLogModel> doInBackground(Object[] object) {
@@ -70,7 +69,6 @@ public class SessionLogListTask extends AsyncJsonTask<List<SessionLogModel>> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return result;
     }
 }

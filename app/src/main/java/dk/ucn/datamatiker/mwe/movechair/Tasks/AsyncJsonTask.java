@@ -6,6 +6,7 @@ import android.support.annotation.RequiresApi;
 
 import java.lang.reflect.Type;
 
+@RequiresApi(api = Build.VERSION_CODES.P)
 public abstract class AsyncJsonTask<T> extends AsyncTask {
 
     public Type type;
@@ -16,9 +17,8 @@ public abstract class AsyncJsonTask<T> extends AsyncTask {
         void processFinish(Object o);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.P)
-    public AsyncJsonTask (AsyncJsonResponse delegate, Type type) {
 
+    public AsyncJsonTask (AsyncJsonResponse delegate, Type type) {
         this.delegate = delegate;
         this.type = type;
     }

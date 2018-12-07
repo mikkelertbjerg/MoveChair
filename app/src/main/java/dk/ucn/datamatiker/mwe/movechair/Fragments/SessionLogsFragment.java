@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Adapters.SessionLogsAdapter;
+import dk.ucn.datamatiker.mwe.movechair.Helpers.ProgressHelper;
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
@@ -36,9 +37,12 @@ public class SessionLogsFragment extends Fragment {
     private List<SessionLogModel> sessionLogs;
     private RecyclerView rvSessionLogs;
     private UserModel user = UserHelper.getUser();
+    private ProgressHelper progressHelper;
 
     //UI elements
     private TextView sessionLogTotal;
+    private View mSessionLogView;
+    private View mProgressView;
 
     public static SessionLogsFragment newInstance() {
         return new SessionLogsFragment();
@@ -54,7 +58,9 @@ public class SessionLogsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
+        progressHelper = new ProgressHelper();
+        mSessionLogView = view.findViewById(R.id.sessionlog_view);
+        mProgressView = view.findViewById(R.id.progress);
 
         mViewModel = ViewModelProviders.of(this).get(SessionLogsViewModel.class);
 
@@ -82,6 +88,7 @@ public class SessionLogsFragment extends Fragment {
             @Override
             public void processFinish(Object o) {
                 onGetSessionLogs((List<SessionLogModel>) o);
+                progressHelper.showProgress(false, mSessionLogView, mProgressView, getContext());
             }
         }, SessionLogModel.class, user.getId());
 
