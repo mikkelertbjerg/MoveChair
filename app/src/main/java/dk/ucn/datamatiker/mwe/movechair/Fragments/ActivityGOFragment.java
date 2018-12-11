@@ -7,6 +7,7 @@ import android.os.CountDownTimer;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -158,11 +159,13 @@ public class ActivityGOFragment extends Fragment {
                                 Toast.makeText(getContext(), (String) o, Toast.LENGTH_LONG);
                             }
                         }, String.class, workout.getId());
+                    } else {
+                        Toast.makeText(getContext(), "Exercise done", Toast.LENGTH_SHORT).show();
+                        player.release();
+                        HomeFragment fragment = new HomeFragment();
+                        MainActivity mainActivity = (MainActivity) getContext();
+                        mainActivity.switchFragment(fragment);
                     }
-                    player.release();
-                    HomeFragment fragment = new HomeFragment();
-                    MainActivity mainActivity = (MainActivity) getContext();
-                    mainActivity.switchFragment(fragment);
 
 
                 } else if(player.getCurrentWindowIndex() < durationList.size() - 1) {
@@ -212,4 +215,15 @@ public class ActivityGOFragment extends Fragment {
             countDownTimer.cancel();
         }
     }
+
+/*    @Override
+    public void onResume() {
+        super.onResume();
+        if (player == null) {
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            MainActivity mainActivity = (MainActivity) getActivity();
+            mainActivity.switchFragment(fm.getFragments().get(0));
+            fm.popBackStack();
+        }
+    }*/
 }

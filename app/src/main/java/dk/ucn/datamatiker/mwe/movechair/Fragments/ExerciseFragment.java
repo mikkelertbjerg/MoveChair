@@ -66,6 +66,7 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener {
     private TextView exercise_muscle;
     private View mProgressView;
     private View mExerciseView;
+    private Button startExerciseButton;
 
     @Nullable
     @Override
@@ -117,7 +118,7 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener {
         }, ExerciseModel.class, activity.getId());
 
         //Find button and set onClick
-        Button startExerciseButton = (Button) view.findViewById(R.id.start_exercise_button);
+        startExerciseButton = (Button) view.findViewById(R.id.start_exercise_button);
         startExerciseButton.setOnClickListener(this);
     }
 
@@ -179,7 +180,7 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener {
         countDownTimer = new CountDownTimer(Double.valueOf(mExerciseModel.getDuration()).longValue() * 1000, 500) {
             @Override
             public void onTick(long millisUntilFinished) {
-
+                startExerciseButton.setText(millisUntilFinished / 1000 + "");
             }
 
             @Override
@@ -192,7 +193,10 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener {
                             Toast.makeText(getContext(),(String)o, Toast.LENGTH_LONG);
                         }
                     },String.class, mExerciseModel.getId());
+                } else {
+                    Toast.makeText(getContext(), "Exercise done", Toast.LENGTH_SHORT).show();
                 }
+                startExerciseButton.setText("Start Exercise");
             }
         }.start();
 
