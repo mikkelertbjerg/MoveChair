@@ -1,7 +1,9 @@
 package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class ActivitiesFragment extends Fragment implements View.OnClickListener {
     Button exerciseButton;
     Button workoutButton;
@@ -45,6 +48,7 @@ public class ActivitiesFragment extends Fragment implements View.OnClickListener
         workoutPlanButton.setOnClickListener(this);
     }
 
+
     @Override
     public void onClick(View v) {
         //creating fragment object
@@ -54,18 +58,21 @@ public class ActivitiesFragment extends Fragment implements View.OnClickListener
         switch (v.getId()) {
             case R.id.exercise_button:
                 bundle.putSerializable("type", ExerciseModel.class);
+                bundle.putString("title", "Exercises");
                 fragment = new ActivitiesListFragment();
                 fragment.setArguments(bundle);
                 break;
 
             case R.id.workout_button:
                 bundle.putSerializable("type", WorkoutModel.class);
+                bundle.putString("title", "Workouts");
                 fragment = new ActivitiesListFragment();
                 fragment.setArguments(bundle);
                 break;
 
             case R.id.workout_plan_button:
                 bundle.putSerializable("type", WorkoutPlanModel.class);
+                bundle.putString("title", "Workout Plans");
                 fragment = new ActivitiesListFragment();
                 fragment.setArguments(bundle);
                 break;

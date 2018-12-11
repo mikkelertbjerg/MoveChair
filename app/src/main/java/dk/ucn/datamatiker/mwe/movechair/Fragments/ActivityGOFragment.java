@@ -194,4 +194,22 @@ public class ActivityGOFragment extends Fragment {
             countDownTimer.cancel();
         }
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(player != null){
+            player.release();
+            countDownTimer.cancel();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(player != null){
+            player.release();
+            countDownTimer.cancel();
+        }
+    }
 }

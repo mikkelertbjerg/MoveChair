@@ -1,5 +1,6 @@
 package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
+import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import dk.ucn.datamatiker.mwe.movechair.ViewModels.ActivityListViewModel;
 @RequiresApi(api = Build.VERSION_CODES.P)
 public class ActivitiesListFragment extends Fragment {
 
+    ActivityModel activity;
     List<ActivityModel> activities;
     ActivityListViewModel mActivityListViewModel;
     ActivityAdapter activityAdapter;
@@ -50,7 +52,7 @@ public class ActivitiesListFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //This makes you able to change toolbar title
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getArguments().getString("buttonText"));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getArguments().getString("title"));
 
         mActivityListViewModel = ViewModelProviders.of(this).get(ActivityListViewModel.class);
 
