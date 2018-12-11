@@ -62,7 +62,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     private TextView workout_title;
     private TextView workout_duration;
     private TextView workout_points;
-
+    private Button my_plan_button;
     private View mUpcommingWorkoutView;
     private View mProgressView;
 
@@ -81,9 +81,6 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        progressHelper = new ProgressHelper();
-
         //Hides the keyboard if it's shown
         InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
         View focusedView = getActivity().getCurrentFocus();
@@ -101,14 +98,17 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         //Views...
         mUpcommingWorkoutView = view.findViewById(R.id.upcomming_workout_layout);
         mProgressView = view.findViewById(R.id.progress);
+        my_plan_button = view.findViewById(R.id.my_plan_btn);
 
-        //Progressbar
-        progressHelper.showProgress(true, mUpcommingWorkoutView, mProgressView, this.getContext());
+        //ProgressHelper
+        progressHelper = new ProgressHelper();
+        if(UserHelper.getUser() == null){
+            progressHelper.showProgress(false, mUpcommingWorkoutView, mProgressView, this.getContext());
+        }
 
         //TODO Move to separate class
         //Instantiate sensormanager
         sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
-
         workout_title = getActivity().findViewById(R.id.activity_title);
         workout_duration = getActivity().findViewById(R.id.activity_field_one);
         workout_points = getActivity().findViewById(R.id.activity_field_two);
@@ -147,8 +147,12 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerViewAchievements.setLayoutManager(linearLayoutManager);
 
+        //Handle MyPlan button if there's no user
+        if(UserHelper.getUser() == null){
+            my_plan_button.setEnabled(false);
+        }
+
         //OnClick switches to MyPlan view
-        Button my_plan_button = getActivity().findViewById(R.id.my_plan_btn);
         my_plan_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

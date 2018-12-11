@@ -27,6 +27,7 @@ import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ActivityListViewModel;
 
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class ActivitiesListFragment extends Fragment {
 
     List<ActivityModel> activities;
@@ -45,7 +46,6 @@ public class ActivitiesListFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_activities_list, container, false);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -55,9 +55,8 @@ public class ActivitiesListFragment extends Fragment {
         mActivityListViewModel = ViewModelProviders.of(this).get(ActivityListViewModel.class);
 
         progressHelper = new ProgressHelper();
-        mActivitiesView = view.findViewById(R.id.rv_activities);
+        mActivitiesView = view.findViewById(R.id.activities_list_form);
         mProgressView = view.findViewById(R.id.progress);
-
         rvActivities = view.findViewById(R.id.rv_activities);
 
         activities = new ArrayList<>();

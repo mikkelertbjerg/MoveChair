@@ -27,17 +27,16 @@ import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class ActivityListTask extends AsyncJsonTask<List<ActivityModel>> {
 
     private String controller;
 
-    @RequiresApi(api = Build.VERSION_CODES.P)
     public ActivityListTask(AsyncJsonResponse delegate, Type type) {
         super(delegate, type);
         this.controller = type.getTypeName().substring(type.getTypeName().lastIndexOf(".")+1);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     protected List<ActivityModel> doInBackground(Object[] objects) {
         HttpClient client = HttpClients.custom().setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36").build();

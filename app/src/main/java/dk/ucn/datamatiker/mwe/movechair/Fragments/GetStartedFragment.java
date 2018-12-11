@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import dk.ucn.datamatiker.mwe.movechair.Helpers.ProgressHelper;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
@@ -37,12 +38,15 @@ import dk.ucn.datamatiker.mwe.movechair.ViewModels.UserViewModel;
 public class GetStartedFragment extends Fragment {
 
     private UserViewModel mUserViewModel;
+    private ProgressHelper progressHelper;
 
     private RadioButton gender_male;
     private RadioButton gender_female;
     private EditText birth_date;
     private EditText weight;
     private EditText height;
+    private View mGetStartedForm;
+    private View mProgressView;
 
     //Datepicker
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -61,7 +65,6 @@ public class GetStartedFragment extends Fragment {
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Get Started");
 
-
         mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
         mUserViewModel.getUserByEmail(new AsyncJsonTask.AsyncJsonResponse() {
@@ -76,6 +79,12 @@ public class GetStartedFragment extends Fragment {
         birth_date = view.findViewById(R.id.birth_date);
         weight = view.findViewById(R.id.weight);
         height = view.findViewById(R.id.height);
+
+        mGetStartedForm = view.findViewById(R.id.get_started_form);
+        mProgressView = view.findViewById(R.id.progress);
+
+        progressHelper = new ProgressHelper();
+        progressHelper.showProgress(false, mGetStartedForm, mProgressView, getContext());
 
         //Date picker
         birth_date.setOnClickListener(new View.OnClickListener() {
@@ -104,13 +113,7 @@ public class GetStartedFragment extends Fragment {
         getStartedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 onGetStarted();
-                //Switch to appropriate exercise/workout/workoutplan
-                //Currently sat to home
-                HomeFragment homeFragment = new HomeFragment();
-                MainActivity mainActivity = (MainActivity)getActivity();
-                mainActivity.switchFragment(homeFragment);
             }
         });
 
@@ -155,13 +158,13 @@ public class GetStartedFragment extends Fragment {
         else{
             check = false;
         }
-        if(Double.valueOf(weight.getText().toString()).doubleValue()  > 0){
+        if(weight.getText().length() > 0){
             uWeight = Double.valueOf(weight.getText().toString()).doubleValue();
         }
         else{
             check = false;
         }
-        if(Double.valueOf(height.getText().toString()).doubleValue() > 0){
+        if(height.getText().length() > 0){
             uHeight = (Double.valueOf(height.getText().toString()).doubleValue());
         }
         else{
@@ -172,9 +175,17 @@ public class GetStartedFragment extends Fragment {
             mUserViewModel.getStarted(new AsyncJsonTask.AsyncJsonResponse() {
                 @Override
                 public void processFinish(Object o) {
-
+                    //Switch to appropriate exercise/workout/workoutplan
+                    //Currently sat to home
+                    HomeFragment homeFragment = new HomeFragment();
+                    MainActivity mainActivity = (MainActivity)getActivity();
+                    mainActivity.switchFragment(homeFragment);
                 }
             }, UserModel.class, UserHelper.getUser().getId(), uGender_id, uBirthDate, uWeight, uHeight);
+            progressHelper.showProgress(true, mGetStartedForm, mProgressView, getContext());
+        }
+        else{
+            Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
         }
     }
 

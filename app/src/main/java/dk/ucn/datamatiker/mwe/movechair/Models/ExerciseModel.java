@@ -56,6 +56,16 @@ public class ExerciseModel extends ActivityModel implements Serializable {
         this.equipment = equipment;
     }
 
+    public List<MediaModel> getMediaByType(String type){
+        List<MediaModel> media = new ArrayList<>();
+        for(int i = 0; i < getMedia().size(); i++){
+            if(getMedia().get(i).getMediaType().getName().toLowerCase().equals(type.toLowerCase())){
+                media.add(getMedia().get(i));
+            }
+        }
+        return media;
+    }
+
     public String getMuscles(){
         String muscles = "";
         for (int i = 0; i < this.muscles.size(); i++) {

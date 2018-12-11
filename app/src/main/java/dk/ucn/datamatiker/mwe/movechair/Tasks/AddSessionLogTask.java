@@ -21,15 +21,16 @@ import cz.msebera.android.httpclient.client.methods.RequestBuilder;
 import cz.msebera.android.httpclient.impl.client.HttpClients;
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class AddSessionLogTask extends AsyncJsonTask<String> {
     private final int activityId;
 
-    @RequiresApi(api = Build.VERSION_CODES.P)
     public AddSessionLogTask(AsyncJsonResponse delegate, Type type, int activityId) {
         super(delegate, type);
         this.activityId = activityId;
         this.controller = "sessionlogs";
     }
+
 
     @Override
     protected String doInBackground(Object[] objects) {

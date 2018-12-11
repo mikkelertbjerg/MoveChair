@@ -1,15 +1,25 @@
 package dk.ucn.datamatiker.mwe.movechair.Adapters;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Fragments.ExerciseFragment;
@@ -21,14 +31,18 @@ import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.LoadActivityIconTask;
+import dk.ucn.datamatiker.mwe.movechair.ViewModels.ActivityListViewModel;
 
 // Create the basic adapter extending from RecyclerView.Adapter
 // Note that we specify the custom ViewHolder which gives us access to our views
+
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHolder> implements Serializable {
-    Context context;
 
     // Store a member variable for the activities
     private List<ActivityModel> activities;
+    private Bitmap bitmap;
 
     // Pass in the activities array into the constructor
     public ActivityAdapter (List<ActivityModel> activities){
@@ -40,7 +54,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-        //public ImageView activityItemIcon;
+        public ImageView activityItemIcon;
         public TextView activityItemTitle;
         public TextView activityFieldOne;
         public TextView activityFieldTwo;
@@ -53,7 +67,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
             // to access the context from any ViewHolder instance.
             super(activityItemView);
 
-            //activityItemIcon = (ImageView) activityItemView.findViewById(R.id.activity_item_icon);
+            activityItemIcon = (ImageView) activityItemView.findViewById(R.id.activity_icon);
             activityItemTitle = (TextView) activityItemView.findViewById(R.id.activity_title);
             activityFieldOne = (TextView) activityItemView.findViewById(R.id.activity_field_one);
             activityFieldTwo = (TextView) activityItemView.findViewById(R.id.activity_field_two);
@@ -110,7 +124,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        //ImageView activityItemIcon = viewHolder.activityItemIcon;
+        ImageView activityItemIcon = viewHolder.activityItemIcon;
         TextView activityItemTitle = viewHolder.activityItemTitle;
         TextView activityFieldOne = viewHolder.activityFieldOne;
         TextView activityFieldTwo = viewHolder.activityFieldTwo;
@@ -123,6 +137,13 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         switch(type){
             case "Exercise":
                 ExerciseModel exercise = (ExerciseModel) activity;
+                if(!exercise.getMediaByType("img").isEmpty()){
+                    LoadActivityIconTask task = new LoadActivityIconTask(activityItemIcon);
+                    task.execute(exercise.getMediaByType("img").get(0).getPath());
+                }
+                else{
+                activityItemIcon.setImageResource(R.drawable.ic_exercise);
+                }
                 activityItemTitle.setText("Title: " + exercise.getName());
                 activityFieldOne.setText("Muscle(s): " + exercise.getMuscles());
                 activityFieldTwo.setText("Points: " + String.valueOf(activity.getPoints()));
@@ -130,6 +151,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
             case "Workout":
                 WorkoutModel workout = (WorkoutModel) activity;
+                activityItemIcon.setImageResource(R.drawable.ic_workout);
                 activityItemTitle.setText("Title: " + workout.getName());
                 activityFieldOne.setText("Difficulty: " + workout.getDifficulty().getName());
                 activityFieldTwo.setText("Points: " + String.valueOf(activity.getPoints()));
@@ -137,13 +159,13 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
             case "Workout Plan":
                 WorkoutPlanModel workoutPlan = (WorkoutPlanModel) activity;
+                activityItemIcon.setImageResource(R.drawable.ic_workout_plan);
                 activityItemTitle.setText("Title: " + workoutPlan.getName());
                 activityFieldOne.setText("Rest days: " + String.valueOf(workoutPlan.getRestDays()));
                 activityFieldTwo.setText("Points: " + String.valueOf(activity.getPoints()));
                 break;
 
         }
-        //activityItemIcon.setImageIcon(activitiesListItem.getImg());
     }
 
     @Override

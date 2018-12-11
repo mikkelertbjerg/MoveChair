@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Adapters.ActivityAdapter;
+import dk.ucn.datamatiker.mwe.movechair.Helpers.ProgressHelper;
 import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
@@ -26,19 +27,22 @@ import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutViewModel;
 
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class WorkoutFragment extends Fragment implements View.OnClickListener {
-
-    //TODO DELETE THEESE/TESTING PURPOSE
+    private WorkoutViewModel mWorkoutViewModel;
+    private ProgressHelper progressHelper;
     private WorkoutModel workout;
 
     //UI Elements
-    TextView workout_title;
-    TextView workout_duration;
-    TextView workout_description;
-    RecyclerView rvActivities;
+    private TextView workout_title;
+    private TextView workout_duration;
+    private TextView workout_description;
+    private RecyclerView rvActivities;
+    private View mProgressView;
+    private View mWorkoutView;
 
-    private WorkoutViewModel mWorkoutViewModel;
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     public WorkoutFragment() {
     }
 
@@ -50,30 +54,17 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.P)
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         //Get activity object from fragment arguments
         ActivityModel activity = (ActivityModel) getArguments().getSerializable("activity");
-
-        Button startWorkoutButton = (Button) view.findViewById(R.id.start_workout_button);
-        startWorkoutButton.setOnClickListener(this);
-
-        mWorkoutViewModel = ViewModelProviders.of(this).get(WorkoutViewModel.class);
-
-        //Call getWorkoutmethod on ViewModel that starts the async task which retrives data from DB
-        mWorkoutViewModel.getWorkout(new AsyncJsonTask.AsyncJsonResponse() {
-
-            @Override
-            public void processFinish(Object o) {
-                onGetWorkout((WorkoutModel) o);
-            }
-        }, WorkoutModel.class, activity.getId());
-
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(activity.getName());
 
+        //ViewModels
+        mWorkoutViewModel = ViewModelProviders.of(this).get(WorkoutViewModel.class);
+
+        //UI Elements
         workout_title = view.findViewById(R.id.workout_title);
         workout_duration = view.findViewById(R.id.workout_duration);
         //TODO Do we need theese props? Not according to our domain
@@ -82,7 +73,26 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener {
         //workout_muscle_group = view.findViewById(R.id.workout_muscle_group);
         //workout_equipment = view.findViewById(R.id.workout_equipment);
         workout_description = view.findViewById(R.id.workout_description);
+        mProgressView = view.findViewById(R.id.progress);
+        mWorkoutView = view.findViewById(R.id.workout_form);
 
+        //Progresshelper
+        progressHelper = new ProgressHelper();
+
+        //Buttons
+        Button startWorkoutButton = (Button) view.findViewById(R.id.start_workout_button);
+        startWorkoutButton.setOnClickListener(this);
+
+        //Setup the adapter
+        //Call getWorkoutmethod on ViewModel that starts the async task which retrives data from DB
+        mWorkoutViewModel.getWorkout(new AsyncJsonTask.AsyncJsonResponse() {
+
+            @Override
+            public void processFinish(Object o) {
+                onGetWorkout((WorkoutModel) o);
+                progressHelper.showProgress(false, mWorkoutView, mProgressView, getContext());
+            }
+        }, WorkoutModel.class, activity.getId());
 
         rvActivities = view.findViewById(R.id.rv_exercises);
         // Create adapter passing in the sample user data
@@ -98,12 +108,6 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-    /*    try {
-            mWorkoutViewModel.addActivityToUser(user, workout);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }*/
-
         //Initiates new ActivityGOFragment and parses the workoutModel
         ActivityGOFragment fragment = new ActivityGOFragment();
         Bundle bundleActivities = new Bundle();

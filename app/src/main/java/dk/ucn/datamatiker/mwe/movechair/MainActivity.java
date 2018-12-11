@@ -32,6 +32,9 @@ import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 @RequiresApi(api = Build.VERSION_CODES.P)
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
+
+    private NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
@@ -76,6 +79,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             username.setText(UserHelper.getUser().getName());
             email.setText(UserHelper.getUser().getEmail());
         }
+
+        //Adjust the UI if there's no user
+        if(UserHelper.getUser() == null){
+            setUpDrawer();
+        }
     }
 
 
@@ -97,6 +105,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         displaySelectedScreen(item.getItemId());
         return true;
+    }
+
+    private void setUpDrawer(){
+        navigationView.getMenu().findItem(R.id.nav_activity_log).setEnabled(false);
+        navigationView.getMenu().findItem(R.id.nav_my_plan).setEnabled(false);
+        navigationView.getMenu().findItem(R.id.nav_profile).setEnabled(false);
+        navigationView.getMenu().findItem(R.id.nav_achievements).setEnabled(false);
+        navigationView.getMenu().findItem(R.id.nav_get_started).setEnabled(false);
+        navigationView.getMenu().findItem(R.id.nav_highscore).setEnabled(false);
     }
 
     private void displaySelectedScreen(int itemId) {

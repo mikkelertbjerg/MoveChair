@@ -19,6 +19,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Adapters.ActivityAdapter;
+import dk.ucn.datamatiker.mwe.movechair.Helpers.ProgressHelper;
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.UserModel;
@@ -27,14 +28,20 @@ import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.WorkoutPlanViewModel;
 
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class WorkoutPlanFragment extends Fragment implements View.OnClickListener {
 
     private WorkoutPlanModel workoutPlan;
-    private UserModel user;
     private WorkoutPlanViewModel mWorkoutPlanViewModel;
+    private ProgressHelper progressHelper;
+
+    //UI Elements
     private TextView workout_plan_title;
     private TextView workout_plan_duration;
     private TextView workout_plan_description;
+    private View mProgressView;
+    private View mWorkoutPlanView;
+    private Button addWorkoutPlanButton;
     private RecyclerView rvActivities;
 
     @Override
@@ -48,40 +55,44 @@ public class WorkoutPlanFragment extends Fragment implements View.OnClickListene
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //Instantiate the viewmodel from ViewModelProviders
+        mWorkoutPlanViewModel = ViewModelProviders.of(this).get(WorkoutPlanViewModel.class);
+
+        //UI Elements
         //Get activity object from fragment arguments
         ActivityModel activity = (ActivityModel) getArguments().getSerializable("activity");
         //This makes you able to change toolbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(activity.getName());
+        workout_plan_title = view.findViewById(R.id.workout_plan_title);
+        workout_plan_duration = view.findViewById(R.id.workout_plan_duration);
+        workout_plan_description = view.findViewById(R.id.workout_plan_description);
+        mProgressView = view.findViewById(R.id.progress);
+        mWorkoutPlanView = view.findViewById(R.id.workout_plan_form);
+        rvActivities = view.findViewById(R.id.rv_workouts);
 
-        user = UserHelper.getUser();
+        //Setup ProgressHelper
+        progressHelper = new ProgressHelper();
 
-        Button startWorkoutPlanButton = (Button) view.findViewById(R.id.start_workout_plan_button);
-        startWorkoutPlanButton.setOnClickListener(this);
+        //Buttons
+        addWorkoutPlanButton = (Button) view.findViewById(R.id.add_workout_plan_button);
+        addWorkoutPlanButton.setOnClickListener(this);
+        if(UserHelper.getUser() == null){
+            addWorkoutPlanButton.setEnabled(false);
+        }
 
-        // instantiate the viewmodel from ViewModelProviders
-        mWorkoutPlanViewModel = ViewModelProviders.of(this).get(WorkoutPlanViewModel.class);
-
-        // Call the async method in the viewmodel
+        //Call the async method in the viewmodel
         mWorkoutPlanViewModel.getItem(new AsyncJsonTask.AsyncJsonResponse() {
             @Override
             public void processFinish(Object res) {
                 loadedUsersWorkoutPlans((WorkoutPlanModel) res);
+                progressHelper.showProgress(false, mWorkoutPlanView, mProgressView, getContext());
             }
         }, WorkoutPlanModel.class, activity.getId());
-
-        workout_plan_title = view.findViewById(R.id.workout_plan_title);
-        workout_plan_duration = view.findViewById(R.id.workout_plan_duration);
-        workout_plan_description = view.findViewById(R.id.workout_plan_description);
-
-        rvActivities = view.findViewById(R.id.rv_workouts);
        
         // Set layout manager to position the items
         rvActivities.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public void onClick(View v) {
         //Pass the id of the activity to the ViewModel which delegates to task
@@ -102,7 +113,6 @@ public class WorkoutPlanFragment extends Fragment implements View.OnClickListene
     }
 
     public void loadedUsersWorkoutPlans(WorkoutPlanModel res) {
-
         this.workoutPlan = res;
         workout_plan_title.setText("Title: " + this.workoutPlan.getName());
         workout_plan_duration.setText("Duration: " + this.workoutPlan.getDuration());

@@ -21,15 +21,12 @@ public class MediaModel implements Serializable {
     public String getPath() {
         return path;
     }
-
     public void setPath(String path) {
         this.path = path;
     }
-
     public MediaTypeModel getMediaType() {
         return mediaType;
     }
-
     public void setMediaType(MediaTypeModel mediaType) {
         this.mediaType = mediaType;
     }

@@ -36,14 +36,15 @@ import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExoplayerViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.SessionLogsViewModel;
 
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class ActivityGOFragment extends Fragment {
 
     private ExoplayerViewModel mExoplayerViewModel;
     private WorkoutModel workout;
     private PlayerView playerView;
     private SimpleExoPlayer player;
-    private CountDownTimer c;
-    private List<String> s;
+    private CountDownTimer countDownTimer;
+    private List<String> mediaPaths;
     private List<Long> durationList;
     static int nextExercise = 0;
     private SessionLogsViewModel mSessionLogViewModel;
@@ -70,14 +71,13 @@ public class ActivityGOFragment extends Fragment {
         //Get activity object from fragment arguments
         workout = (WorkoutModel) getArguments().getSerializable("workout");
 
-        s = mExoplayerViewModel.getExercisePaths(workout);
+        mediaPaths = mExoplayerViewModel.getExercisePaths(workout);
 
-
-        tempSetupExoplayer(s);
+        tempSetupExoplayer(mediaPaths);
 
     }
 
-    public void tempSetupExoplayer(List<String> s)
+    public void tempSetupExoplayer(List<String> mediaPaths)
     {
         BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
         TrackSelection.Factory videoTrackSelectionFactory =
@@ -94,7 +94,7 @@ public class ActivityGOFragment extends Fragment {
         //Testing
 
         ConcatenatingMediaSource videoSource = new ConcatenatingMediaSource();
-        videoSource.addMediaSources(mExoplayerViewModel.mediasourceConversion(s));
+        videoSource.addMediaSources(mExoplayerViewModel.mediasourceConversion(mediaPaths));
         // Prepare the player with the source.
         player.prepare(videoSource);
 
@@ -111,23 +111,22 @@ public class ActivityGOFragment extends Fragment {
                 if (playWhenReady == true && playbackState == Player.STATE_READY) {
 
                     if (remaining > 0) {
-                        c.cancel();
-                        Toast.makeText(getContext(), "Video Cancelled", Toast.LENGTH_SHORT).show();
+                        countDownTimer.cancel();
                         paused = false;
                         testWorkoutTimerCombo(remaining, 1000, nextExercise);
-                        c.start();
+                        countDownTimer.start();
                     }
                 }
                 else if (playWhenReady == false && playbackState == Player.STATE_READY) {
                     paused = true;
-                    c.cancel();
+                    countDownTimer.cancel();
                 }
             }
         });
 
         testWorkoutTimerCombo(durationList.get(0) * 1000, 1000, 0);
 
-        c.start();
+        countDownTimer.start();
 
 
     }
@@ -135,7 +134,7 @@ public class ActivityGOFragment extends Fragment {
     public String testWorkoutTimerCombo(final long duration, long interval, int next)
     {
         remaining = duration;
-        c = new CountDownTimer(duration, interval) {
+        countDownTimer = new CountDownTimer(duration, interval) {
 
 
             @Override
@@ -146,20 +145,20 @@ public class ActivityGOFragment extends Fragment {
                 }
             }
 
-            @RequiresApi(api = Build.VERSION_CODES.P)
             @Override
             public void onFinish() {
                 if (paused) {
                     // Nothing should happen
                 }
                 else if (player.getCurrentWindowIndex() == durationList.size()-1) {
-                    mSessionLogViewModel.addSessionLog(new AsyncJsonTask.AsyncJsonResponse() {
-                        @Override
-                        public void processFinish(Object o) {
-                            Toast.makeText(getContext(),(String)o, Toast.LENGTH_LONG);
-                        }
-                    },String.class, workout.getId());
-
+                    if(UserHelper.getUser() != null) {
+                        mSessionLogViewModel.addSessionLog(new AsyncJsonTask.AsyncJsonResponse() {
+                            @Override
+                            public void processFinish(Object o) {
+                                Toast.makeText(getContext(), (String) o, Toast.LENGTH_LONG);
+                            }
+                        }, String.class, workout.getId());
+                    }
                     player.release();
                     HomeFragment fragment = new HomeFragment();
                     MainActivity mainActivity = (MainActivity) getContext();
@@ -169,7 +168,7 @@ public class ActivityGOFragment extends Fragment {
                 } else if(player.getCurrentWindowIndex() < durationList.size() - 1) {
                     player.seekTo(player.getCurrentWindowIndex() + 1, C.TIME_UNSET);
                     testWorkoutTimerCombo(durationList.get(++nextExercise) * 1000, 1000, nextExercise);
-                    c.start();
+                    countDownTimer.start();
                 }
 
             }
@@ -178,4 +177,21 @@ public class ActivityGOFragment extends Fragment {
         return "pindis";
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if(player != null){
+            player.release();
+            countDownTimer.cancel();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(player != null){
+            player.release();
+            countDownTimer.cancel();
+        }
+    }
 }

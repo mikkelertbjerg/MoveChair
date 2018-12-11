@@ -7,6 +7,7 @@
         <item
             android:id="@+id/nav_home"
             android:title="@string/home" />
+
         <item
             android:id="@+id/nav_my_plan"
             android:title="@string/my_plan" />

@@ -31,6 +31,7 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import java.util.ArrayList;
 import java.util.List;
 
+import dk.ucn.datamatiker.mwe.movechair.Helpers.ProgressHelper;
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
@@ -43,25 +44,28 @@ import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExerciseViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ExoplayerViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.SessionLogsViewModel;
 
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class ExerciseFragment extends Fragment implements View.OnClickListener {
 
     private ExerciseViewModel mExerciseViewModel;
     private ExoplayerViewModel mExoplayerViewModel;
-    private UserModel user;
     private PlayerView playerView;
     private SimpleExoPlayer player;
     private ExerciseModel mExerciseModel;
     private SessionLogsViewModel mSessionLogViewModel;
+    private ProgressHelper progressHelper;
+    private CountDownTimer countDownTimer;
 
     //UI Elements
-    VideoView exercise_video;
-    TextView exercise_title;
-    TextView exercise_description;
-    TextView exercise_points;
-    TextView exercise_duration;
-    TextView exercise_category;
-    TextView exercise_equipment;
-    TextView exercise_muscle;
+    private TextView exercise_title;
+    private TextView exercise_description;
+    private TextView exercise_points;
+    private TextView exercise_duration;
+    private TextView exercise_category;
+    private TextView exercise_equipment;
+    private TextView exercise_muscle;
+    private View mProgressView;
+    private View mExerciseView;
 
     @Nullable
     @Override
@@ -71,10 +75,24 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener {
         return inflater.inflate(R.layout.fragment_exercise_view, container, false);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //Instantiate ui elements
+        exercise_title = view.findViewById(R.id.exercise_title);
+        exercise_description = view.findViewById(R.id.exercise_description);
+        exercise_points = view.findViewById(R.id.exercise_points);
+        exercise_duration = view.findViewById(R.id.exercise_duration);
+        exercise_category = view.findViewById(R.id.exercise_category);
+        exercise_equipment = view.findViewById(R.id.exercise_equipment);
+        exercise_muscle = view.findViewById(R.id.exercise_muscles);
+        playerView = view.findViewById(R.id.player_view);
+        mProgressView = view.findViewById(R.id.progress);
+        mExerciseView = view.findViewById(R.id.exercise_form);
+
+        //Setup the progress helper
+        progressHelper = new ProgressHelper();
 
         //Get viewModel
         mExerciseViewModel = ViewModelProviders.of(this).get(ExerciseViewModel.class);
@@ -93,6 +111,7 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener {
             @Override
             public void processFinish(Object o) {
                 onGetExercise((ExerciseModel) o);
+                progressHelper.showProgress(false, mExerciseView, mProgressView, getContext());
             }
 
         }, ExerciseModel.class, activity.getId());
@@ -100,21 +119,6 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener {
         //Find button and set onClick
         Button startExerciseButton = (Button) view.findViewById(R.id.start_exercise_button);
         startExerciseButton.setOnClickListener(this);
-
-
-        //Instantiate ui elements
-/*
-        exercise_video = view.findViewById(R.id.exercise_video);
-*/
-        exercise_title = view.findViewById(R.id.exercise_title);
-        exercise_description = view.findViewById(R.id.exercise_description);
-        exercise_points = view.findViewById(R.id.exercise_points);
-        exercise_duration = view.findViewById(R.id.exercise_duration);
-        exercise_category = view.findViewById(R.id.exercise_category);
-        exercise_equipment = view.findViewById(R.id.exercise_equipment);
-        exercise_muscle = view.findViewById(R.id.exercise_muscles);
-        playerView = view.findViewById(R.id.player_view);
-
     }
 
     @Override
@@ -128,12 +132,8 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener {
                 {
                     exercisePaths.add(m.getPath());
                 }
-
-
             }
             tempSetupExoplayer(exercisePaths);
-
-
         }
     }
 
@@ -176,26 +176,44 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener {
         player.setRepeatMode(Player.REPEAT_MODE_ONE);
         player.setPlayWhenReady(true);
         //Starts the timer
-        CountDownTimer c = new CountDownTimer(Double.valueOf(mExerciseModel.getDuration()).longValue() * 1000, 500) {
+        countDownTimer = new CountDownTimer(Double.valueOf(mExerciseModel.getDuration()).longValue() * 1000, 500) {
             @Override
             public void onTick(long millisUntilFinished) {
 
             }
 
-            @RequiresApi(api = Build.VERSION_CODES.P)
             @Override
             public void onFinish() {
                 player.release();
-
-                mSessionLogViewModel.addSessionLog(new AsyncJsonTask.AsyncJsonResponse() {
-                    @Override
-                    public void processFinish(Object o) {
-                        Toast.makeText(getContext(),(String)o, Toast.LENGTH_LONG);
-                    }
-                },String.class, mExerciseModel.getId());
+                if(UserHelper.getUser() != null){
+                    mSessionLogViewModel.addSessionLog(new AsyncJsonTask.AsyncJsonResponse() {
+                        @Override
+                        public void processFinish(Object o) {
+                            Toast.makeText(getContext(),(String)o, Toast.LENGTH_LONG);
+                        }
+                    },String.class, mExerciseModel.getId());
+                }
             }
         }.start();
 
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if(player != null){
+            player.release();
+            countDownTimer.cancel();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(player != null){
+
+            player.release();
+            countDownTimer.cancel();
+        }
+    }
 }
