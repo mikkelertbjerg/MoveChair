@@ -132,7 +132,7 @@ public class ActivityGOFragment extends Fragment {
 
     }
 
-    public String testWorkoutTimerCombo(final long duration, long interval, int next)
+    public void testWorkoutTimerCombo(final long duration, long interval, int next)
     {
         remaining = duration;
         countDownTimer = new CountDownTimer(duration, interval) {
@@ -168,7 +168,7 @@ public class ActivityGOFragment extends Fragment {
                     }
 
 
-                } else if(player.getCurrentWindowIndex() < durationList.size() - 1) {
+                } else if(nextExercise < durationList.size()) {
                     player.seekTo(player.getCurrentWindowIndex() + 1, C.TIME_UNSET);
                     testWorkoutTimerCombo(durationList.get(++nextExercise) * 1000, 1000, nextExercise);
                     countDownTimer.start();
@@ -176,8 +176,6 @@ public class ActivityGOFragment extends Fragment {
 
             }
         };
-
-        return "pindis";
     }
 
     @Override

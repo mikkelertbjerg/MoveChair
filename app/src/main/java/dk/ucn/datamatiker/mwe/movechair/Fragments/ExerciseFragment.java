@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -67,6 +68,7 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener {
     private View mProgressView;
     private View mExerciseView;
     private Button startExerciseButton;
+    public ImageView imgView;
 
     @Nullable
     @Override
@@ -91,6 +93,7 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener {
         playerView = view.findViewById(R.id.player_view);
         mProgressView = view.findViewById(R.id.progress);
         mExerciseView = view.findViewById(R.id.exercise_form);
+        imgView = view.findViewById(R.id.overlay);
 
         //Setup the progress helper
         progressHelper = new ProgressHelper();
@@ -135,6 +138,7 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener {
                 }
             }
             tempSetupExoplayer(exercisePaths);
+
         }
     }
 
@@ -176,6 +180,8 @@ public class ExerciseFragment extends Fragment implements View.OnClickListener {
         player.prepare(videoSource);
         player.setRepeatMode(Player.REPEAT_MODE_ONE);
         player.setPlayWhenReady(true);
+        imgView.setVisibility(View.GONE);
+
         //Starts the timer
         countDownTimer = new CountDownTimer(Double.valueOf(mExerciseModel.getDuration()).longValue() * 1000, 500) {
             @Override
