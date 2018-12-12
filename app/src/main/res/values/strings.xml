@@ -61,6 +61,7 @@
     <string name="input_weight">Weight</string>
     <string name="action_skip">Skip</string>
     <string name="action_get_started">Get Started</string>
+    <string name="age">Age</string>
 
 
     <!-- Strings related to activities -->

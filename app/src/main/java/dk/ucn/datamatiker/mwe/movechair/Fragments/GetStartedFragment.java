@@ -43,6 +43,7 @@ public class GetStartedFragment extends Fragment {
     private RadioButton gender_male;
     private RadioButton gender_female;
     private EditText birth_date;
+    private EditText age;
     private EditText weight;
     private EditText height;
     private View mGetStartedForm;
@@ -77,6 +78,7 @@ public class GetStartedFragment extends Fragment {
         gender_male = view.findViewById(R.id.male_radio_button);
         gender_female = view.findViewById(R.id.female_radio_button);
         birth_date = view.findViewById(R.id.birth_date);
+        age = view.findViewById(R.id.age);
         weight = view.findViewById(R.id.weight);
         height = view.findViewById(R.id.height);
 
@@ -106,6 +108,12 @@ public class GetStartedFragment extends Fragment {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month += 1;
                 birth_date.setText(dayOfMonth + "-" + month + "-" + year);
+                try {
+                    String birthDay = year+ "" + month + "" + dayOfMonth;
+                    age.setText(String.valueOf(calculateAge(birthDay)));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         };
 
@@ -201,6 +209,7 @@ public class GetStartedFragment extends Fragment {
         if(o.getBirthDate().getTime() > 0) {
             DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
             birth_date.setText(formatter.format(o.getBirthDate()));
+            age.setText(o.getAge());
         }
 
         if(o.getWeight() > 0) {
@@ -210,6 +219,16 @@ public class GetStartedFragment extends Fragment {
         if(o.getHeight() > 0) {
             height.setText(Double.toString(o.getHeight()));
         }
+    }
+
+    private int calculateAge(String strBirthDate) throws ParseException {
+        Date currentDate = new Date();
+        DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Date birthDate = formatter.parse(strBirthDate);
+        int bd = Integer.parseInt(formatter.format(birthDate));
+        int cd = Integer.parseInt(formatter.format(currentDate));
+        int age = (cd - bd) / 10000;
+        return age;
     }
 
 }
