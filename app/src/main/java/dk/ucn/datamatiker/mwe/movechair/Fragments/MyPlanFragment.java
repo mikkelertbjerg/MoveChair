@@ -25,6 +25,7 @@ import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.MyPlanViewModel;
 
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class MyPlanFragment extends Fragment {
 
     private MyPlanViewModel mMyPlanViewModel;
@@ -80,6 +81,7 @@ public class MyPlanFragment extends Fragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvWorkouts.setLayoutManager(linearLayoutManager);
     }
+
 
 
     public void onGetMyPlan(List<WorkoutModel> o) {

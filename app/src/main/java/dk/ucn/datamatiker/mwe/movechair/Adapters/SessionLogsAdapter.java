@@ -1,13 +1,16 @@
 package dk.ucn.datamatiker.mwe.movechair.Adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,7 +23,9 @@ import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.LoadActivityIconTask;
 
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class SessionLogsAdapter extends RecyclerView.Adapter<SessionLogsAdapter.ViewHolder>  {
 
     // Store a member variable for the sessionLog
@@ -32,6 +37,7 @@ public class SessionLogsAdapter extends RecyclerView.Adapter<SessionLogsAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        public ImageView activityLogIcon;
         public TextView activityLogField1;
         public TextView activityLogField2;
         public TextView activityLogField3;
@@ -39,6 +45,7 @@ public class SessionLogsAdapter extends RecyclerView.Adapter<SessionLogsAdapter.
         public ViewHolder(@NonNull View sessionLogListView) {
             super(sessionLogListView);
 
+            activityLogIcon = sessionLogListView.findViewById(R.id.activity_log_icon);
             activityLogField1 = sessionLogListView.findViewById(R.id.activity_log_field1);
             activityLogField2 = sessionLogListView.findViewById(R.id.activity_log_field2);
             activityLogField3 = sessionLogListView.findViewById(R.id.activity_log_field3);
@@ -61,6 +68,7 @@ public class SessionLogsAdapter extends RecyclerView.Adapter<SessionLogsAdapter.
 
         //Create onClick
         activityListView.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.P)
             @Override
             public void onClick(View v) {
                 MainActivity mainActivity = (MainActivity) context;
@@ -94,9 +102,11 @@ public class SessionLogsAdapter extends RecyclerView.Adapter<SessionLogsAdapter.
         return viewHolder;
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull SessionLogsAdapter.ViewHolder viewHolder, int position) {
 
+        ImageView activityLogIcon = viewHolder.activityLogIcon;
         TextView activityLogField1 = viewHolder.activityLogField1;
         TextView activityLogField2 = viewHolder.activityLogField2;
         TextView activityLogField3 = viewHolder.activityLogField3;
@@ -107,6 +117,13 @@ public class SessionLogsAdapter extends RecyclerView.Adapter<SessionLogsAdapter.
         SessionLogModel sessionLog = sessionLogs.get(position);
 
         // Set item views based on your views and data model
+        if(!sessionLog.getActivity().getMediaByType("img").isEmpty()){
+            LoadActivityIconTask task = new LoadActivityIconTask(activityLogIcon);
+            task.execute(sessionLog.getActivity().getMediaByType("img").get(0).getPath());
+        }
+        else{
+            activityLogIcon.setImageResource(R.drawable.ic_workout);
+        }
         activityLogField1.setText("Activity Title: " + sessionLog.getActivity().getName());
         activityLogField2.setText("Activity Type: " + sessionLog.getActivity().getActivityType().getName());
         activityLogField3.setText("Points: " + sessionLog.getActivity().getPoints());

@@ -22,15 +22,15 @@ public class WorkoutModel extends ActivityModel implements Serializable {
     @Expose
     private DifficultyModel difficulty;
 
-    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration, List<ExerciseModel> exercises, double restDuration, DifficultyModel difficulty) {
-        super(name, description, id, activityType, points, duration);
+    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration, List<MediaModel> media, List<ExerciseModel> exercises, double restDuration, DifficultyModel difficulty) {
+        super(name, description, id, activityType, points, duration, media);
         this.exercises = exercises;
         this.restDuration = restDuration;
         this.difficulty = difficulty;
     }
 
-    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration) {
-        super(name, description, id, activityType, points, duration);
+    public WorkoutModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration, List<MediaModel> media) {
+        super(name, description, id, activityType, points, duration, media);
     }
 
     public WorkoutModel() {

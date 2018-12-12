@@ -4,6 +4,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ActivityModel implements Serializable {
 
@@ -25,15 +27,19 @@ public class ActivityModel implements Serializable {
     @SerializedName("duration")
     @Expose
     private double duration;
+    @SerializedName("media")
+    @Expose
+    private List<MediaModel> media;
 
 
-    public ActivityModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration){
+    public ActivityModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration, List<MediaModel> media){
         this.id = id;
         this.name = name;
         this.description = description;
         this.activityType = activityType;
         this.points = points;
         this.duration = duration;
+        this.media = media;
     }
 
     public ActivityModel () {
@@ -84,5 +90,23 @@ public class ActivityModel implements Serializable {
 
     public void setDuration(double duration) {
         this.duration = duration;
+    }
+
+    public List<MediaModel> getMedia() {
+        return media;
+    }
+
+    public void setMedia(List<MediaModel> media) {
+        this.media = media;
+    }
+
+    public List<MediaModel> getMediaByType(String type){
+        List<MediaModel> media = new ArrayList<>();
+        for(int i = 0; i < getMedia().size(); i++){
+            if(getMedia().get(i).getMediaType().getName().toLowerCase().equals(type.toLowerCase())){
+                media.add(getMedia().get(i));
+            }
+        }
+        return media;
     }
 }

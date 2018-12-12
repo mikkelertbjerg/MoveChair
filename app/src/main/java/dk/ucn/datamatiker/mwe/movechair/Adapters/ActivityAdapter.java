@@ -137,9 +137,9 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         switch(type){
             case "Exercise":
                 ExerciseModel exercise = (ExerciseModel) activity;
-                if(!exercise.getMediaByType("img").isEmpty()){
+                if(!activity.getMediaByType("img").isEmpty()){
                     LoadActivityIconTask task = new LoadActivityIconTask(activityItemIcon);
-                    task.execute(exercise.getMediaByType("img").get(0).getPath());
+                    task.execute(activity.getMediaByType("img").get(0).getPath());
                 }
                 else{
                 activityItemIcon.setImageResource(R.drawable.ic_exercise);
@@ -151,7 +151,13 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
             case "Workout":
                 WorkoutModel workout = (WorkoutModel) activity;
-                activityItemIcon.setImageResource(R.drawable.ic_workout);
+                if(!activity.getMediaByType("img").isEmpty()){
+                    LoadActivityIconTask task = new LoadActivityIconTask(activityItemIcon);
+                    task.execute(activity.getMediaByType("img").get(0).getPath());
+                }
+                else{
+                    activityItemIcon.setImageResource(R.drawable.ic_workout);
+                }
                 activityItemTitle.setText("Title: " + workout.getName());
                 activityFieldOne.setText("Difficulty: " + workout.getDifficulty().getName());
                 activityFieldTwo.setText("Points: " + String.valueOf(activity.getPoints()));
@@ -159,7 +165,13 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
             case "Workout Plan":
                 WorkoutPlanModel workoutPlan = (WorkoutPlanModel) activity;
-                activityItemIcon.setImageResource(R.drawable.ic_workout_plan);
+                if(!activity.getMediaByType("img").isEmpty()){
+                    LoadActivityIconTask task = new LoadActivityIconTask(activityItemIcon);
+                    task.execute(activity.getMediaByType("img").get(0).getPath());
+                }
+                else{
+                    activityItemIcon.setImageResource(R.drawable.ic_workout_plan);
+                }
                 activityItemTitle.setText("Title: " + workoutPlan.getName());
                 activityFieldOne.setText("Rest days: " + String.valueOf(workoutPlan.getRestDays()));
                 activityFieldTwo.setText("Points: " + String.valueOf(activity.getPoints()));

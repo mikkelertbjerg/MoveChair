@@ -41,6 +41,7 @@ import dk.ucn.datamatiker.mwe.movechair.Models.StridesModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.LoadActivityIconTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.HomeViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.SessionLogsViewModel;
 
@@ -58,6 +59,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     private ProgressHelper progressHelper;
 
     //UI Elements
+    private ImageView workout_icon;
     private TextView total_points;
     private TextView workout_title;
     private TextView workout_duration;
@@ -109,6 +111,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         //TODO Move to separate class
         //Instantiate sensormanager
         sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        workout_icon = getActivity().findViewById(R.id.activity_icon);
         workout_title = getActivity().findViewById(R.id.activity_title);
         workout_duration = getActivity().findViewById(R.id.activity_field_one);
         workout_points = getActivity().findViewById(R.id.activity_field_two);
@@ -243,6 +246,13 @@ public class HomeFragment extends Fragment implements SensorEventListener {
                     mainActivity.switchFragment(workoutFragment);
                 }
             });
+            if(!workout.getMediaByType("img").isEmpty()){
+                LoadActivityIconTask task = new LoadActivityIconTask(workout_icon);
+                task.execute(workout.getMediaByType("img").get(0).getPath());
+            }
+            else{
+                workout_icon.setImageResource(R.drawable.ic_workout_plan);
+            }
             workout_title.setText("Title: " + workout.getName());
             workout_duration.setText("Duration: " + workout.getDuration());
             workout_points.setText("Points: " + workout.getPoints());

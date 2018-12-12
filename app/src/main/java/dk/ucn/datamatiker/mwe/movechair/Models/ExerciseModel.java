@@ -9,10 +9,6 @@ import java.util.List;
 
 public class ExerciseModel extends ActivityModel implements Serializable {
 
-
-    @SerializedName("media")
-    @Expose
-    private List<MediaModel> media;
     @SerializedName("categories")
     @Expose
     private List<CategoryModel> categories;
@@ -25,27 +21,18 @@ public class ExerciseModel extends ActivityModel implements Serializable {
 
 
     public ExerciseModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration, List<MediaModel> media, List<CategoryModel> categories, List<MuscleModel> muscles, List<EquipmentModel> equipment) {
-        super(name, description, id, activityType, points, duration);
-        this.media = media;
+        super(name, description, id, activityType, points, duration, media);
         this.categories = categories;
         this.muscles = muscles;
         this.equipment = equipment;
     }
 
-    public ExerciseModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration) {
-        super(name, description, id, activityType, points, duration);
+    public ExerciseModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration, List<MediaModel> media) {
+        super(name, description, id, activityType, points, duration, media);
     }
 
     public ExerciseModel() {
 
-    }
-
-    public List<MediaModel> getMedia() {
-        return media;
-    }
-
-    public void setMedia(ArrayList<MediaModel> media) {
-        this.media = media;
     }
 
     public void setCategories(ArrayList<CategoryModel> categories) {
@@ -54,16 +41,6 @@ public class ExerciseModel extends ActivityModel implements Serializable {
 
     public void setEquipment(ArrayList<EquipmentModel> equipment) {
         this.equipment = equipment;
-    }
-
-    public List<MediaModel> getMediaByType(String type){
-        List<MediaModel> media = new ArrayList<>();
-        for(int i = 0; i < getMedia().size(); i++){
-            if(getMedia().get(i).getMediaType().getName().toLowerCase().equals(type.toLowerCase())){
-                media.add(getMedia().get(i));
-            }
-        }
-        return media;
     }
 
     public String getMuscles(){
