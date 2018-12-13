@@ -209,7 +209,7 @@ public class GetStartedFragment extends Fragment {
         if(o.getBirthDate().getTime() > 0) {
             DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
             birth_date.setText(formatter.format(o.getBirthDate()));
-            age.setText(o.getAge());
+            age.setText(String.valueOf(o.getAge()));
         }
 
         if(o.getWeight() > 0) {
