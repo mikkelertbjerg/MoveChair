@@ -159,8 +159,13 @@ public class ActivityGOFragment extends Fragment {
                                 Toast.makeText(getContext(), (String) o, Toast.LENGTH_LONG);
                             }
                         }, String.class, workout.getId());
+                        Toast.makeText(getContext(), "Activity done", Toast.LENGTH_SHORT).show();
+                        player.release();
+                        HomeFragment fragment = new HomeFragment();
+                        MainActivity mainActivity = (MainActivity) getContext();
+                        mainActivity.switchFragment(fragment);
                     } else {
-                        Toast.makeText(getContext(), "Exercise done", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Activity done", Toast.LENGTH_SHORT).show();
                         player.release();
                         HomeFragment fragment = new HomeFragment();
                         MainActivity mainActivity = (MainActivity) getContext();
@@ -168,9 +173,9 @@ public class ActivityGOFragment extends Fragment {
                     }
 
 
-                } else if(nextExercise < durationList.size()) {
+                } else if(nextExercise < durationList.size()-1) {
                     player.seekTo(player.getCurrentWindowIndex() + 1, C.TIME_UNSET);
-                    testWorkoutTimerCombo(durationList.get(++nextExercise) * 1000, 1000, nextExercise);
+                    testWorkoutTimerCombo(durationList.get(nextExercise) * 1000, 1000, nextExercise);
                     countDownTimer.start();
                 }
 
