@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import dk.ucn.datamatiker.mwe.movechair.Fragments.AchievementsFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.ActivitiesFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.AnalyzeFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.GetStartedFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.HighscoreFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.HomeFragment;
@@ -114,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.getMenu().findItem(R.id.nav_achievements).setEnabled(false);
         navigationView.getMenu().findItem(R.id.nav_get_started).setEnabled(false);
         navigationView.getMenu().findItem(R.id.nav_highscore).setEnabled(false);
+        navigationView.getMenu().findItem(R.id.nav_analyze).setEnabled(false);
     }
 
     private void displaySelectedScreen(int itemId) {
@@ -129,6 +131,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_activities:
                 fragment = new ActivitiesFragment();
+                break;
+            case R.id.nav_analyze:
+                fragment = new AnalyzeFragment();
                 break;
             case R.id.nav_profile:
                 fragment = new ProfileFragment();

@@ -13,6 +13,7 @@ import dk.ucn.datamatiker.mwe.movechair.Tasks.AddSessionLogTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.SessionLogListTask;
 
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class SessionLogsViewModel extends AndroidViewModel {
     private AsyncJsonTask.AsyncJsonResponse callback;
 
@@ -21,7 +22,6 @@ public class SessionLogsViewModel extends AndroidViewModel {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.P)
     public void getSessionLogs(AsyncJsonTask.AsyncJsonResponse callback, Type type, int userId) {
         //Defines callback method for task and starts the task that gets all activities with type.
         this.callback = callback;
@@ -29,7 +29,6 @@ public class SessionLogsViewModel extends AndroidViewModel {
         task.execute();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.P)
     public void addSessionLog(AsyncJsonTask.AsyncJsonResponse callback, Type type, int activityId) {
         //Defines callback method for task and starts the task that gets all activities with type.
         this.callback = callback;

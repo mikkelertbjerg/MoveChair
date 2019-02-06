@@ -146,5 +146,14 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_gotest">ActivityGOTestActivity</string>
 
+    <!-- Strings related to Exercise Parameter Visulization Engine-->
+    <string name="analyze_title">Analyze</string>
+    <string name="analyze_convert_button">Convert data</string>
+    <string name="analyze_unit">Unit</string>
+    <string name="analyze_value">Value</string>
+    <string name="pve_unit">Unit</string>
+    <string name="pve_value">Value</string>
+    <string name="pve_description">Description</string>
+
 
 </resources>

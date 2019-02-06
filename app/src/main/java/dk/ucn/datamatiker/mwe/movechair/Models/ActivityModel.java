@@ -30,6 +30,9 @@ public class ActivityModel implements Serializable {
     @SerializedName("media")
     @Expose
     private List<MediaModel> media;
+    @SerializedName("calories")
+    @Expose
+    private int calories;
 
 
     public ActivityModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration, List<MediaModel> media){
@@ -108,5 +111,13 @@ public class ActivityModel implements Serializable {
             }
         }
         return media;
+    }
+
+    public int getCalories() {
+        return calories;
+    }
+
+    public void setCalories(int calories) {
+        this.calories = calories;
     }
 }

@@ -3,8 +3,6 @@ package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
 import android.app.DatePickerDialog;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;

@@ -31,6 +31,7 @@ import dk.ucn.datamatiker.mwe.movechair.Tasks.SessionLogListTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ActivityListViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.SessionLogsViewModel;
 
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class SessionLogsFragment extends Fragment {
 
     private SessionLogsViewModel mViewModel;
@@ -54,7 +55,6 @@ public class SessionLogsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_session_logs, container, false);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.P)
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 

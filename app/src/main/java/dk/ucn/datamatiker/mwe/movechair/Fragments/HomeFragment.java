@@ -210,7 +210,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
 
     private void onGetAllStridesFromUser(List<StridesModel> strides) {
         GraphView graph = getActivity().findViewById(R.id.graph_strides);
-        if(!strides.isEmpty()) {
+        if(strides != null) {
 
 
             graph.addSeries(mHomeViewModel.getStrides(strides));
