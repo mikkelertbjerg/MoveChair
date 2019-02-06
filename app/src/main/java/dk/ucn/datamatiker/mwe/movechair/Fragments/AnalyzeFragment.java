@@ -38,7 +38,7 @@ public class AnalyzeFragment extends Fragment {
     private RecyclerView rvAnalyze;
 
     //Global variables
-    private List<ScalarModel> scalars;
+    private ArrayList<ScalarModel> scalars;
 
     public AnalyzeFragment() {
         // Required empty public constructor
@@ -72,15 +72,6 @@ public class AnalyzeFragment extends Fragment {
 
         //UI elements
         analyze_button = view.findViewById(R.id.analyze_button_convert);
-        analyze_button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                ParameterVisualizationFragment parameterVisualizationFragment = new ParameterVisualizationFragment();
-                MainActivity mainActivity = (MainActivity)getActivity();
-                mainActivity.switchFragment(parameterVisualizationFragment);
-            }
-        });
 
         mAnalyzeViewModel.getSessionLogs(new AsyncJsonTask.AsyncJsonResponse() {
             @Override
@@ -92,8 +83,21 @@ public class AnalyzeFragment extends Fragment {
 
     //When we get logs we get scalars
     public void onGetSessionLogs(Object o) {
-        scalars = mAnalyzeViewModel.getScalars((List<SessionLogModel>)o);
+        scalars = (ArrayList<ScalarModel>) mAnalyzeViewModel.getScalars((List<SessionLogModel>)o);
         AnalyzeAdapter analyzeAdapter = new AnalyzeAdapter(scalars);
         rvAnalyze.setAdapter(analyzeAdapter);
+
+        analyze_button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                ParameterVisualizationFragment parameterVisualizationFragment = new ParameterVisualizationFragment();
+                Bundle b = new Bundle();
+                b.putSerializable("scalars", scalars);
+                parameterVisualizationFragment.setArguments(b);
+                MainActivity mainActivity = (MainActivity)getActivity();
+                mainActivity.switchFragment(parameterVisualizationFragment);
+            }
+        });
     }
 }

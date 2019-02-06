@@ -1,10 +1,12 @@
 package dk.ucn.datamatiker.mwe.movechair.Models;
 
-public class ScalarModel {
-    private String unit;
-    private String value;
+import java.io.Serializable;
 
-    public ScalarModel(String unit, String value) {
+public class ScalarModel implements Serializable {
+    private String unit;
+    private float value;
+
+    public ScalarModel(String unit, float value) {
         this.unit = unit;
         this.value = value;
     }
@@ -20,11 +22,11 @@ public class ScalarModel {
         this.unit = unit;
     }
 
-    public String getValue() {
+    public float getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(float value) {
         this.value = value;
     }
 }

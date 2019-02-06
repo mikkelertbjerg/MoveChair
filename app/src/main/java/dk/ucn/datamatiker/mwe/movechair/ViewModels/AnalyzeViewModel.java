@@ -57,7 +57,7 @@ public class AnalyzeViewModel extends AndroidViewModel {
             weight += sessionLogs.get(i).getActivity().getEquipment().getWeight();
             */
         }
-        ScalarModel pointsScalar = new ScalarModel("Points", String.valueOf(points));
+        ScalarModel pointsScalar = new ScalarModel("Points", points);
         scalars.add(pointsScalar);
 
         return scalars;

@@ -34,7 +34,7 @@ public class AnalyzeAdapter extends RecyclerView.Adapter<AnalyzeAdapter.ViewHold
     }
 
     @Override
-    public AnalyzeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final Context context = parent.getContext();
 
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -44,10 +44,6 @@ public class AnalyzeAdapter extends RecyclerView.Adapter<AnalyzeAdapter.ViewHold
 
         // Return a new holder instance
         final ViewHolder viewHolder = new ViewHolder(analyze_item);
-
-        //Create onClick
-        //TODO OnClick goes to detailed view of achievement
-
 
         return viewHolder;
     }
@@ -61,10 +57,8 @@ public class AnalyzeAdapter extends RecyclerView.Adapter<AnalyzeAdapter.ViewHold
         TextView analyzeItemUnit = viewHolder.analyze_unit;
         TextView analyzeItemValue = viewHolder.analyze_value;
 
-
-        //TODO How is this added generically?
-            analyzeItemUnit.setText(scalar.getUnit());
-            analyzeItemValue.setText(scalar.getValue());
+        analyzeItemUnit.setText(scalar.getUnit());
+        analyzeItemValue.setText(String.valueOf(scalar.getValue()));
 
     }
 
