@@ -20,14 +20,14 @@ public class WorkoutPlanModel extends ActivityModel implements Serializable {
     @Expose
     private List<WorkoutModel> workouts;
 
-    public WorkoutPlanModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration, List<MediaModel> media, int restDays, List<WorkoutModel> workouts) {
-        super(name, description, id, activityType, points, duration, media);
+    public WorkoutPlanModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration, List<MediaModel> media, int restDays, List<WorkoutModel> workouts, int kcal) {
+        super(name, description, id, activityType, points, duration, media, kcal);
         this.restDays = restDays;
         this.workouts = workouts;
     }
 
-    public WorkoutPlanModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration, List<MediaModel> media) {
-        super(name, description, id, activityType, points, duration, media);
+    public WorkoutPlanModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration, List<MediaModel> media, int kcal) {
+        super(name, description, id, activityType, points, duration, media, kcal);
     }
 
     public WorkoutPlanModel() {

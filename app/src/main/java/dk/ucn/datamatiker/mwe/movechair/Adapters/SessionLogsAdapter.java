@@ -23,7 +23,7 @@ import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Models.ActivityModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.LoadActivityIconTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.LoadImageTask;
 
 @RequiresApi(api = Build.VERSION_CODES.P)
 public class SessionLogsAdapter extends RecyclerView.Adapter<SessionLogsAdapter.ViewHolder>  {
@@ -118,7 +118,7 @@ public class SessionLogsAdapter extends RecyclerView.Adapter<SessionLogsAdapter.
 
         // Set item views based on your views and data model
         if(!sessionLog.getActivity().getMediaByType("img").isEmpty()){
-            LoadActivityIconTask task = new LoadActivityIconTask(activityLogIcon);
+            LoadImageTask task = new LoadImageTask(activityLogIcon);
             task.execute(sessionLog.getActivity().getMediaByType("img").get(0).getPath());
         }
         else{

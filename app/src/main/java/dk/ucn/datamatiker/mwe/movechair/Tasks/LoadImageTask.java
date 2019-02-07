@@ -11,11 +11,11 @@ import android.widget.ImageView;
 import java.io.InputStream;
 
 @RequiresApi(api = Build.VERSION_CODES.P)
-public class LoadActivityIconTask extends AsyncTask<String, Integer, Bitmap> {
+public class LoadImageTask extends AsyncTask<String, Integer, Bitmap> {
 
     ImageView bitmapImage;
 
-    public LoadActivityIconTask(ImageView bitmapImage) {
+    public LoadImageTask(ImageView bitmapImage) {
         this.bitmapImage = bitmapImage;
     }
 

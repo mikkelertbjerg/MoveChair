@@ -31,7 +31,7 @@ import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutPlanModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.LoadActivityIconTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.LoadImageTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ActivityListViewModel;
 
 // Create the basic adapter extending from RecyclerView.Adapter
@@ -138,7 +138,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
             case "Exercise":
                 ExerciseModel exercise = (ExerciseModel) activity;
                 if(!activity.getMediaByType("img").isEmpty()){
-                    LoadActivityIconTask task = new LoadActivityIconTask(activityItemIcon);
+                    LoadImageTask task = new LoadImageTask(activityItemIcon);
                     task.execute(activity.getMediaByType("img").get(0).getPath());
                 }
                 else{
@@ -152,7 +152,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
             case "Workout":
                 WorkoutModel workout = (WorkoutModel) activity;
                 if(!activity.getMediaByType("img").isEmpty()){
-                    LoadActivityIconTask task = new LoadActivityIconTask(activityItemIcon);
+                    LoadImageTask task = new LoadImageTask(activityItemIcon);
                     task.execute(activity.getMediaByType("img").get(0).getPath());
                 }
                 else{
@@ -166,7 +166,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
             case "Workout Plan":
                 WorkoutPlanModel workoutPlan = (WorkoutPlanModel) activity;
                 if(!activity.getMediaByType("img").isEmpty()){
-                    LoadActivityIconTask task = new LoadActivityIconTask(activityItemIcon);
+                    LoadImageTask task = new LoadImageTask(activityItemIcon);
                     task.execute(activity.getMediaByType("img").get(0).getPath());
                 }
                 else{

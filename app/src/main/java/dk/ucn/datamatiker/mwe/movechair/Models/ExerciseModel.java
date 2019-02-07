@@ -20,15 +20,15 @@ public class ExerciseModel extends ActivityModel implements Serializable {
     private List<EquipmentModel> equipment;
 
 
-    public ExerciseModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration, List<MediaModel> media, List<CategoryModel> categories, List<MuscleModel> muscles, List<EquipmentModel> equipment) {
-        super(name, description, id, activityType, points, duration, media);
+    public ExerciseModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration, List<MediaModel> media, List<CategoryModel> categories, List<MuscleModel> muscles, List<EquipmentModel> equipment, int kcal) {
+        super(name, description, id, activityType, points, duration, media, kcal);
         this.categories = categories;
         this.muscles = muscles;
         this.equipment = equipment;
     }
 
-    public ExerciseModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration, List<MediaModel> media) {
-        super(name, description, id, activityType, points, duration, media);
+    public ExerciseModel(String name, String description, int id, ActivityTypeModel activityType, double points, double duration, List<MediaModel> media, int kcal) {
+        super(name, description, id, activityType, points, duration, media, kcal);
     }
 
     public ExerciseModel() {

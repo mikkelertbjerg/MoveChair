@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import java.lang.reflect.Type;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.ActivityListTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.LoadActivityIconTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.LoadImageTask;
 
 @RequiresApi(api = Build.VERSION_CODES.P)
 public class ActivityListViewModel extends AndroidViewModel {
@@ -30,7 +30,7 @@ public class ActivityListViewModel extends AndroidViewModel {
     }
 
     public void getActivitiesImages(ImageView img, String url){
-        LoadActivityIconTask task = new LoadActivityIconTask(img);
+        LoadImageTask task = new LoadImageTask(img);
         task.execute(url);
     }
 }

@@ -41,7 +41,7 @@ import dk.ucn.datamatiker.mwe.movechair.Models.StridesModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.WorkoutModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
-import dk.ucn.datamatiker.mwe.movechair.Tasks.LoadActivityIconTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.LoadImageTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.HomeViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.SessionLogsViewModel;
 
@@ -247,7 +247,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
                 }
             });
             if(!workout.getMediaByType("img").isEmpty()){
-                LoadActivityIconTask task = new LoadActivityIconTask(workout_icon);
+                LoadImageTask task = new LoadImageTask(workout_icon);
                 task.execute(workout.getMediaByType("img").get(0).getPath());
             }
             else{

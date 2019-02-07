@@ -1,6 +1,8 @@
 package dk.ucn.datamatiker.mwe.movechair.Adapters;
 
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Models.ParameterVisualizationModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.LoadImageTask;
 
 public class ParameterVisualizationAdapter extends RecyclerView.Adapter<ParameterVisualizationAdapter.ViewHolder> {
 
@@ -36,6 +39,7 @@ public class ParameterVisualizationAdapter extends RecyclerView.Adapter<Paramete
 
     private List<ParameterVisualizationModel> parameterVisualizationModels;
     private Context context;
+    public ImageView unitVisualizationImage;
 
     public  ParameterVisualizationAdapter (List<ParameterVisualizationModel> parameterVisualizationModels, Context context){
         this.parameterVisualizationModels = parameterVisualizationModels;
@@ -61,6 +65,7 @@ public class ParameterVisualizationAdapter extends RecyclerView.Adapter<Paramete
         return viewHolder;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         // Get the data model based on position
@@ -79,17 +84,18 @@ public class ParameterVisualizationAdapter extends RecyclerView.Adapter<Paramete
         //Testing shyte
         //TODO This seems like a redundant list of images, find a way to let the ParameterVirtualizationImageAdapter recieve a list of simpler models or just a single url somehow...
 
-        List<ParameterVisualizationModel> images = new ArrayList<>();
+        List<String> imagePaths = new ArrayList<>();
 
         for(ParameterVisualizationModel p : parameterVisualizationModels) {
             float numberOfImages = p.getValue() / p.getThreshold();
             for(int i = 0; i < numberOfImages; i++) {
-                ParameterVisualizationModel pvm = new ParameterVisualizationModel("Name","Description","Unit",500, "imagePath", 1293);
-                images.add(pvm);
+
+                String imagePath = p.getMedia().getPath();
+                imagePaths.add(imagePath);
             }
         }
 
-        ParameterVisualizationImageAdapter parameterVisualizationImageAdapter = new ParameterVisualizationImageAdapter(images);
+        ParameterVisualizationImageAdapter parameterVisualizationImageAdapter = new ParameterVisualizationImageAdapter(imagePaths);
         viewHolder.rvImages.setAdapter(parameterVisualizationImageAdapter);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);

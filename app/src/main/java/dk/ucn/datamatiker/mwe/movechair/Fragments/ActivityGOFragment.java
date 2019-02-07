@@ -95,6 +95,7 @@ public class ActivityGOFragment extends Fragment {
         //Testing
 
         ConcatenatingMediaSource videoSource = new ConcatenatingMediaSource();
+        //The following method is used to convert strings to mediaSources
         videoSource.addMediaSources(mExoplayerViewModel.mediasourceConversion(mediaPaths));
         // Prepare the player with the source.
         player.prepare(videoSource);
@@ -114,7 +115,7 @@ public class ActivityGOFragment extends Fragment {
                     if (remaining > 0) {
                         countDownTimer.cancel();
                         paused = false;
-                        testWorkoutTimerCombo(remaining, 1000, nextExercise);
+                        testWorkoutTimerCombo(remaining, 1000);
                         countDownTimer.start();
                     }
                 }
@@ -125,14 +126,14 @@ public class ActivityGOFragment extends Fragment {
             }
         });
 
-        testWorkoutTimerCombo(durationList.get(0) * 1000, 1000, 0);
+        testWorkoutTimerCombo(durationList.get(0) * 1000, 1000);
 
         countDownTimer.start();
 
 
     }
 
-    public void testWorkoutTimerCombo(final long duration, long interval, int next)
+    public void testWorkoutTimerCombo(final long duration, long interval)
     {
         remaining = duration;
         countDownTimer = new CountDownTimer(duration, interval) {
@@ -171,11 +172,10 @@ public class ActivityGOFragment extends Fragment {
                         MainActivity mainActivity = (MainActivity) getContext();
                         mainActivity.switchFragment(fragment);
                     }
-
-
-                } else if(nextExercise < durationList.size()-1) {
+                }
+                else if(nextExercise < durationList.size()-1) {
                     player.seekTo(player.getCurrentWindowIndex() + 1, C.TIME_UNSET);
-                    testWorkoutTimerCombo(durationList.get(nextExercise) * 1000, 1000, nextExercise);
+                    testWorkoutTimerCombo(durationList.get(++nextExercise) * 1000, 1000);
                     countDownTimer.start();
                 }
 

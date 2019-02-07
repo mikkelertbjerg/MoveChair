@@ -35,9 +35,10 @@ public class AnalyzeViewModel extends AndroidViewModel {
     public List<ScalarModel> getScalars(List<SessionLogModel> sessionLogs) {
 
         int points = 0;
+        int kcal = 0;
         List<ScalarModel> scalars = new ArrayList<>();
         /*
-        int calories = 0;
+
         int distance = 0;
         int weight = 0;
          */
@@ -46,10 +47,10 @@ public class AnalyzeViewModel extends AndroidViewModel {
             if (sessionLogs.get(i).getActivity().getPoints() > 0)
                 points += sessionLogs.get(i).getActivity().getPoints();
 
-            /*
-            if (sessionLogs.get(i).getActivity().getCalories() > 0)
-                calories += sessionLogs.get(i).getActivity().getCalories();
 
+            if (sessionLogs.get(i).getActivity().getKcal() > 0)
+                kcal += sessionLogs.get(i).getActivity().getKcal();
+/*
             if (sessionLogs.get(i).getActivity().getDistance() > 0)
                 distance += sessionLogs.get(i).getActivity().getDistance();
 
@@ -57,8 +58,12 @@ public class AnalyzeViewModel extends AndroidViewModel {
             weight += sessionLogs.get(i).getActivity().getEquipment().getWeight();
             */
         }
+        //TODO Find a way to make this CRUD from DB mayhaps?
         ScalarModel pointsScalar = new ScalarModel("Points", points);
         scalars.add(pointsScalar);
+
+        ScalarModel kcalScalar = new ScalarModel("Kcal", kcal);
+        scalars.add(kcalScalar);
 
         return scalars;
     }

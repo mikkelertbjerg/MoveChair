@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 
 public class TestGetWorkout {
 
-    @Test
+  /*  @Test
     public void testGetWorkoutId() {
         WorkoutFragment fragment = new WorkoutFragment();
 
@@ -33,5 +33,5 @@ public class TestGetWorkout {
         }, WorkoutModel.class, 1);
 
 
-    }
+    }*/
 }

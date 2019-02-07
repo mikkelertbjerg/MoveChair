@@ -3,6 +3,8 @@ package dk.ucn.datamatiker.mwe.movechair.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class ParameterVisualizationModel {
     @SerializedName("name")
     @Expose
@@ -16,18 +18,17 @@ public class ParameterVisualizationModel {
     @SerializedName("threshold")
     @Expose
     private float threshold;
-    @SerializedName("imagePath")
+    @SerializedName("media")
     @Expose
-    private String imagePath;
-
+    private MediaModel media;
     private float value;
 
-    public ParameterVisualizationModel(String name, String description, String unit, float threshold, String imagePath, float value) {
+    public ParameterVisualizationModel(String name, String description, String unit, float threshold, String imagePath, float value, MediaModel media) {
         this.name = name;
         this.description = description;
         this.unit = unit;
         this.threshold = threshold;
-        this.imagePath = imagePath;
+        this.media = media;
         this.value = value;
     }
 
@@ -66,12 +67,12 @@ public class ParameterVisualizationModel {
         this.threshold = threshold;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public MediaModel getMedia() {
+        return media;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setMedia(MediaModel media) {
+        this.media = media;
     }
 
     public float getValue() {
