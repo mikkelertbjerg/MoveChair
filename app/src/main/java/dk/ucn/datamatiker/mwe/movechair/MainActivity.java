@@ -1,6 +1,7 @@
 package dk.ucn.datamatiker.mwe.movechair;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -22,6 +23,7 @@ import dk.ucn.datamatiker.mwe.movechair.Fragments.AchievementsFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.ActivitiesFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.AnalyzeFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.GetStartedFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.GoogleFitFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.HighscoreFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.HomeFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.OptionsFragment;
@@ -153,6 +155,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_my_plan:
                 fragment = new MyPlanFragment();
                 break;
+            case R.id.nav_googlefit:
+                fragment = new GoogleFitFragment();
+                break;
 
                 default:
             fragment = new HomeFragment();
@@ -179,4 +184,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    //GOOGLE FIT TESTING
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode,resultCode,data);
+    }
 }

@@ -11,17 +11,6 @@ public class GoogleFitModel extends ActivityModel {
     private int distance;
     private int calories;
 
-    public GoogleFitModel(String name, String description, int id, ActivityTypeModel activityType,
-                          double points, double duration, List<MediaModel> media, Date starttime,
-                          Date endtime, int strides, int distance, int calories) {
-        super(name, description, id, activityType, points, duration, media);
-        this.starttime = starttime;
-        this.endtime = endtime;
-        this.strides = strides;
-        this.distance = distance;
-        this.calories = calories;
-    }
-
     public GoogleFitModel() {
     }
 
@@ -57,12 +46,9 @@ public class GoogleFitModel extends ActivityModel {
         this.distance = distance;
     }
 
-    @Override
     public int getCalories() {
         return calories;
     }
-
-    @Override
     public void setCalories(int calories) {
         this.calories = calories;
     }
