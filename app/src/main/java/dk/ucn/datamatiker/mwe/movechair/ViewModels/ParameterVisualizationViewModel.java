@@ -39,27 +39,20 @@ public class ParameterVisualizationViewModel extends AndroidViewModel {
         task.execute();
     }
 
-    public List<ParameterVisualizationModel> getVisualizationModels(List<ParameterVisualizationModel> parameterVisualizationModels,List<ScalarModel> scalars) {
+    public List<ParameterVisualizationModel> getVisualizationModels(List<ParameterVisualizationModel> parameterVisualizationModels, List<ScalarModel> scalars) {
         List<ParameterVisualizationModel> visualizationModels = new ArrayList<>();
 
         for (ScalarModel s : scalars) {
             //TODO Time complexity is shyte, reconsider!
-
-            boolean found = false;
-            int i = 0;
-            while(found != true && i < parameterVisualizationModels.size()) {
-                if(parameterVisualizationModels.get(i).getUnit().toLowerCase().equals(s.getUnit().toLowerCase())) {
-                    if(s.getValue() > parameterVisualizationModels.get(i).getThreshold()) {
-                        ParameterVisualizationModel p = parameterVisualizationModels.get(i);
-                        p.setValue(s.getValue());
-                        visualizationModels.add(p);
+            for (ParameterVisualizationModel pvm : parameterVisualizationModels) {
+                if (pvm.getUnit().toLowerCase().equals(s.getUnit().toLowerCase())) {
+                    if (s.getValue() > pvm.getThreshold()) {
+                        pvm.setValue(s.getValue());
+                        visualizationModels.add(pvm);
                     }
-                    found = true;
                 }
-                i++;
             }
         }
-
-        return visualizationModels;
+            return visualizationModels;
     }
 }
