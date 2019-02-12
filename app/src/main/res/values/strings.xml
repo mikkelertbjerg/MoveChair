@@ -149,6 +149,7 @@
 
     <!-- Strings related to Exercise Parameter Visulization Engine-->
     <string name="analyze_title">Analyze</string>
+    <string name="analyze_map_button">Travel Map</string>
     <string name="analyze_convert_button">Convert data</string>
     <string name="analyze_unit">Unit</string>
     <string name="analyze_value">Value</string>
@@ -156,5 +157,10 @@
     <string name="pve_value">Value</string>
     <string name="pve_description">Description</string>
 
+    <!-- Strings related to Travel Map-->
+    <string name="map_unit">Unit</string>
+    <string name="map_value">Value</string>
+    <string name="map_next_threshold">Next Check Point: </string>
+    <string name="map_threshold">Threshold</string>
 
 </resources>

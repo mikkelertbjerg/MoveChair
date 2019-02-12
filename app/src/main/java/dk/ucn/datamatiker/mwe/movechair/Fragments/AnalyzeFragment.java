@@ -1,11 +1,9 @@
 package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
 
-import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Build;
 import android.os.Bundle;
-import android.se.omapi.Session;
 import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -15,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +32,7 @@ public class AnalyzeFragment extends Fragment {
 
     //UI elements
     private Button analyze_button;
+    private Button map_button;
     private AnalyzeViewModel mAnalyzeViewModel;
     private RecyclerView rvAnalyze;
 
@@ -73,6 +71,16 @@ public class AnalyzeFragment extends Fragment {
 
         //UI elements
         analyze_button = view.findViewById(R.id.analyze_button_convert);
+        map_button = view.findViewById(R.id.analyze_button_map);
+
+        map_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TravelMapFragment travelMapFragment = new TravelMapFragment();
+                MainActivity mainActivity = (MainActivity)getActivity();
+                mainActivity.switchFragment(travelMapFragment);
+            }
+        });
 
         mAnalyzeViewModel.getSessionLogs(new AsyncJsonTask.AsyncJsonResponse() {
             @Override
