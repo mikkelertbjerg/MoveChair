@@ -3,6 +3,7 @@ package dk.ucn.datamatiker.mwe.movechair.Fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -65,7 +66,7 @@ public class ParameterVisualizationFragment extends Fragment {
 
         context = getActivity();
 
-        ParameterVisualizationAdapter parameterVisualizationAdapter = new ParameterVisualizationAdapter(pvm, context);
+        ParameterVisualizationAdapter parameterVisualizationAdapter = new ParameterVisualizationAdapter(pvm, context, null);
         rvParameterVisualization.setAdapter(parameterVisualizationAdapter);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -75,10 +76,19 @@ public class ParameterVisualizationFragment extends Fragment {
     }
 
     public void onGetParameterVisualizationModels(Object o) {
-        ArrayList<ParameterVisualizationModel> pvm = (ArrayList<ParameterVisualizationModel>) mParameterVisualizationViewModel.getVisualizationModels((List<ParameterVisualizationModel>)o, scalars);
 
-        ParameterVisualizationAdapter parameterVisualizationAdapter = new ParameterVisualizationAdapter(pvm, context);
-        rvParameterVisualization.setAdapter(parameterVisualizationAdapter);
+        final ArrayList<ParameterVisualizationModel> pvm = (ArrayList<ParameterVisualizationModel>) mParameterVisualizationViewModel.getVisualizationModels((List<ParameterVisualizationModel>)o, scalars);
+
+
+        mParameterVisualizationViewModel.getPVMImage(new AsyncJsonTask.AsyncJsonResponse() {
+            @Override
+            public void processFinish(Object o) {
+                ParameterVisualizationAdapter parameterVisualizationAdapter = new ParameterVisualizationAdapter(pvm, context, (Bitmap)o);
+                rvParameterVisualization.setAdapter(parameterVisualizationAdapter);
+            }
+        }, pvm.get(0).getMedia().getPath());
+
+
     }
 
 }

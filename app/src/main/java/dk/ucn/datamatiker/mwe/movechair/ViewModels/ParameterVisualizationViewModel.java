@@ -13,9 +13,11 @@ import java.util.List;
 import dk.ucn.datamatiker.mwe.movechair.Models.ParameterVisualizationModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ScalarModel;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.LoadPVMImageTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.ParameterVisualizationModelListTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.SessionLogListTask;
 
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class ParameterVisualizationViewModel extends AndroidViewModel {
 
     public ParameterVisualizationViewModel(@NonNull Application application) {
@@ -24,11 +26,16 @@ public class ParameterVisualizationViewModel extends AndroidViewModel {
 
     private AsyncJsonTask.AsyncJsonResponse callback;
 
-    @RequiresApi(api = Build.VERSION_CODES.P)
     public void getParameterVisualizationModels(AsyncJsonTask.AsyncJsonResponse callback, Type type) {
         //Defines callback method for task and starts the task that gets all activities with type.
         this.callback = callback;
         ParameterVisualizationModelListTask task = new ParameterVisualizationModelListTask(callback, type);
+        task.execute();
+    }
+
+    public void getPVMImage(AsyncJsonTask.AsyncJsonResponse callback, String url) {
+        this.callback = callback;
+        LoadPVMImageTask task = new LoadPVMImageTask(callback, url);
         task.execute();
     }
 

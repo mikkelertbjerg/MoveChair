@@ -1,6 +1,10 @@
 package dk.ucn.datamatiker.mwe.movechair.Adapters;
 
+import android.app.Activity;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,12 +15,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Models.ParameterVisualizationModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.LoadImageTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.LoadPVMImageTask;
+import dk.ucn.datamatiker.mwe.movechair.ViewModels.ParameterVisualizationViewModel;
 
 public class ParameterVisualizationAdapter extends RecyclerView.Adapter<ParameterVisualizationAdapter.ViewHolder> {
 
@@ -39,16 +47,18 @@ public class ParameterVisualizationAdapter extends RecyclerView.Adapter<Paramete
 
     private List<ParameterVisualizationModel> parameterVisualizationModels;
     private Context context;
-    public ImageView unitVisualizationImage;
+    private Bitmap pvmImage;
 
-    public  ParameterVisualizationAdapter (List<ParameterVisualizationModel> parameterVisualizationModels, Context context){
+    public  ParameterVisualizationAdapter (List<ParameterVisualizationModel> parameterVisualizationModels, Context context, Bitmap pvmImage){
         this.parameterVisualizationModels = parameterVisualizationModels;
         this.context = context;
+        this.pvmImage = pvmImage;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final Context context = parent.getContext();
+
 
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -57,6 +67,7 @@ public class ParameterVisualizationAdapter extends RecyclerView.Adapter<Paramete
 
         // Return a new holder instance
         final ParameterVisualizationAdapter.ViewHolder viewHolder = new ParameterVisualizationAdapter.ViewHolder(parameter_visualization_item);
+
 
         //Create onClick
         //TODO OnClick goes to detailed view of achievement
@@ -84,10 +95,11 @@ public class ParameterVisualizationAdapter extends RecyclerView.Adapter<Paramete
         //Testing shyte
         //TODO This seems like a redundant list of images, find a way to let the ParameterVirtualizationImageAdapter recieve a list of simpler models or just a single url somehow...
 
-        List<String> imagePaths = new ArrayList<>();
 
+
+        List<String> imagePaths = new ArrayList<>();
         for(ParameterVisualizationModel p : parameterVisualizationModels) {
-            float numberOfImages = p.getValue() / p.getThreshold();
+            double numberOfImages = Math.floor(Double.valueOf(p.getValue() / p.getThreshold()));
             for(int i = 0; i < numberOfImages; i++) {
 
                 String imagePath = p.getMedia().getPath();
@@ -95,7 +107,7 @@ public class ParameterVisualizationAdapter extends RecyclerView.Adapter<Paramete
             }
         }
 
-        ParameterVisualizationImageAdapter parameterVisualizationImageAdapter = new ParameterVisualizationImageAdapter(imagePaths);
+        ParameterVisualizationImageAdapter parameterVisualizationImageAdapter = new ParameterVisualizationImageAdapter(imagePaths, this.pvmImage);
         viewHolder.rvImages.setAdapter(parameterVisualizationImageAdapter);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);

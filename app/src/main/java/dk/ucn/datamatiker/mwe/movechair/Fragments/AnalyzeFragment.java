@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dk.ucn.datamatiker.mwe.movechair.Adapters.AnalyzeAdapter;
+import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.MainActivity;
 import dk.ucn.datamatiker.mwe.movechair.Models.ScalarModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
@@ -78,7 +79,7 @@ public class AnalyzeFragment extends Fragment {
             public void processFinish(Object o) {
                 onGetSessionLogs(o);
             }
-        },SessionLogModel.class,1);
+        },SessionLogModel.class,UserHelper.getUser().getId());
     }
 
     //When we get logs we get scalars

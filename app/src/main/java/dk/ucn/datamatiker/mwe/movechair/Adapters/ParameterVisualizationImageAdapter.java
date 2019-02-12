@@ -1,6 +1,7 @@
 package dk.ucn.datamatiker.mwe.movechair.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
@@ -30,10 +31,12 @@ public class ParameterVisualizationImageAdapter extends RecyclerView.Adapter<Par
     }
 
     private List<String> imagePaths;
+    private Bitmap pvmImage;
 
 
-    public ParameterVisualizationImageAdapter(List<String> imagePaths){
+    public ParameterVisualizationImageAdapter(List<String> imagePaths, Bitmap pvmImage){
         this.imagePaths = imagePaths;
+        this.pvmImage = pvmImage;
     }
 
     @Override
@@ -60,9 +63,8 @@ public class ParameterVisualizationImageAdapter extends RecyclerView.Adapter<Par
         // Set item views based on your views and data model
         ImageView parameterVisualizationImage = viewHolder.image;
 
-        //TODO This downloads the same image for every url string in the list, fix.!!!
-        LoadImageTask task = new LoadImageTask(parameterVisualizationImage);
-        task.execute(imagePath);
+        parameterVisualizationImage.setImageBitmap(pvmImage);
+
     }
 
     @Override
