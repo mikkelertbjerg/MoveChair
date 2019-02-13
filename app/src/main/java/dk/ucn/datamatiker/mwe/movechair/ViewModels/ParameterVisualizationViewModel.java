@@ -13,6 +13,7 @@ import java.util.List;
 import dk.ucn.datamatiker.mwe.movechair.Models.ParameterVisualizationModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ScalarModel;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
+import dk.ucn.datamatiker.mwe.movechair.Tasks.GetParameterVisualizationModelByThresholdTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.LoadPVMImageTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.ParameterVisualizationModelListTask;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.SessionLogListTask;
@@ -36,6 +37,12 @@ public class ParameterVisualizationViewModel extends AndroidViewModel {
     public void getPVMImage(AsyncJsonTask.AsyncJsonResponse callback, String url) {
         this.callback = callback;
         LoadPVMImageTask task = new LoadPVMImageTask(callback, url);
+        task.execute();
+    }
+
+    public void getParameterVisualizationModelByThreshold(AsyncJsonTask.AsyncJsonResponse callback, Type type, float value){
+        this.callback = callback;
+        GetParameterVisualizationModelByThresholdTask task = new GetParameterVisualizationModelByThresholdTask(callback, type, value);
         task.execute();
     }
 

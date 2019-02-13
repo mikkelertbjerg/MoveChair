@@ -21,7 +21,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map_threshold" />
+        app:layout_constraintTop_toBottomOf="@+id/map_description" />
 
     <TextView
         android:id="@+id/map_unit"
@@ -30,18 +30,18 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/map_unit"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/map_value"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/map_next_threshhold"
+        android:id="@+id/map_checkpoint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/map_next_threshold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map_unit" />
+        app:layout_constraintTop_toBottomOf="@+id/map_current" />
 
     <TextView
         android:id="@+id/map_value"
@@ -50,16 +50,39 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/map_value"
-        app:layout_constraintStart_toEndOf="@+id/map_unit"
+        app:layout_constraintStart_toEndOf="@+id/map_current"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/map_threshold"
+        android:id="@+id/map_next_threshold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/map_threshold"
-        app:layout_constraintStart_toEndOf="@+id/map_next_threshhold"
-        app:layout_constraintTop_toBottomOf="@+id/map_value" />
+        app:layout_constraintStart_toEndOf="@+id/map_checkpoint"
+        app:layout_constraintTop_toBottomOf="@+id/map_current" />
+
+    <TextView
+        android:id="@+id/map_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/map_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/map_checkpoint" />
+
+    <TextView
+        android:id="@+id/map_current"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/map_current"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

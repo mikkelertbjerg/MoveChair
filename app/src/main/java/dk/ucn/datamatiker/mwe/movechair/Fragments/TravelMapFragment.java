@@ -13,32 +13,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
 import dk.ucn.datamatiker.mwe.movechair.Models.ParameterVisualizationModel;
-import dk.ucn.datamatiker.mwe.movechair.Models.ScalarModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
-import dk.ucn.datamatiker.mwe.movechair.ViewModels.ActivityListViewModel;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ParameterVisualizationViewModel;
 
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class TravelMapFragment extends Fragment {
 
     //UI elements
     private TextView unit;
     private TextView value;
     private TextView next_threshold;
+    private TextView description;
     private ImageView image;
 
     //Helpers
     private ParameterVisualizationModel uiPVM;
-    private ScalarModel scalar;
 
     //VM
     private ParameterVisualizationViewModel mParameterVisualizationViewmodel;
@@ -63,61 +54,23 @@ public class TravelMapFragment extends Fragment {
 
         mParameterVisualizationViewmodel = ViewModelProviders.of(this).get(ParameterVisualizationViewModel.class);
 
-        mParameterVisualizationViewmodel.getParameterVisualizationModels(new AsyncJsonTask.AsyncJsonResponse() {
+        mParameterVisualizationViewmodel.getParameterVisualizationModelByThreshold(new AsyncJsonTask.AsyncJsonResponse() {
             @Override
             public void processFinish(Object o) {
                 updateTravelMap(o);
             }
-        },ParameterVisualizationModel.class);
+        }, ParameterVisualizationModel.class, 60); //HARDCODED VALUE CHANGE LATER YOU MONG
 
         //UI Elements
         unit = view.findViewById(R.id.map_unit);
         value = view.findViewById(R.id.map_value);
-        next_threshold = view.findViewById(R.id.map_next_threshhold);
+        next_threshold = view.findViewById(R.id.map_next_threshold);
+        description = view.findViewById(R.id.map_description);
         image = view.findViewById(R.id.map_image);
-
-
     }
 
-    //TODO - Most of the code below this should be moved to a viewModel or Helper class.
-    @RequiresApi(api = Build.VERSION_CODES.P)
     public void updateTravelMap(Object o) {
-        ArrayList<ParameterVisualizationModel> pvms = (ArrayList<ParameterVisualizationModel>) o;
-
-
-        //TODO - This is hardcoded for now, change to use DB
-        ArrayList<ScalarModel> scalars = new ArrayList<>();
-        scalar = new ScalarModel("km", 78);
-        scalars.add(scalar);
-
-        ArrayList<ParameterVisualizationModel> uiPVMs = (ArrayList<ParameterVisualizationModel>)mParameterVisualizationViewmodel.getVisualizationModels(pvms,scalars);
-
-        //List of threshold in PVMS
-        List<Float> thresholds = new ArrayList<>();
-
-        //Add thresholds to that list
-        for(ParameterVisualizationModel p : uiPVMs) {
-            thresholds.add(p.getThreshold());
-        }
-
-        //Sorting for search
-        Collections.sort(thresholds);
-
-        //Find the closestThreshold to the scalar value
-        float closestThreshold = closest(scalar.getValue(), thresholds);
-
-        //Choose the corresponding PVM to the closest threshold
-        boolean found = false;
-        int i = 0;
-        while(!found && i < uiPVMs.size()) {
-            ParameterVisualizationModel p = uiPVMs.get(i);
-            if(p.getThreshold() == closestThreshold) {
-                found = true;
-                uiPVM = p;
-            }
-            i++;
-        }
-
+        uiPVM = (ParameterVisualizationModel)o;
         if(uiPVM != null) {
             mParameterVisualizationViewmodel.getPVMImage(o1 -> updateUI(o1), uiPVM.getMedia().getPath());
         }
@@ -125,23 +78,9 @@ public class TravelMapFragment extends Fragment {
 
     public void updateUI(Object o) {
         unit.setText(uiPVM.getUnit());
-        value.setText(String.valueOf(scalar.getValue()));
+        value.setText("123"); //HARDCODED FIX
+        next_threshold.setText("missing");
+        description.setText(uiPVM.getDescription());
         image.setImageBitmap((Bitmap)o);
-    }
-
-    public float closest(float of, List<Float> in) {
-        float min = Float.MAX_VALUE;
-        float closest = of;
-
-        for (float v : in) {
-            final float diff = Math.abs(v - of);
-
-            if (diff < min) {
-                min = diff;
-                closest = v;
-            }
-        }
-
-        return closest;
     }
 }

@@ -158,9 +158,11 @@
     <string name="pve_description">Description</string>
 
     <!-- Strings related to Travel Map-->
+    <string name="map_current">Currently traveled:</string>
     <string name="map_unit">Unit</string>
     <string name="map_value">Value</string>
     <string name="map_next_threshold">Next Check Point: </string>
     <string name="map_threshold">Threshold</string>
+    <string name="map_description">Description</string>
 
 </resources>
