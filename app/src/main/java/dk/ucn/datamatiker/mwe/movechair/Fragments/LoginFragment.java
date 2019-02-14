@@ -15,6 +15,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import dk.ucn.datamatiker.mwe.movechair.Helpers.ProgressHelper;
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 import dk.ucn.datamatiker.mwe.movechair.LoginActivity;
@@ -36,6 +48,12 @@ public class LoginFragment extends Fragment {
     private View mLoginFormView;
     private UserViewModel mUserViewModel;
 
+    //API TEST
+    private LoginButton txtFbLogin;
+    private AccessToken mAccessToken;
+    private CallbackManager callbackManager;
+    //
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,6 +64,9 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        callbackManager = CallbackManager.Factory.create();
+        txtFbLogin = getActivity().findViewById(R.id.connectWithFbButton);
+        Initialize();
 
         progressHelper = new ProgressHelper();
 
@@ -123,4 +144,55 @@ public class LoginFragment extends Fragment {
         }, UserModel.class, email, password);
 
     }
+
+    private void getUserProfile(AccessToken currentAccessToken) {
+        GraphRequest request = GraphRequest.newMeRequest(
+                currentAccessToken,
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        try {
+                            //You can fetch user info like this…
+                            object.getJSONObject("picture").
+                            getJSONObject("data").getString("url");
+                            object.getString("name");
+                            object.getString("email");
+                            object.getString("id");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "data,name,email,picture.width(200)");
+        request.setParameters(parameters);
+        request.executeAsync();
+    }
+
+    public void Initialize(){
+        txtFbLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                mAccessToken = loginResult.getAccessToken();
+                getUserProfile(mAccessToken);
+            }
+            @Override
+            public void onCancel() {
+
+            }
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        });
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode,  data);
+    }
+
 }

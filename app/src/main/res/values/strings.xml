@@ -1,6 +1,7 @@
 <resources>
     <!-- String related to hamburger menu -->
     <string name="app_name">MoveChair</string>
+    <string name="facebook_app_id">622161118240070</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Username</string>
