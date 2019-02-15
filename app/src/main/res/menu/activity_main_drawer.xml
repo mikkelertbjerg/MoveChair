@@ -28,6 +28,9 @@
             android:id="@+id/nav_get_started"
             android:title="@string/get_started" />
         <item
+            android:id="@+id/nav_smart"
+            android:title="@string/smart" />
+        <item
             android:id="@+id/nav_profile"
             android:title="@string/profile" />
         <item

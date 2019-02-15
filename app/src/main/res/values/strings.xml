@@ -18,6 +18,7 @@
     <string name="home">Home</string>
     <string name="highscore">Highscore</string>
     <string name="my_plan">My Plan</string>
+    <string name="smart">SMART Goal</string>
 
     <string name="title_activity_login">Sign in</string>
 
@@ -165,5 +166,15 @@
     <string name="map_next_threshold">Next Check Point: </string>
     <string name="map_threshold">Threshold</string>
     <string name="map_description">Description</string>
+
+    <!-- Strings related to SMART goal-->
+    <string name="smart_specific">I want to focus on</string>
+    <string name="smart_measurable">Enter the value you want to reach according to your goal</string>
+    <string name="smart_value">10</string>
+    <string name="smart_start_date">20-02-2020</string>
+    <string name="smart_end_date">02-02-2222</string>
+    <string name="smart_sessions">Weekly Sessions:</string>
+    <string name="smart_number_of_sessions">4</string>
+    <string name="smart_confirm_button">Confirm</string>
 
 </resources>

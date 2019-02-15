@@ -21,28 +21,31 @@ import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.client.methods.HttpUriRequest;
 import cz.msebera.android.httpclient.client.methods.RequestBuilder;
 import cz.msebera.android.httpclient.impl.client.HttpClients;
+import dk.ucn.datamatiker.mwe.movechair.Models.ExerciseModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.ParameterVisualizationModel;
 import dk.ucn.datamatiker.mwe.movechair.Models.SessionLogModel;
 
 @RequiresApi(api = Build.VERSION_CODES.P)
-public class GetParameterVisualizationModelByThresholdTask extends AsyncJsonTask<ParameterVisualizationModel> {
+public class GetParameterVisualizationModelByThresholdTask extends AsyncJsonTask<List<ParameterVisualizationModel>> {
 
     private AsyncJsonResponse delegate;
     private float value;
+    private String unit;
 
-    public GetParameterVisualizationModelByThresholdTask(AsyncJsonResponse delegate, Type type, float value) {
+    public GetParameterVisualizationModelByThresholdTask(AsyncJsonResponse delegate, Type type, float value, String unit) {
         super(delegate, type);
         this.value = value;
+        this.unit = unit;
         this.controller = type.getTypeName().substring(type.getTypeName().lastIndexOf(".")+1);
     }
 
 
     @Override
-    protected ParameterVisualizationModel doInBackground(Object[] object) {
+    protected List<ParameterVisualizationModel> doInBackground(Object[] object) {
         HttpClient client = HttpClients.custom().setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36").build();
 
-        ParameterVisualizationModel result = null;
-        String myUrl = "http://jvo-web.dk/index.php?controller="+ this.controller.replace("Model", "") + "s" +"&action=selectbythreshold&value=" + value;
+        List<ParameterVisualizationModel> result = null;
+        String myUrl = "http://jvo-web.dk/index.php?controller="+ this.controller.replace("Model", "") + "s" +"&action=selectbythreshold&value=" + value + "&unit=" + unit;
         HttpUriRequest request = RequestBuilder.get()
                 .setUri(myUrl)
                 .setHeader(HttpHeaders.ACCEPT, "application/json")
@@ -57,7 +60,10 @@ public class GetParameterVisualizationModelByThresholdTask extends AsyncJsonTask
                 InputStream content = httpEntity.getContent();
                 Reader reader = new InputStreamReader(content);
                 Gson gson = new Gson();
-                result = gson.fromJson(reader, this.type);
+                Type listType = null;
+                listType = new TypeToken<List<ParameterVisualizationModel>>() {
+                }.getType();
+                result = gson.fromJson(reader, listType);
                 content.close();
 
             } else {

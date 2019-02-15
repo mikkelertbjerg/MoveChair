@@ -40,9 +40,9 @@ public class ParameterVisualizationViewModel extends AndroidViewModel {
         task.execute();
     }
 
-    public void getParameterVisualizationModelByThreshold(AsyncJsonTask.AsyncJsonResponse callback, Type type, float value){
+    public void getParameterVisualizationModelByThreshold(AsyncJsonTask.AsyncJsonResponse callback, Type type, float value, String unit){
         this.callback = callback;
-        GetParameterVisualizationModelByThresholdTask task = new GetParameterVisualizationModelByThresholdTask(callback, type, value);
+        GetParameterVisualizationModelByThresholdTask task = new GetParameterVisualizationModelByThresholdTask(callback, type, value, unit);
         task.execute();
     }
 

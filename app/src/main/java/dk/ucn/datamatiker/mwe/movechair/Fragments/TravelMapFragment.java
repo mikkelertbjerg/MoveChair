@@ -13,7 +13,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dk.ucn.datamatiker.mwe.movechair.Models.ParameterVisualizationModel;
+import dk.ucn.datamatiker.mwe.movechair.Models.ScalarModel;
 import dk.ucn.datamatiker.mwe.movechair.R;
 import dk.ucn.datamatiker.mwe.movechair.Tasks.AsyncJsonTask;
 import dk.ucn.datamatiker.mwe.movechair.ViewModels.ParameterVisualizationViewModel;
@@ -29,7 +33,8 @@ public class TravelMapFragment extends Fragment {
     private ImageView image;
 
     //Helpers
-    private ParameterVisualizationModel uiPVM;
+    private List<ParameterVisualizationModel> uiPVMs;
+    private ScalarModel scalar;
 
     //VM
     private ParameterVisualizationViewModel mParameterVisualizationViewmodel;
@@ -54,12 +59,14 @@ public class TravelMapFragment extends Fragment {
 
         mParameterVisualizationViewmodel = ViewModelProviders.of(this).get(ParameterVisualizationViewModel.class);
 
+        scalar = new ScalarModel("km",20); //HARDCODED FIX!!!
+
         mParameterVisualizationViewmodel.getParameterVisualizationModelByThreshold(new AsyncJsonTask.AsyncJsonResponse() {
             @Override
             public void processFinish(Object o) {
                 updateTravelMap(o);
             }
-        }, ParameterVisualizationModel.class, 60); //HARDCODED VALUE CHANGE LATER YOU MONG
+        }, ParameterVisualizationModel.class, scalar.getValue(), scalar.getUnit()); //HARDCODED VALUE CHANGE LATER YOU MONG
 
         //UI Elements
         unit = view.findViewById(R.id.map_unit);
@@ -70,17 +77,26 @@ public class TravelMapFragment extends Fragment {
     }
 
     public void updateTravelMap(Object o) {
-        uiPVM = (ParameterVisualizationModel)o;
-        if(uiPVM != null) {
-            mParameterVisualizationViewmodel.getPVMImage(o1 -> updateUI(o1), uiPVM.getMedia().getPath());
+        uiPVMs = (ArrayList<ParameterVisualizationModel>)o;
+
+
+        if(uiPVMs != null) {
+            for(ParameterVisualizationModel pvm : uiPVMs){
+                if(pvm.getThreshold() <= scalar.getValue()){
+                    unit.setText(pvm.getUnit());
+                    value.setText(String.valueOf(scalar.getValue())); //HARDCODED FIX
+
+                    description.setText(pvm.getDescription());
+                    mParameterVisualizationViewmodel.getPVMImage(bitmap -> updateTravelMapImage(bitmap), pvm.getMedia().getPath());
+                } else if(pvm.getThreshold() > scalar.getValue()){
+                    next_threshold.setText(String.valueOf(pvm.getThreshold()));
+                }
+            }
         }
+
     }
 
-    public void updateUI(Object o) {
-        unit.setText(uiPVM.getUnit());
-        value.setText("123"); //HARDCODED FIX
-        next_threshold.setText("missing");
-        description.setText(uiPVM.getDescription());
+    public void updateTravelMapImage(Object o) {
         image.setImageBitmap((Bitmap)o);
     }
 }

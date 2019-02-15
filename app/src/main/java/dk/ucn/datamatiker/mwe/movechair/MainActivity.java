@@ -29,6 +29,7 @@ import dk.ucn.datamatiker.mwe.movechair.Fragments.HomeFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.OptionsFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.ProfileFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.MyPlanFragment;
+import dk.ucn.datamatiker.mwe.movechair.Fragments.SMARTFragment;
 import dk.ucn.datamatiker.mwe.movechair.Fragments.SessionLogsFragment;
 import dk.ucn.datamatiker.mwe.movechair.Helpers.UserHelper;
 
@@ -157,6 +158,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_googlefit:
                 fragment = new GoogleFitFragment();
+                break;
+            case R.id.nav_smart:
+                fragment = new SMARTFragment();
                 break;
 
                 default:
