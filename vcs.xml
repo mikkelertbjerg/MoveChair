@@ -10,6 +10,10 @@
           <option name="url" value="https://github.com/mikkelertbjerg/MoveChair.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://gitlab.com/Ki.anybodytech/student_source_code.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="C:\Users\mwe1\Desktop" />
